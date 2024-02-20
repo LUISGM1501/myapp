@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
       borderColor: "#6f6f6f",
+      color: "#000",
       fontSize: 18,
       borderWidth: 1,
       width: Dimensions.get("screen").width*0.7,

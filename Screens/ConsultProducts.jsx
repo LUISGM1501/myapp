@@ -89,13 +89,13 @@ const ConsultScreen = () => {
         data={filteredProducts}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Text>{item.name}</Text>
-            <Text># {item.id}</Text>
-            <Text>Precio: ${item.sellingPrice}</Text>
+            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}># {item.id}</Text>
+            <Text style={styles.text}>Precio: ${item.sellingPrice}</Text>
 
             <View style={styles.Container}>
-              <Text>Cantidad: {item.quantity}</Text>
-              <Text>Vendidos: {item.soldQuantity}</Text>
+              <Text style={styles.text}>Cantidad: {item.quantity}</Text>
+              <Text style={styles.text}>Vendidos: {item.soldQuantity}</Text>
             </View>
           </View>
         )}

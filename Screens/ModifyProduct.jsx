@@ -74,6 +74,7 @@ const ModifyProductScreen = () => {
       <TextInput
         style={styles.textInput}
         placeholder="ID del Producto"
+        placeholderTextColor="gray"
         value={productId}
         onChangeText={setProductId}
       />
@@ -81,6 +82,7 @@ const ModifyProductScreen = () => {
       <TextInput
         style={styles.textInput}
         placeholder="Nuevo Precio Costo"
+        placeholderTextColor="gray"
         value={costPrice}
         onChangeText={setCostPrice}
         keyboardType="numeric"
@@ -89,6 +91,7 @@ const ModifyProductScreen = () => {
       <TextInput
         style={styles.textInput}
         placeholder="Nuevo Precio Venta"
+        placeholderTextColor="gray"
         value={sellingPrice}
         onChangeText={setSellingPrice}
         keyboardType="numeric"
@@ -97,6 +100,7 @@ const ModifyProductScreen = () => {
       <TextInput
         style={styles.textInput}
         placeholder="Nueva Cantidad"
+        placeholderTextColor="gray"
         value={quantity}
         onChangeText={setQuantity}
         keyboardType="numeric"
@@ -109,17 +113,17 @@ const ModifyProductScreen = () => {
         data={products}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Text>{item.name}</Text>
-            <Text># {item.id}</Text>
+            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}># {item.id}</Text>
             
             <View style={styles.Container}>
-                <Text>Precio: ${item.sellingPrice}</Text>
-                <Text>Costo: ${item.costPrice}</Text>
+                <Text style={styles.text}>Precio: ${item.sellingPrice}</Text>
+                <Text style={styles.text}>Costo: ${item.costPrice}</Text>
             </View>
 
             <View style={styles.Container}>
-              <Text>Cantidad: {item.quantity}</Text>
-              <Text>Vendidos: {item.soldQuantity}</Text>
+              <Text style={styles.text}>Cantidad: {item.quantity}</Text>
+              <Text style={styles.text}>Vendidos: {item.soldQuantity}</Text>
             </View>
           </View>
         )}
