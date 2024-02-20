@@ -9,6 +9,7 @@ import OptionsScreen from './Screens/OptionsScreen';
 import AddProduct from './Screens/AddProduct';
 import ConsultScreen from './Screens/ConsultProducts';
 import DeleteProductScreen from './Screens/DeleteProduct';
+import ModifyProductScreen from './Screens/ModifyProduct';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,7 @@ const App = () => {
           color: '#000', // Color del texto
         },  }} />
 
-        <Stack.Screen name="ModifyProduct" component={OptionsScreen} options={{ title: 'FALTA', headerTitleStyle: {
+        <Stack.Screen name="ModifyProduct" component={ModifyProductScreen} options={{ title: 'Actualizar', headerTitleStyle: {
           fontSize: 30, // Tamaño del texto
           color: '#000', // Color del texto
         },  }} />

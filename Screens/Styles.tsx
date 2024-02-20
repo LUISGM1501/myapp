@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
       textAlign: 'center', // Esto centra el texto horizontalmente
       textAlignVertical : 'center', // Esto centra el texto verticalmente
     },
+    text:{
+      color: "#808080",
+      fontSize: 15,
+      padding: 15,
+      margin: -10,
+    },
     Subtittletext:{
       color: "#000",
       fontSize: 20,

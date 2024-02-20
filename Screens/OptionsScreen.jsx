@@ -22,7 +22,7 @@ const OptionsScreen = () => {
   };
 
   const goToModifyProduct = () => {
-    // Navegar a la pantalla para modificar productos
+    navigation.navigate('ModifyProduct'); 
   };
 
   const goToDeleteProduct = () => { 

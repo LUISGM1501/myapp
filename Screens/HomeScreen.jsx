@@ -27,6 +27,14 @@ const HomeScreen = () => {
           <Text style={styles.whiteText}>Ver opciones</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={{ marginTop: 'auto' }}>
+        <Text style={styles.Subtittletext}>Responsables:</Text>
+        <Text style={styles.text}> 1 - Luis Gerardo Urbina Salazar </Text>
+        <Text style={styles.text}> carne 2023156802 </Text>
+        <Text style={styles.text}> 2 - Josi Marin Jimenez </Text>
+        <Text style={styles.text}> carne 2022182201 </Text>
+      </View>
     </View>
   );
 };

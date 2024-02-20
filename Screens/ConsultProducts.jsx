@@ -52,10 +52,28 @@ const ConsultScreen = () => {
       <Button title="Buscar" onPress={filterProducts} />
 
       <Text style={styles.Subtittletext}>Filtrar por:</Text>
-      <Button title="Nombre" onPress={() => setFilterType('name')} />
-      <Button title="Precio" onPress={() => setFilterType('price')} />
-      <Button title="Cantidad" onPress={() => setFilterType('quantity')} />
-      <Button title="Cantidad vendida" onPress={() => setFilterType('soldQuantity')} />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Nombre"
+          onPress={() => setFilterType('name')}
+          color={filterType === 'name' ? 'blue' : 'gray'}
+        />
+        <Button
+          title="Precio"
+          onPress={() => setFilterType('price')}
+          color={filterType === 'price' ? 'blue' : 'gray'}
+        />
+        <Button
+          title="Cantidad"
+          onPress={() => setFilterType('quantity')}
+          color={filterType === 'quantity' ? 'blue' : 'gray'}
+        />
+        <Button
+          title="Cantidad vendida"
+          onPress={() => setFilterType('soldQuantity')}
+          color={filterType === 'soldQuantity' ? 'blue' : 'gray'}
+        />
+      </View>
 
       <Text style={styles.Subtittletext} >Productos:</Text>
 
