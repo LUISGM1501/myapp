@@ -8,7 +8,7 @@ import HomeScreen from './Screens/HomeScreen';
 import OptionsScreen from './Screens/OptionsScreen';
 import AddProduct from './Screens/AddProduct';
 import ConsultScreen from './Screens/ConsultProducts';
-import DeleteProduct from './Screens/DeleteProduct';
+import DeleteProductScreen from './Screens/DeleteProduct';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ const App = () => {
           color: '#000', // Color del texto
         },  }} />
 
-        <Stack.Screen name="DeleteProduct" component={DeleteProduct} options={{ title: 'Eliminar Producto', headerTitleStyle: {
+        <Stack.Screen name="DeleteProduct" component={DeleteProductScreen} options={{ title: 'Eliminar Producto', headerTitleStyle: {
           fontSize: 30, // Tamaño del texto
           color: '#000', // Color del texto
         },  }} />
