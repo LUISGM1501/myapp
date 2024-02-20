@@ -33,7 +33,7 @@ const App = () => {
           color: '#000', // Color del texto
         },  }} />
 
-        <Stack.Screen name="ModifyProduct" component={ModifyProductScreen} options={{ title: 'Actualizar', headerTitleStyle: {
+        <Stack.Screen name="ModifyProduct" component={ModifyProductScreen} options={{ title: 'Modificar', headerTitleStyle: {
           fontSize: 30, // Tamaño del texto
           color: '#000', // Color del texto
         },  }} />

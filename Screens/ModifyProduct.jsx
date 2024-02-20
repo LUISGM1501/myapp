@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import { getProducts, saveProducts } from './Products'; // Importa las funciones para obtener y guardar productos
 import styles from './Styles';
 
@@ -50,6 +50,15 @@ const ModifyProductScreen = () => {
         // Guardar la lista actualizada de productos
         await saveProducts(updatedProducts);
         console.log('Producto modificado correctamente');
+
+        // Actualizar el estado de los productos
+        setProducts(updatedProducts);
+
+        // Limpiar los campos de entrada
+        setProductId('');
+        setCostPrice('');
+        setSellingPrice('');
+        setQuantity('');
       } else {
         console.log('No se encontró ningún producto con el ID proporcionado');
       }
@@ -94,6 +103,28 @@ const ModifyProductScreen = () => {
       />
 
       <Button title="Modificar Producto" onPress={handleModify} />
+
+      {/* Lista de productos */}
+      <FlatList
+        data={products}
+        renderItem={({ item }) => (
+          <View style={styles.itemContainer}>
+            <Text>{item.name}</Text>
+            <Text># {item.id}</Text>
+            
+            <View style={styles.Container}>
+                <Text>Precio: ${item.sellingPrice}</Text>
+                <Text>Costo: ${item.costPrice}</Text>
+            </View>
+
+            <View style={styles.Container}>
+              <Text>Cantidad: {item.quantity}</Text>
+              <Text>Vendidos: {item.soldQuantity}</Text>
+            </View>
+          </View>
+        )}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 };

@@ -34,6 +34,9 @@ const ConsultScreen = () => {
       case 'soldQuantity':
         filtered = products.filter(product => product.soldQuantity === parseInt(searchCriteria));
         break;
+      case 'id':
+        filtered = products.filter(product => product.id.toLowerCase().includes(searchCriteria.toLowerCase()));
+        break;
       default:
         break;
     }
@@ -59,7 +62,12 @@ const ConsultScreen = () => {
           color={filterType === 'name' ? 'blue' : 'gray'}
         />
         <Button
-          title="Precio"
+          title="ID"
+          onPress={() => setFilterType('id')}
+          color={filterType === 'id' ? 'blue' : 'gray'}
+        />
+        <Button
+          title="Precio Venta"
           onPress={() => setFilterType('price')}
           color={filterType === 'price' ? 'blue' : 'gray'}
         />
@@ -69,7 +77,7 @@ const ConsultScreen = () => {
           color={filterType === 'quantity' ? 'blue' : 'gray'}
         />
         <Button
-          title="Cantidad vendida"
+          title="Cantidad Vendida"
           onPress={() => setFilterType('soldQuantity')}
           color={filterType === 'soldQuantity' ? 'blue' : 'gray'}
         />
