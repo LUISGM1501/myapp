@@ -29,6 +29,10 @@ const OptionsScreen = () => {
     navigation.navigate('DeleteProduct'); 
   };
 
+  const goToViewAllProducts = () => { 
+    navigation.navigate('ViewAllProducts'); 
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.Container}>
@@ -72,6 +76,14 @@ const OptionsScreen = () => {
           style={styles.addButton}
           onPress={goToDeleteProduct}>
           <Text style={styles.whiteText}>Eliminar Producto</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.ButtonContainer}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={goToViewAllProducts}>
+          <Text style={styles.whiteText}>Ver Productos</Text>
         </TouchableOpacity>
       </View>
 

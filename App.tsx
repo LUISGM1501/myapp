@@ -10,6 +10,7 @@ import AddProduct from './Screens/AddProduct';
 import ConsultScreen from './Screens/ConsultProducts';
 import DeleteProductScreen from './Screens/DeleteProduct';
 import ModifyProductScreen from './Screens/ModifyProduct';
+import AllProductsScreen from './Screens/ViewProducts';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,11 @@ const App = () => {
         },  }} />
 
         <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Agregar', headerTitleStyle: {
+          fontSize: 30, // Tamaño del texto
+          color: '#000', // Color del texto
+        },  }} />
+
+        <Stack.Screen name="ViewAllProducts" component={AllProductsScreen} options={{ title: 'Productos', headerTitleStyle: {
           fontSize: 30, // Tamaño del texto
           color: '#000', // Color del texto
         },  }} />
