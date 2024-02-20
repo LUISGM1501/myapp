@@ -1,3 +1,5 @@
+// OptionsScreen.tsx
+
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -8,23 +10,23 @@ const OptionsScreen = () => {
   const navigation = useNavigation();
 
   const goToHome = () => {
-    navigation.navigate('HomeScreen'); // Regresa a la pantalla anterior (en este caso, "Home")
+    navigation.navigate('HomeScreen'); 
   };
   
   const goToAddProduct = () => {
-    navigation.navigate('AddProduct'); // Regresa a la pantalla anterior (en este caso, "Home")
+    navigation.navigate('AddProduct');
   };
 
   const goToConsultProducts = () => {
-    navigation.navigate('ConsultProduct'); // Regresa a la pantalla anterior (en este caso, "Home")
+    navigation.navigate('ConsultProduct'); 
   };
 
   const goToModifyProduct = () => {
     // Navegar a la pantalla para modificar productos
   };
 
-  const goToDeleteProduct = () => {
-    // Navegar a la pantalla para eliminar productos
+  const goToDeleteProduct = () => { 
+    navigation.navigate('DeleteProduct'); 
   };
 
   return (

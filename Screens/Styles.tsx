@@ -34,9 +34,10 @@ const styles = StyleSheet.create({
       borderColor: "#6f6f6f",
       fontSize: 18,
       borderWidth: 1,
-      width: Dimensions.get("screen").width*0.6,
+      width: Dimensions.get("screen").width*0.7,
       borderRadius: 10,
       paddingLeft: 15,
+      margin: 10,
     },
     inputContainer: {
       marginTop: 20,
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
       color: "#000",
       fontSize: 20,
       marginTop: 10,
+      marginLeft:10, 
     },
     textDone:{
       color: "#6f6f6f",
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     },
     itemContainer:{
       paddingVertical: 20,
+      paddingLeft: 15,
       marginRight: 20,
       borderBottomColor: "#e4e4e4",
       borderBottomWidth: 1,

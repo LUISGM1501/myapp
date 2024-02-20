@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import { getProducts } from './Products'; // Importa la función para obtener los productos
+import styles from './Styles';
 
 const ConsultScreen = () => {
   const [products, setProducts] = useState([]);
@@ -40,29 +41,36 @@ const ConsultScreen = () => {
   };
 
   return (
-    <View>
-      <Text>Consulta de productos</Text>
+    <View style={styles.mainContainer}>
+      <Text style={styles.Subtittletext}>Consulta de productos:</Text>
       <TextInput
-        style={styles.input}
+        style={styles.textInput}
         placeholder="Ingrese criterio de búsqueda"
         value={searchCriteria}
         onChangeText={setSearchCriteria}
       />
       <Button title="Buscar" onPress={filterProducts} />
-      <Text>Filtrar por:</Text>
+
+      <Text style={styles.Subtittletext}>Filtrar por:</Text>
       <Button title="Nombre" onPress={() => setFilterType('name')} />
       <Button title="Precio" onPress={() => setFilterType('price')} />
       <Button title="Cantidad" onPress={() => setFilterType('quantity')} />
       <Button title="Cantidad vendida" onPress={() => setFilterType('soldQuantity')} />
 
+      <Text style={styles.Subtittletext} >Productos:</Text>
+
       <FlatList
         data={filteredProducts}
         renderItem={({ item }) => (
-          <View>
+          <View style={styles.itemContainer}>
             <Text>{item.name}</Text>
-            <Text>Precio: {item.sellingPrice}</Text>
-            <Text>Cantidad: {item.quantity}</Text>
-            <Text>Cantidad vendida: {item.soldQuantity}</Text>
+            <Text># {item.id}</Text>
+            <Text>Precio: ${item.sellingPrice}</Text>
+
+            <View style={styles.Container}>
+              <Text>Cantidad: {item.quantity}</Text>
+              <Text>Vendidos: {item.soldQuantity}</Text>
+            </View>
           </View>
         )}
         keyExtractor={item => item.id.toString()}
@@ -72,12 +80,3 @@ const ConsultScreen = () => {
 };
 
 export default ConsultScreen;
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-});
