@@ -43,7 +43,7 @@ const OptionsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToHome}>
-          <Text style={styles.whiteText}>Volver a inicio</Text>
+          <Text style={styles.whiteText}>Inicio</Text>
         </TouchableOpacity>
       </View>
 
@@ -51,7 +51,7 @@ const OptionsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToAddProduct}>
-          <Text style={styles.whiteText}>Agregar Producto</Text>
+          <Text style={styles.whiteText}>Agregar</Text>
         </TouchableOpacity>
       </View>
 
@@ -59,7 +59,7 @@ const OptionsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToConsultProducts}>
-          <Text style={styles.whiteText}>Consultar Productos</Text>
+          <Text style={styles.whiteText}>Consultar</Text>
         </TouchableOpacity>
       </View>
 
@@ -67,7 +67,7 @@ const OptionsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToModifyProduct}>
-          <Text style={styles.whiteText}>Modificar Producto</Text>
+          <Text style={styles.whiteText}>Modificar</Text>
         </TouchableOpacity>
       </View>
 
@@ -75,7 +75,7 @@ const OptionsScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToDeleteProduct}>
-          <Text style={styles.whiteText}>Eliminar Producto</Text>
+          <Text style={styles.whiteText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
 

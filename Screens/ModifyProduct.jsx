@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
 import { getProducts, saveProducts } from './Products'; // Importa las funciones para obtener y guardar productos
 import styles from './Styles';
 
@@ -9,6 +9,7 @@ const ModifyProductScreen = () => {
   const [costPrice, setCostPrice] = useState(''); // Estado para almacenar el nuevo precio costo
   const [sellingPrice, setSellingPrice] = useState(''); // Estado para almacenar el nuevo precio de venta
   const [quantity, setQuantity] = useState(''); // Estado para almacenar la nueva cantidad
+  const [previousValues, setPreviousValues] = useState(null); // Estado para almacenar los valores anteriores
 
   // Función para cargar los productos al iniciar la pantalla
   useEffect(() => {
@@ -31,6 +32,13 @@ const ModifyProductScreen = () => {
       if (productIndex !== -1) {
         // Copiar el producto actual
         const modifiedProduct = { ...products[productIndex] };
+
+        // Guardar los valores anteriores
+        setPreviousValues({
+          costPrice: modifiedProduct.costPrice,
+          sellingPrice: modifiedProduct.sellingPrice,
+          quantity: modifiedProduct.quantity
+        });
 
         // Actualizar los campos modificables
         if (costPrice !== '') {
@@ -59,12 +67,32 @@ const ModifyProductScreen = () => {
         setCostPrice('');
         setSellingPrice('');
         setQuantity('');
+
+        // Mostrar la alerta de modificación exitosa
+        showAlert();
       } else {
         console.log('No se encontró ningún producto con el ID proporcionado');
       }
     } catch (error) {
       console.error('Error al modificar el producto:', error);
     }
+  };
+
+  // Función para mostrar la alerta de modificación exitosa
+  const showAlert = () => {
+    const previous = previousValues ? `Precio anterior: ${previousValues.costPrice}, Precio de venta anterior: ${previousValues.sellingPrice}, Cantidad anterior: ${previousValues.quantity}` : '';
+    const current = `Nuevo Precio: ${costPrice} \nNuevo Precio de venta: ${sellingPrice} \nNueva Cantidad: ${quantity}`;
+    Alert.alert(
+      'Producto Modificado',
+      `El producto ha sido modificado exitosamente. \n\n${current}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (

@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
 import { deleteProducts, getProducts } from './Products'; // Importar las funciones de productos
 import styles from './Styles';
 
@@ -21,13 +21,59 @@ const DeleteProductScreen = () => {
   // Función para eliminar un producto
   const handleDelete = async () => {
     try {
-      await deleteProducts(identifier, byName);
+      const deleted = await deleteProducts(identifier, byName);
       // Recargar la lista de productos después de eliminar
       await loadProducts();
       // Reiniciar el campo de entrada después de eliminar el producto
       setIdentifier('');
+      // Mostrar la alerta de eliminación exitosa solo si hay datos del producto eliminado
+      if (deleted !== undefined && Object.keys(deleted).length > 0) {
+        let message = 'El producto ha sido eliminado correctamente.';
+        if (deleted.id) {
+          message += ` ID: ${deleted.id}`;
+        }
+        if (deleted.name) {
+          message += ` Nombre: ${deleted.name}`;
+        }
+        Alert.alert(
+          'Producto Eliminado',
+          message,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+            },
+          ],
+          { cancelable: false }
+        );
+      }
+      else {
+        Alert.alert(
+          'Producto no encontrado',
+          `El producto con nombre o ID ${identifier} no fue encontrado.`,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+            },
+          ],
+          { cancelable: false }
+        );
+      }
     } catch (error) {
       console.error('Error al eliminar el producto:', error);
+      // Mostrar la alerta de error
+      Alert.alert(
+        'Error',
+        'Ocurrió un error al eliminar el producto. Por favor, inténtalo de nuevo más tarde.',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed'),
+          },
+        ],
+        { cancelable: false }
+      );
     }
   };
 

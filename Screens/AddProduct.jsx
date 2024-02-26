@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { saveProducts, Product, getProducts } from './Products'; // Importar las funciones de guardado, obtener productos y la interfaz Product
 import styles from './Styles';
 
@@ -24,6 +24,14 @@ const AddProductScreen = () => {
     try {
       // Obtener productos existentes
       const existingProducts = await getProducts();
+      
+      // Verificar si el ID o el nombre del producto ya existen
+      const isDuplicate = existingProducts.some(product => product.id === productId || product.name === productName);
+      if (isDuplicate) {
+        showAlert();
+        return; // No agregamos el producto si es duplicado
+      }
+
       // Agregar el nuevo producto a la lista
       const updatedProducts = [...existingProducts, newProduct];
       // Guardar la lista actualizada de productos
@@ -39,6 +47,20 @@ const AddProductScreen = () => {
     } catch (error) {
       console.error('Error al agregar el producto:', error);
     }
+  };
+
+  const showAlert = () => {
+    Alert.alert(
+      'Producto Duplicado',
+      'El ID o el nombre del producto ya existe.',
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -100,7 +122,6 @@ const AddProductScreen = () => {
             </TouchableOpacity>
         </View>
       </View>
-
     </ScrollView>
   );
 };

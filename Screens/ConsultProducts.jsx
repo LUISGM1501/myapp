@@ -49,6 +49,7 @@ const ConsultScreen = () => {
       <TextInput
         style={styles.textInput}
         placeholder="Ingrese criterio de búsqueda"
+        placeholderTextColor="gray"
         value={searchCriteria}
         onChangeText={setSearchCriteria}
       />

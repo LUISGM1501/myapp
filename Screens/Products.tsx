@@ -68,7 +68,8 @@ const getProducts = async (): Promise<Product[]> => {
 
 // Eliminar productos
 // Función para eliminar productos por nombre o ID
-const deleteProducts = async (identifier: string, byName: boolean) => {
+// Función para eliminar productos por nombre o ID
+const deleteProducts = async (identifier: string, byName: boolean): Promise<Product | null> => {
   try {
     // Obtener la lista de productos actual
     const productsJSON = await AsyncStorage.getItem('products');
@@ -87,11 +88,23 @@ const deleteProducts = async (identifier: string, byName: boolean) => {
       // Guardar la lista actualizada de productos
       await AsyncStorage.setItem('products', JSON.stringify(updatedProducts));
       console.log('Producto(s) eliminado(s) correctamente');
+
+      // Encontrar el producto eliminado en caso de que haya sido eliminado por ID
+      const deletedProduct = products.find(product => {
+        if (!byName && product.id === identifier) {
+          return true;
+        }
+        return false;
+      });
+
+      return deletedProduct || null;
     } else {
       console.log('No hay productos para eliminar');
+      return null;
     }
   } catch (error) {
     console.error('Error al eliminar producto(s):', error);
+    throw error;
   }
 };
 

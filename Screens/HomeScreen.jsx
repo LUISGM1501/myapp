@@ -17,14 +17,14 @@ const HomeScreen = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.Container}>
-        <Text style={styles.Regulartext}>¡Bienvenido a la pantalla de inicio!</Text>
+        <Text style={styles.Regulartext}>¡Bienvenidos al inventario!</Text>
       </View>
 
       <View style={styles.ButtonContainer}>
         <TouchableOpacity
           style={styles.addButton}
           onPress={goToOptions}>
-          <Text style={styles.whiteText}>Ver opciones</Text>
+          <Text style={styles.whiteText}>Opciones</Text>
         </TouchableOpacity>
       </View>
 
