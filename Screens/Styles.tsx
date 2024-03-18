@@ -20,6 +20,15 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    mapView: {
+      //width: Dimensions.get("screen").width,
+      //height: Dimensions.get("screen").height,
+      width: 408,
+      height: 744,
+      alignContent: "center",
+      justifyContent: "center",
+    }
+    ,
     mainContainer: {
       flex: 1,
       backgroundColor: 'white', // Cambia el color de fondo aquí
