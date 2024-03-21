@@ -7,6 +7,8 @@ import 'react-native-gesture-handler';
 import { create } from 'react-test-renderer';
 import Ferreteria from './Pages/Ferreteria';
 import GoogleMaps from './Pages/GoogleMaps';
+import {enableLatestRenderer} from 'react-native-maps';
+enableLatestRenderer();
 
 const Menu = createDrawerNavigator()
 

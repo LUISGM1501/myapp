@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     mapView: {
-      //width: Dimensions.get("screen").width,
-      //height: Dimensions.get("screen").height,
-      width: 408,
-      height: 744,
+      width: Dimensions.get("screen").width,
+      height: Dimensions.get("screen").height,
+      //width: 408,
+      //height: 744,
       alignContent: "center",
       justifyContent: "center",
     }
