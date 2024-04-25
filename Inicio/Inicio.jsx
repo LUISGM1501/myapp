@@ -16,11 +16,12 @@ const Inicio = ({ onSelectUserType }) => {
       });
 
       if (response && response.data) {
-        const { role } = response.data;
+        const { role, id } = response.data;
         onSelectUserType(role);
 
-        // Guardar el nombre de usuario en AsyncStorage
+        // Guardar el nombre de usuario y el ID del usuario en AsyncStorage
         await AsyncStorage.setItem('username', username);
+        await AsyncStorage.setItem('userId', id);
 
         setUsername('');
         setPassword('');
