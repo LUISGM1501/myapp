@@ -13,7 +13,7 @@ function ForoFoUs() {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
+      const response = await axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/foro/660d97e3783f0dbbe89eba1a/mensaje'); // 660d97e3783f0dbbe89eba1a no exite ni como colab ni admin
       const mensajes = response.data;
       
       // Obtener el nombre y el departamento del autor de cada mensaje
