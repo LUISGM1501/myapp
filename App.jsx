@@ -7,7 +7,6 @@ import Inicio from './Inicio/Inicio';
 import ForoFoUs from './Colaborador/PantallasColaborador/ForoColaborador/ForoFoUs';
 import InformeProUsu from './Colaborador/PantallasColaborador/MiEquipo/EquipoColaborador';
 import MiProyecto from './Colaborador/PantallasColaborador/MiProyecto/MiProyecto';
-import BurnDownChart from './Colaborador/PantallasColaborador/MiProyecto/BurnDownChart';
 import InformeProyecto from './Colaborador/PantallasColaborador/MiProyecto/InformeProyecto';
 import TareasProyecto from './Colaborador/PantallasColaborador/MiProyecto/TareasProyecto';
 import ProyectosAdmin from  "./Administrador/Proyectos/ProyectosAdmin";
@@ -31,7 +30,6 @@ const MiProyectoStack = () => {
   return (
     <Stack.Navigator initialRouteName="Proyectos">
       <Stack.Screen name="Proyectos" component={MiProyecto} />
-      <Stack.Screen name="BurnDownChart" component={BurnDownChart} />
       <Stack.Screen name="InformeProyecto" component={InformeProyecto} />
       <Stack.Screen name="TareasProyecto" component={TareasProyecto} />
     </Stack.Navigator>

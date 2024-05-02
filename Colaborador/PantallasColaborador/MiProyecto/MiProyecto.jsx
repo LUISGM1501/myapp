@@ -15,12 +15,6 @@ const MiProyecto = () => {
       <Text>Mi Proyecto</Text>
       <View style={{ marginVertical: 10 }}>
         <Button
-          title="Ver BurnDownChart"
-          onPress={() => navigateToScreen('BurnDownChart')}
-        />
-      </View>
-      <View style={{ marginVertical: 10 }}>
-        <Button
           title="Ver Informe"
           onPress={() => navigateToScreen('InformeProyecto')}
         />
