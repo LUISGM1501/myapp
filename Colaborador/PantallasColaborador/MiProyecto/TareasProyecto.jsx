@@ -35,6 +35,11 @@ const TareasProyecto = () => {
   };
 
   const handleProjectSelect = async () => {
+    if (!selectedProjectId) {
+      // Si no se ha seleccionado un proyecto, mostrar alerta y salir de la función
+      alert('Selecciona un proyecto');
+      return;
+    }
     try {
       console.log('Proyecto seleccionado:', selectedProjectId);
       const response = await axios.get(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${selectedProjectId}`);
@@ -42,7 +47,7 @@ const TareasProyecto = () => {
       const project = response.data;
       setTareas(project.tareas);
       console.log('Tareas del proyecto:', project.tareas);
-
+  
       const uniqueResponsableIds = new Set(project.tareas.map(tarea => tarea.responsable));
       const newResponsablesMap = {};
       for (const responsableId of uniqueResponsableIds) {
