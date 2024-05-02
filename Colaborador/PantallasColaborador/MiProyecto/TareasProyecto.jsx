@@ -1,4 +1,3 @@
-// TareasProyecto.jsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -28,7 +27,7 @@ const TareasProyecto = () => {
     try {
       const response = await axios.get(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/colaborador/${responsableId}`);
       const responsable = response.data;
-      return responsable.nombre; 
+      return responsable.nombre;
     } catch (error) {
       console.error('Error fetching responsable:', error);
       return 'Desconocido';
@@ -72,8 +71,8 @@ const TareasProyecto = () => {
         </Picker>
         <Button title="Seleccionar" onPress={handleProjectSelect} />
       </View>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.taskContainer}>
+      <ScrollView horizontal>
+        <View style={styles.taskStateContainer}>
           <Text style={styles.taskHeader}>Pendiente</Text>
           {tareas.filter(tarea => tarea.estado === 'Pendiente').map((tarea, index) => (
             <View key={index} style={styles.taskItem}>
@@ -83,7 +82,7 @@ const TareasProyecto = () => {
             </View>
           ))}
         </View>
-        <View style={styles.taskContainer}>
+        <View style={styles.taskStateContainer}>
           <Text style={styles.taskHeader}>En Progreso</Text>
           {tareas.filter(tarea => tarea.estado === 'En Progreso').map((tarea, index) => (
             <View key={index} style={styles.taskItem}>
@@ -93,7 +92,7 @@ const TareasProyecto = () => {
             </View>
           ))}
         </View>
-        <View style={styles.taskContainer}>
+        <View style={styles.taskStateContainer}>
           <Text style={styles.taskHeader}>Terminada</Text>
           {tareas.filter(tarea => tarea.estado === 'Terminada').map((tarea, index) => (
             <View key={index} style={styles.taskItem}>
@@ -122,11 +121,8 @@ const styles = StyleSheet.create({
   selectContainer: {
     marginBottom: 20,
   },
-  scrollView: {
-    marginBottom: 20,
-  },
-  taskContainer: {
-    marginBottom: 20,
+  taskStateContainer: {
+    marginRight: 20, // Espacio entre cada contenedor de estado
   },
   taskHeader: {
     fontSize: 20,
@@ -137,6 +133,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     backgroundColor: '#f0f0f0',
+    minWidth: 250, // Ancho mínimo para cada tarea
   },
   taskTitle: {
     fontWeight: 'bold',
@@ -148,5 +145,3 @@ const styles = StyleSheet.create({
 });
 
 export default TareasProyecto;
-
-
