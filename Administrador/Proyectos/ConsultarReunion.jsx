@@ -21,7 +21,6 @@ const ConsultaReuPro = () => {
   const [searchId, setSearchId] = useState('');
   const [reunion, setReunion] = useState(null);
   const [reunionesList, setReunionesList] = useState([]);
-
   const [selectedField, setSelectedField] = useState('');
   const [newData, setNewData] = useState('');
 
