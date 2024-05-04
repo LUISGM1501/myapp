@@ -90,7 +90,7 @@ const ConsultaReuPro = () => {
         <Button
           title="Buscar"
           onPress={handleSearch}
-          color="#1D8CE0"
+          color="#1D4EE0"
           style={{ marginBottom: 20 }}
         />
   
