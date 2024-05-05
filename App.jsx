@@ -1,5 +1,6 @@
 // App.jsx
 import React, { useState } from 'react';
+import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -88,6 +89,18 @@ export default function App() {
             <Menu.Screen name="Foro Colaboradores" component={ForoFoUs} />
             <Menu.Screen name="Mi Equipo" component={InformeProUsu} /> 
             <Menu.Screen name="Mi Proyecto" component={MiProyectoStack} />
+            {/* Botón para salir y regresar al inicio */}
+            <Menu.Screen name="Salir" >
+              {({navigation}) => (
+                <Button
+                  title="Salir"
+                  onPress={() => {
+                    navigation.navigate("Inicio");
+                    setUserType(null); // Limpia el userType
+                  }}
+                />
+              )}
+            </Menu.Screen>
           </>
         ) : (
           <>
@@ -95,6 +108,18 @@ export default function App() {
             <Menu.Screen name="Gestion Colabs" component={ColaboradoresAdminStack} />
             <Menu.Screen name="Informes" component={InformesProyectos} />
             <Menu.Screen name="Foros" component={ForoAdminStack} />
+            {/* Botón para salir y regresar al inicio */}
+            <Menu.Screen name="Salir">
+              {({navigation}) => (
+                <Button
+                  title="Salir"
+                  onPress={() => {
+                    navigation.navigate("Inicio");
+                    setUserType(null); // Limpia el userType
+                  }}
+                />
+              )}
+            </Menu.Screen>
           </>
         )}
       </Menu.Navigator>

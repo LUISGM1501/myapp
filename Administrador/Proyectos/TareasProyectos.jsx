@@ -4,17 +4,6 @@ import { View, Text, TextInput, ScrollView,  Button, FlatList } from 'react-nati
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-const TareasProyectos = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>TareasProyectos</Text>
-      <Button
-        title="Abrir Menú"
-        onPress={() => navigation.openDrawer()}
-      />
-    </View>
-  );
-};
 
 const TareasProAd = () => {
   const [searchId, setSearchId] = useState('');
@@ -90,53 +79,90 @@ const TareasProAd = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-    <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'black' }}>
-      <Text style={{ fontSize: 20, marginBottom: 10 }}>Asignación de tareas de los proyectos</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
+        <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Tareas asignadas</Text>
+        <TextInput
+        style={{
+          backgroundColor: 'lightgray',
+          padding: 10,
+          marginBottom: 10,
+          color: 'black',
+          borderWidth: 1, // Añade un borde para resaltar el TextInput
+          borderColor: '#6886E0', // Color del borde
+          borderRadius: 5, // Bordes redondeados
+          shadowColor: 'black', // Color de la sombra
+          shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+          shadowOpacity: 0.2, // Opacidad de la sombra
+          shadowRadius: 2, // Radio de la sombra
+          elevation: 3, // Elevación de la sombra en dispositivos Android
+        }}
+          placeholder="Search by ID"
+          value={searchId}
+          onChangeText={(text) => setSearchId(text)}
+        />
+        <Button title="Search" onPress={handleSearch} />
   
-      <TextInput
-        style={{ marginBottom: 10, borderWidth: 1, padding: 5 }}
-        placeholder="Search by ID"
-        value={searchId}
-        onChangeText={(text) => setSearchId(text)}
-      />
-      <Button title="Search" onPress={handleSearch} />
-  
-      {proyecto && (
-        <View>
-          <Text style={{ fontSize: 16, marginTop: 10 }}>Información del Proyecto:</Text>
-          <Text>ID: {proyecto._id}</Text>
-          <Text>Nombre: {proyecto.nombre}</Text>
-          <Text>Recursos: {proyecto.recursos}</Text>
-          <Text>Presupuesto: {proyecto.presupuesto}</Text>
-          <Text>Colaboradores: {proyecto.colaboradores.join(', ')}</Text>
-          <Text>Tareas:</Text>
+        {proyecto && (
+        <View style={{ backgroundColor: 'lightgray',  padding: 20, borderRadius: 10, marginBottom: 20}}>
+          <Text style={{ fontSize: 15, marginTop: 10 , color: 'black', fontWeight: 'bold', marginBottom: 20}}>Información del Proyecto:</Text>
+          <Text style={{ color: 'black' }}>ID: {proyecto._id}</Text>
+          <Text style={{ color: 'black' }}>Nombre: {proyecto.nombre}</Text>
+          <Text style={{ color: 'black' }}>Recursos: {proyecto.recursos}</Text>
+          <Text style={{ color: 'black' }}>Presupuesto: {proyecto.presupuesto}</Text>
+          <Text style={{ color: 'black' }}>Colaboradores: {proyecto.colaboradores.join(', ')}</Text>
+          <Text  style={{ fontSize: 15, marginTop: 20 , color: 'black', fontWeight: 'bold', marginBottom: 10}}>Tareas:</Text>
           <FlatList
             data={tareasProyecto}
             renderItem={({ item }) => (
               <View>
-                <Text>Nombre: {item.nombre}</Text>
-                <Text>Descripción: {item.descripcion}</Text>
-                <Text>Responsable: {item.responsable}</Text>
+                <Text style={{ color: 'black' }}>Nombre: {item.nombre}</Text>
+                <Text style={{ color: 'black' }}>Descripción: {item.descripcion}</Text>
+                <Text style={{ color: 'black' }}>Responsable: {item.responsable}</Text>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-          <Text>Estado: {proyecto.estado}</Text>
-          <Text>Descripción: {proyecto.descripcion}</Text>
-          <Text>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
-          <Text>Responsable: {proyecto.responsable}</Text>
+          <Text style={{ color: 'black' }}>Estado: {proyecto.estado}</Text>
+          <Text style={{ color: 'black' }}>Descripción: {proyecto.descripcion}</Text>
+          <Text style={{ color: 'black' }}>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
+          <Text style={{ color: 'black' }}>Responsable: {proyecto.responsable}</Text>
   
           <View style={{ marginTop: 10 }}>
-            <Text>Agregar Tarea:</Text>
-            <TextInput
-              style={{ marginBottom: 5, borderWidth: 1, padding: 5 }}
+          <Text  style={{ fontSize: 15, marginTop: 20 , color: 'black', fontWeight: 'bold', marginBottom: 10}}>Agregar tarea:</Text>
+          <TextInput
+            style={{
+              backgroundColor: 'lightgray',
+              padding: 10,
+              marginBottom: 10,
+              color: 'black',
+              borderWidth: 1, // Añade un borde para resaltar el TextInput
+              borderColor: '#6886E0', // Color del borde
+              borderRadius: 5, // Bordes redondeados
+              shadowColor: 'black', // Color de la sombra
+              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+              shadowOpacity: 0.2, // Opacidad de la sombra
+              shadowRadius: 2, // Radio de la sombra
+              elevation: 3, // Elevación de la sombra en dispositivos Android
+            }}
               placeholder="Nombre"
               value={newTaskName}
               onChangeText={(text) => setNewTaskName(text)}
             />
             <TextInput
-              style={{ marginBottom: 5, borderWidth: 1, padding: 5 }}
+            style={{
+              backgroundColor: 'lightgray',
+              padding: 10,
+              marginBottom: 10,
+              color: 'black',
+              borderWidth: 1, // Añade un borde para resaltar el TextInput
+              borderColor: '#6886E0', // Color del borde
+              borderRadius: 5, // Bordes redondeados
+              shadowColor: 'black', // Color de la sombra
+              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+              shadowOpacity: 0.2, // Opacidad de la sombra
+              shadowRadius: 2, // Radio de la sombra
+              elevation: 3, // Elevación de la sombra en dispositivos Android
+            }}
               placeholder="Descripción"
               value={newTaskDescription}
               onChangeText={(text) => setNewTaskDescription(text)}
@@ -146,7 +172,7 @@ const TareasProAd = () => {
               onValueChange={(itemValue) => setSelectedTaskAssignee(itemValue)}
               style={{ marginBottom: 5 }}
             >
-              <Picker.Item label="Seleccionar encargado" value="" />
+              <Picker.Item color = 'black' label="Seleccionar encargado" value="" />
               {colaboradoresList.map((colaborador) => (
                 <Picker.Item key={colaborador._id} label={colaborador.nombre} value={colaborador._id} />
               ))}
@@ -157,16 +183,18 @@ const TareasProAd = () => {
       )}
   
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Proyectos disponibles:</Text>
-        <ScrollView>
-          {proyectosList.map((proyecto) => (
-            <Text key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
-          ))}
-        </ScrollView>
+          <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Proyectos disponibles</Text>
+          
+              {proyectosList.map((proyecto) => (
+                <Text style={{ color: 'black' }} key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
+              ))}
+            
+          </View>
       </View>
+      
     </ScrollView>
-  </View>
-  
+    
   );
 };
 

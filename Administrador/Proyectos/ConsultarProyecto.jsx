@@ -76,13 +76,15 @@ const ConsultarProAd = () => {
       }
   };
   const handleDeleteTask = async (taskId) => {
-      try {
-          await axios.delete(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
-          handleSearch();
-      } catch (error) {
-          console.error('Error deleting collaborator:', error);
-      }
-  };
+    try {
+        await axios.delete(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
+        handleSearch();
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        console.error('Error response data:', error.response.data); // Agrega esta línea para mostrar los datos de la respuesta del error
+    }
+};
+
   const handleEditTask = async (taskId) => {
       try {
           await axios.put(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyecto._id}/edit-task/${taskId}`, {
@@ -99,6 +101,7 @@ const ConsultarProAd = () => {
           handleSearch();
       } catch (error) {
           console.error('Error editing task:', error);
+          console.error('Error response data:', error.response.data);
       }
   };
   useEffect(() => {
@@ -122,15 +125,24 @@ const ConsultarProAd = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'black' }}>
-      <Text>Consultar Proyecto</Text>
-      <Text>Consultar Proyecto</Text>
-      <Text>Consultar Proyecto</Text>
-      <Text>Consultar Proyecto</Text>
-      <Text>Consultar Proyecto</Text>
-      <Text>Consultar Proyecto</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Consulta y modificación de proyectos</Text>
       <TextInput
-        placeholderTextColor= 'gray'
+        style={{
+          backgroundColor: 'lightgray',
+          padding: 10,
+          marginBottom: 10,
+          color: 'black',
+          borderWidth: 1, // Añade un borde para resaltar el TextInput
+          borderColor: '#6886E0', // Color del borde
+          borderRadius: 5, // Bordes redondeados
+          shadowColor: 'black', // Color de la sombra
+          shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+          shadowOpacity: 0.2, // Opacidad de la sombra
+          shadowRadius: 2, // Radio de la sombra
+          elevation: 3, // Elevación de la sombra en dispositivos Android
+        }}
         placeholder="Search by ID"
         value={searchId}
         onChangeText={(text) => setSearchId(text)}
@@ -139,63 +151,26 @@ const ConsultarProAd = () => {
       {/* Información del Proyecto */}
       {proyecto && (
         
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <ScrollView>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-
-              <Text>Información del Proyecto:</Text>
-              <Text>ID: {proyecto._id}</Text>
-              <Text>Nombre: {proyecto.nombre}</Text>
-              <Text>Recursos: {proyecto.recursos}</Text>
-              <Text>Presupuesto: {proyecto.presupuesto}</Text>
-              <Text>Colaboradores: {proyecto.colaboradores.join(', ')}</Text>
-              <Text>Estado: {proyecto.estado}</Text>
-              <Text>Descripción: {proyecto.descripcion}</Text>
-              <Text>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
-              <Text>Responsable: {proyecto.responsable}</Text>
-              <Button title="Delete" onPress={handleDelete} />
-            </ScrollView>
-          <ScrollView>
+        <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+                         
+              <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Información del Proyecto:</Text>
+              <Text style={{ color: 'black' }}>ID: {proyecto._id}</Text>
+              <Text style={{ color: 'black' }}>Nombre: {proyecto.nombre}</Text>
+              <Text style={{ color: 'black' }}> Recursos: {proyecto.recursos}</Text>
+              <Text style={{ color: 'black' }}>Presupuesto: {proyecto.presupuesto}</Text>
+              <Text style={{ color: 'black' }}>Colaboradores: {proyecto.colaboradores.join(', ')}</Text>
+              <Text style={{ color: 'black' }}>Estado: {proyecto.estado}</Text>
+              <Text style={{ color: 'black' }}>Descripción: {proyecto.descripcion}</Text>
+              <Text style={{ color: 'black' }}>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
+              <Text style={{ color: 'black' }}>Responsable: {proyecto.responsable}</Text>
+              <Button color="#FA1946" title="Delete" onPress={handleDelete} />
+            
+          
             <View>
                 <Picker
                   selectedValue={selectedField}
                   onValueChange={(itemValue) => setSelectedField(itemValue)}
+                  style={{ backgroundColor: 'lightgray', marginBottom: 10, color: 'black' }}
                 >
                   <Picker.Item label="Nombre" value="nombre" />
                   <Picker.Item label="Recursos" value="recursos" />
@@ -206,16 +181,29 @@ const ConsultarProAd = () => {
                   <Picker.Item label="Estado" value="estado" />
                 </Picker>
                 <TextInput
+                  style={{
+                    backgroundColor: 'lightgray',
+                    padding: 10,
+                    marginBottom: 10,
+                    color: 'black',
+                    borderWidth: 1, // Añade un borde para resaltar el TextInput
+                    borderColor: '#6886E0', // Color del borde
+                    borderRadius: 5, // Bordes redondeados
+                    shadowColor: 'black', // Color de la sombra
+                    shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+                    shadowOpacity: 0.2, // Opacidad de la sombra
+                    shadowRadius: 2, // Radio de la sombra
+                    elevation: 3, // Elevación de la sombra en dispositivos Android
+                  }}
                   value={newData}
                   onChangeText={(text) => setNewData(text)}
                 />
-                <Button title="Update" onPress={handleUpdate} />
+                <Button color="#32C28B" title="Update" onPress={handleUpdate} />
             </View>
             
             {/* Lista de Tareas */}
             <View>
-                <Text>Lista de Tareas:</Text>
-                <ScrollView>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', marginTop: 20, marginBottom: 20, color: 'black' }}>Lista de tareas:</Text>
                   {proyecto.tareas.map((tarea) => (
                     <View key={tarea._id}>
                       {editingTask === tarea._id ? (
@@ -225,6 +213,20 @@ const ConsultarProAd = () => {
                             onChangeText={(text) => setEditedTaskName(text)}
                           />
                           <TextInput
+                            style={{
+                              backgroundColor: 'lightgray',
+                              padding: 10,
+                              marginBottom: 10,
+                              color: 'black',
+                              borderWidth: 1, // Añade un borde para resaltar el TextInput
+                              borderColor: '#6886E0', // Color del borde
+                              borderRadius: 5, // Bordes redondeados
+                              shadowColor: 'black', // Color de la sombra
+                              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+                              shadowOpacity: 0.2, // Opacidad de la sombra
+                              shadowRadius: 2, // Radio de la sombra
+                              elevation: 3, // Elevación de la sombra en dispositivos Android
+                            }}
                             value={editedTaskDescription}
                             onChangeText={(text) => setEditedTaskDescription(text)}
                           />
@@ -250,29 +252,34 @@ const ConsultarProAd = () => {
                         </View>
                       ) : (
                         <View>
-                          <Text>Nombre: {tarea.nombre}</Text>
-                          <Text>Descripción: {tarea.descripcion}</Text>
-                          <Text>Responsable: {tarea.responsable}</Text>
-                          <Button title="Borrar tarea" onPress={() => handleDeleteTask(tarea._id)} />
-                          <Button title="Modificar tarea" onPress={() => setEditingTask(tarea._id)} />
+                          <Text style={{ color: 'black' }}>Nombre: {tarea.nombre}</Text>
+                          <Text style={{ color: 'black' }}>Descripción: {tarea.descripcion}</Text>
+                          <Text style={{ color: 'black' }}>Responsable: {tarea.responsable}</Text>
+                          <Button color="#FA2719" title="Borrar tarea" onPress={() => handleDeleteTask(tarea._id)} />
+                          <Button color="#FAB223" title="Modificar tarea" onPress={() => setEditingTask(tarea._id)} />
                         </View>
                       )}
                     </View>
                   ))}
-              </ScrollView>
+              
             </View>
-          </ScrollView>
+          
           
         </View>
         
       )}
+
+      
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Proyectos disponibles:</Text>
-        <ScrollView>
+      <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Proyectos disponibles</Text>
+       
           {proyectosList.map((proyecto) => (
-            <Text key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
+            <Text style={{ color: 'black' }} key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
           ))}
-        </ScrollView>
+        
+      </View>
+      </View>
       </View>
     </ScrollView>
   );
