@@ -4,21 +4,8 @@ import { View, Text, TextInput, ScrollView,  Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView as VirtualizedScrollView} from 'react-native-virtualized-view'
 import DropDownPicker from 'react-native-dropdown-picker';
 import axios from 'axios';
-
-const CrearProyectoVer1 = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>CrearProyecto</Text>
-      <Button
-        title="Abrir Menú"
-        onPress={() => navigation.openDrawer()}
-      />
-    </View>
-  );
-};
 
 const CrearProyecto = () => {
   const [nombre, setNombre] = useState('');
@@ -39,7 +26,7 @@ const CrearProyecto = () => {
   const [mode, setMode] = useState('date');
 
   const [isOpen,setIsOpen] = useState(false);
-  const [currentValue, setCurrentValue] = useState();
+
 
   useEffect(() => {
     // Obtener la lista de colaboradores disponibles
@@ -136,8 +123,8 @@ const CrearProyecto = () => {
           items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
           open = {isOpen} 
           setOpen ={() => setIsOpen(!isOpen)}
-          value = {currentValue}
-          setValue = {(val) => setCurrentValue(val)}
+          value = {colaboradores}
+          setValue = {(val) => setColaboradores(val)}
           
           containerStyle={{ height: 40, width: 200 }}
           maxHeight={200}
@@ -150,6 +137,7 @@ const CrearProyecto = () => {
           showArrowIcon = {true}
           
           multiple = {true}
+          onChangeItem={item => setColaboradores(item.value)}
           min ={1}
           mode = "BADGE"
           badgeColors={['black']}
