@@ -4,6 +4,8 @@ import { View, Text, TextInput, ScrollView,  Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView as VirtualizedScrollView} from 'react-native-virtualized-view'
+import DropDownPicker from 'react-native-dropdown-picker';
 import axios from 'axios';
 
 const CrearProyectoVer1 = ({ navigation }) => {
@@ -35,6 +37,9 @@ const CrearProyecto = () => {
   const [fecha_inicio, setFecha_inicio] = useState(new Date());
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
+
+  const [isOpen,setIsOpen] = useState(false);
+  const [currentValue, setCurrentValue] = useState();
 
   useEffect(() => {
     // Obtener la lista de colaboradores disponibles
@@ -127,27 +132,31 @@ const CrearProyecto = () => {
       </View>
       <View style={{ marginBottom: 10 }}>
       <Text>Colaboradores:</Text>
-      <Picker
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        selectedValue={colaboradoresDisponibles.map(colaborador => colaborador._id)}
-        onValueChange={(itemValue, itemIndex) => {
-          if (itemValue) {
-            console.log("Colaborador seleccionado:", itemValue);
-          } else {
-            console.log("Colaborador seleccionado es null o undefined");
-          }
-          setColaboradores(itemValue);
-        }}
-        mode="multiple"
-      >
-        {colaboradoresDisponibles.map(colaborador => (
-          <Picker.Item
-            key={colaborador._id}
-            label={`${colaborador.nombre} - ${colaborador._id}`}
-            value={colaborador._id}
-          />
-        ))}
-      </Picker>
+      <DropDownPicker
+          items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
+          open = {isOpen} 
+          setOpen ={() => setIsOpen(!isOpen)}
+          value = {currentValue}
+          setValue = {(val) => setCurrentValue(val)}
+          
+          containerStyle={{ height: 40, width: 200 }}
+          maxHeight={200}
+          autoScroll
+          
+          placeholder='Seleccionar Colabs'
+          searchable={true}
+          searchablePlaceholder="Buscar colaboradores"
+          showTickIcon = {true}
+          showArrowIcon = {true}
+          
+          multiple = {true}
+          min ={1}
+          mode = "BADGE"
+          badgeColors={['black']}
+          badegeDotColor = {['white']}
+          badgeTextStyle ={{color: 'white'}}
+          
+        />
     </View>
       <View style={{ marginBottom: 20 }}>
         <Text>Estado:</Text>
