@@ -23,7 +23,7 @@ const CrearProyecto = () => {
   const [recursos, setRecursos] = useState('');
   const [presupuesto, setPresupuesto] = useState('');
   const [colaboradores, setColaboradores] = useState([]);
-  const [colaboradorSeleccionado, setColaboradorSeleccionado] = useState(null);
+  const [colaboradorSeleccionado, setColaboradorSeleccionado] = useState([]);
   const [estado, setEstado] = useState('');
   const [descripcion, setDescripcion] = useState('');
 
@@ -32,7 +32,7 @@ const CrearProyecto = () => {
   const [responsablesDisponibles, setResponsablesDisponibles] = useState([]);
   const [datosGuardados, setDatosGuardados] = useState(null);
 
-  const [date, setDate] = useState(new Date());
+  const [fecha_inicio, setFecha_inicio] = useState(new Date());
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
 
@@ -57,7 +57,7 @@ const CrearProyecto = () => {
   }, []);
 
   const onChange = (event, selectedDate) => {
-    setDate(selectedDate);
+    setFecha_inicio(selectedDate);
     setShow(false);
   };
 
@@ -69,23 +69,23 @@ const CrearProyecto = () => {
   const handleGuardar = () => {
     // Check if any field is undefined
     if (!nombre || !recursos || !presupuesto || !colaboradores || !estado || !descripcion ||
-        !date || !responsable    ) {
+        !fecha_inicio || !responsable    ) {
       alert('Por favor, completa todos los campos antes de guardar.');
       // Si todos los campos están completos, imprimir los datos
-      console.log('Nombre:', nombre);
-      console.log('Recursos:', recursos);
-      console.log('Presupuesto:', presupuesto);
-      console.log('Colaboradores:', colaboradores);
-      console.log('Estado:', estado);
-      console.log('Descripción:', descripcion);
-      console.log('Fecha:', date.toLocaleDateString());
-      console.log('Responsable:', responsable);
+      
       return; // Exit the function early
     }
   
-    const datos = { nombre, recursos, presupuesto, colaboradores, estado, descripcion, date, responsable };
+    const datos = { nombre, recursos, presupuesto, colaboradores, estado, descripcion, fecha_inicio, responsable };
     setDatosGuardados(datos);
-  
+    console.log('Nombre:', nombre);
+    console.log('Recursos:', recursos);
+    console.log('Presupuesto:', presupuesto);
+    console.log('Colaboradores:', colaboradores);
+    console.log('Estado:', estado);
+    console.log('Descripción:', descripcion);
+    console.log('Fecha:', fecha_inicio.toLocaleDateString());
+    console.log('Responsable:', responsable);
     // Enviar los datos al servidor para crear el proyecto
     axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/', datos)
       .then(response => {
@@ -93,6 +93,7 @@ const CrearProyecto = () => {
       })
       .catch(error => {
         console.error('Error al crear el proyecto:', error);
+        console.log('Detalles del error:', error.response);
       });
   };
   ;
@@ -135,7 +136,7 @@ const CrearProyecto = () => {
           } else {
             console.log("Colaborador seleccionado es null o undefined");
           }
-          setColaboradores(itemValue);
+          setColaboradorSeleccionado(itemValue);
         }}
         mode="multiple"
       >
@@ -171,13 +172,13 @@ const CrearProyecto = () => {
         <Button title="Show date picker!" onPress={() => showMode("date")} />
         {show && (
           <DateTimePicker
-            value={date}
+            value={fecha_inicio}
             mode= {mode}// Aquí corregimos el valor de la prop mode
             is24Hour={true}
             onChange={onChange}
           />
         )}
-        <Text>Fecha seleccionada: {date.toLocaleString()}</Text>
+        <Text>Fecha seleccionada: {fecha_inicio.toLocaleString()}</Text>
       </SafeAreaView>
     </View>
     <View style={{ marginBottom: 20 }}>
