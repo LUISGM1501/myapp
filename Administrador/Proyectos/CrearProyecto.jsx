@@ -23,6 +23,7 @@ const CrearProyecto = () => {
   const [recursos, setRecursos] = useState('');
   const [presupuesto, setPresupuesto] = useState('');
   const [colaboradores, setColaboradores] = useState([]);
+  const [colaboradorSeleccionado, setColaboradorSeleccionado] = useState(null);
   const [estado, setEstado] = useState('');
   const [descripcion, setDescripcion] = useState('');
 
@@ -70,6 +71,15 @@ const CrearProyecto = () => {
     if (!nombre || !recursos || !presupuesto || !colaboradores || !estado || !descripcion ||
         !date || !responsable    ) {
       alert('Por favor, completa todos los campos antes de guardar.');
+      // Si todos los campos están completos, imprimir los datos
+      console.log('Nombre:', nombre);
+      console.log('Recursos:', recursos);
+      console.log('Presupuesto:', presupuesto);
+      console.log('Colaboradores:', colaboradores);
+      console.log('Estado:', estado);
+      console.log('Descripción:', descripcion);
+      console.log('Fecha:', date.toLocaleDateString());
+      console.log('Responsable:', responsable);
       return; // Exit the function early
     }
   
@@ -118,8 +128,15 @@ const CrearProyecto = () => {
       <Text>Colaboradores:</Text>
       <Picker
         style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        selectedValue={colaboradores.map(colaborador => colaborador._id)}
-        onValueChange={(itemValue) => setColaboradores(itemValue)}
+        selectedValue={colaboradoresDisponibles.map(colaborador => colaborador._id)}
+        onValueChange={(itemValue, itemIndex) => {
+          if (itemValue) {
+            console.log("Colaborador seleccionado:", itemValue);
+          } else {
+            console.log("Colaborador seleccionado es null o undefined");
+          }
+          setColaboradorSeleccionado(itemValue);
+        }}
         mode="multiple"
       >
         {colaboradoresDisponibles.map(colaborador => (
@@ -163,13 +180,29 @@ const CrearProyecto = () => {
         <Text>Fecha seleccionada: {date.toLocaleString()}</Text>
       </SafeAreaView>
     </View>
-      <View style={{ marginBottom: 20 }}>
+    <View style={{ marginBottom: 20 }}>
         <Text>Responsable:</Text>
-        <TextInput
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-          value={responsable}
-          onChangeText={setResponsable}
-        />
+        <Picker
+        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+        selectedValue={responsablesDisponibles.map(responsable => responsable._id)}
+        onValueChange={(itemValue, itemIndex) => {
+          if (itemValue) {
+            console.log("responsable seleccionado:", itemValue);
+          } else {
+            console.log("responsable seleccionado es null o undefined");
+          }
+          setColaboradorSeleccionado(itemValue);
+        }}
+        mode="multiple"
+      >
+        {responsablesDisponibles.map(responsable => (
+          <Picker.Item
+            key={responsable._id}
+            label={`${responsable.nombre} - ${responsable._id}`}
+            value={responsable._id}
+          />
+        ))}
+      </Picker>
       </View>
       <Button title="Guardar" onPress={handleGuardar} />
       {datosGuardados && (
