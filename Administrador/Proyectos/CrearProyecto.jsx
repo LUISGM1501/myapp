@@ -135,7 +135,7 @@ const CrearProyecto = () => {
           } else {
             console.log("Colaborador seleccionado es null o undefined");
           }
-          setColaboradorSeleccionado(itemValue);
+          setColaboradores(itemValue);
         }}
         mode="multiple"
       >
@@ -187,11 +187,11 @@ const CrearProyecto = () => {
         selectedValue={responsablesDisponibles.map(responsable => responsable._id)}
         onValueChange={(itemValue, itemIndex) => {
           if (itemValue) {
-            console.log("Responsable seleccionado:", itemValue);
+            console.log("esponsable seleccionado:", itemValue);
           } else {
             console.log("responsable seleccionado es null o undefined");
           }
-          setColaboradorSeleccionado(itemValue);
+          setResponsable(itemValue);
         }}
         mode="multiple"
       >
