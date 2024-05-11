@@ -136,7 +136,7 @@ const CrearProyecto = () => {
           } else {
             console.log("Colaborador seleccionado es null o undefined");
           }
-          setColaboradorSeleccionado(itemValue);
+          setColaboradores(itemValue);
         }}
         mode="multiple"
       >
