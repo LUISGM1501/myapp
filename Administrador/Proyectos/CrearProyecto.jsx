@@ -187,7 +187,7 @@ const CrearProyecto = () => {
         selectedValue={responsablesDisponibles.map(responsable => responsable._id)}
         onValueChange={(itemValue, itemIndex) => {
           if (itemValue) {
-            console.log("responsable seleccionado:", itemValue);
+            console.log("Responsable seleccionado:", itemValue);
           } else {
             console.log("responsable seleccionado es null o undefined");
           }
