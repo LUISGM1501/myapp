@@ -2,27 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView,  Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
 
-const CrearReunionVer1 = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>CrearReunion</Text>
-      <Button
-        title="Abrir Menú"
-        onPress={() => navigation.openDrawer()}
-      />
-    </View>
-  );
-};
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import DropDownPicker from 'react-native-dropdown-picker';
+
+import axios from 'axios';
 
 const CrearReunion = () => {
   const [proyectoId, setProyectoId] = useState('');
   const [tema, setTema] = useState('');
   const [medio, setMedio] = useState('');
   const [link, setLink] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('');
+
+  const [fecha, setFecha] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
+  const [hora, setHora] = useState(new Date());
+
   const [duracionHoras, setDuracionHoras] = useState('');
   const [colaboradores, setColaboradores] = useState([]);
   const [administradores, setAdministradores] = useState([]);
@@ -31,22 +29,14 @@ const CrearReunion = () => {
   const [administradoresDisponibles, setAdministradoresDisponibles] = useState([]);
   const [datosGuardados, setDatosGuardados] = useState(null);
 
+  const [isOpen,setIsOpen] = useState(false);
+  const [isOpenAdmin,setIsOpenAdmin] = useState(false);
+
   useEffect(() => {
     loadProyectosList();
     loadColaboradoresDisponibles();
     loadAdministradoresDisponibles();
   }, []);
-
-  const enviarCorreo = async (datosCorreo) => {
-    try {
-      const response = await axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/sendEmail', datosCorreo);
-      console.log('Correo enviado correctamente:', response.data);
-      // Aquí puedes manejar la respuesta del servidor si es necesario
-    } catch (error) {
-      console.error('Error al enviar el correo electrónico:', error);
-      // Aquí puedes manejar cualquier error que ocurra durante la solicitud
-    }
-  };
 
   const loadProyectosList = async () => {
     try {
@@ -74,6 +64,33 @@ const CrearReunion = () => {
       console.error('Error loading available administrators:', error);
     }
   };
+  
+  
+  const onChangeDate = (event, selectedDate) => {
+    setFecha(selectedDate);
+    setShow(false);
+  };
+
+  const onChangeTime = (event, selectedTime) => {
+    setShow(false); // Ocultar el selector de hora
+    if (selectedTime) {
+      // Si se seleccionó una hora, actualiza el estado de fecha con la hora seleccionada
+      const horaSeleccionada = selectedTime.getHours();
+      const minutosSeleccionados = selectedTime.getMinutes();
+       // Restar 6 horas
+      const nuevaHora =horaSeleccionada >= 6 ? horaSeleccionada - 6 : horaSeleccionada + 18;
+    
+    // Crear una nueva fecha con la hora restada
+      const nuevaFecha = new Date(fecha);
+      nuevaFecha.setHours(nuevaHora, minutosSeleccionados, 0);
+      setFecha(nuevaFecha);
+    }
+  };
+
+  const showMode = (modeToShow) => {
+    setShow(true);
+    setMode(modeToShow);
+  };
 
   const handleCrearReunion = async () => {
     if (!proyectoId.trim() || !tema || !medio || !link || !fecha || !colaboradores || !administradores || !duracionHoras) {
@@ -83,67 +100,63 @@ const CrearReunion = () => {
   
     const colaboradoresSeleccionados = colaboradores.concat(administradores);
     const correosColaboradores = colaboradoresSeleccionados.map(colaborador => colaborador.correo);
-  
+
     const datos = {
       proyecto: proyectoId.trim(),
       tema,
       medio,
       link,
-      fecha: new Date(`${fecha}T${hora}:00`),
+      fecha,
       duracionHoras,
       colaboradores: colaboradoresSeleccionados,
     };
-  
-    const correosParticipantes = [...correosColaboradores]; // Copia los correos de los colaboradores
-    // Concatena los correos de los administradores a la lista
-    administradores.forEach(administrador => {
-      correosParticipantes.push(administrador.correo);
-    });
 
     try {
-      const response = await axios.get(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyectoId.trim()}`);
+      const response = await axios.get(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyectoId}`);
+      
       if (!response.data) {
         alert('No se encontró ningún proyecto con el ID proporcionado!');
         return; // Salir de la función temprano si no se encontró el proyecto
       }
+      
       alert('Reunión creada.');
 
       // Crear la reunión en el backend
-      await axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/reunion', datos);
-
-      // Enviar correos electrónicos a los participantes de la reunión
-      const asunto = `Nueva reunión sobre el tema: ${tema}`;
-      const mensaje = `Se ha programado una nueva reunión sobre el tema: ${tema}. La reunión se llevará a cabo el ${fecha} a las ${hora} horas. Por favor, únete a la reunión a través del siguiente enlace: ${link}.`;
-      const datosCorreo = {
-        listaCorreos: correosParticipantes,
-        asunto,
-        mensaje
-      };
-      enviarCorreo(datosCorreo);
-
+      console.log('datos: ', datos);
+      const posting = await axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/reunion', datos);
+      if (!posting.data) {
+        console.log('datos: ', datos);
+        return; // Salir de la función temprano si no se encontró el proyecto
+      }
       console.log('Reunión creada exitosamente');
       // Limpiar los campos después de crear la reunión
       setProyectoId('');
       setTema('');
       setMedio('');
       setLink('');
-      setFecha('');
-      setHora('');
+      setFecha(new Date());
+      setHora(new Date());
       setDuracionHoras('');
       setColaboradores([]);
+      setAdministradores([])
     } catch (error) {
-      alert('No se encontró ningún proyecto con el ID proporcionado.');
+      alert('Error en la creacion de la reunion.');
       setProyectoId('');
       setTema('');
       setMedio('');
       setLink('');
-      setFecha('');
-      setHora('');
+      setFecha(new Date()); //seteamos la fecha actual nuevamente
+      setHora(new Date()); //seteamos la fecha actual nuevamente
       setDuracionHoras('');
       setColaboradores([]);
-      console.error('Error al crear la reunión:', error);
+      setAdministradores([])
+      console.error('Error al crear la reunión:', error.response.data);
     }
   };
+  
+  // Calcula la fecha con 6 horas adicionales para mostrar en la interfaz
+  const fechaMostrada = new Date(fecha);
+  fechaMostrada.setHours(fechaMostrada.getHours() + 6);
 
   return (
     <View style={{ flex: 1 }}>
@@ -151,12 +164,29 @@ const CrearReunion = () => {
     <Text style={{ fontSize: 20, borderColor: 'white', marginBottom: 10 }}>Crear Reunión de Proyectos</Text>
 
     <View style={{ marginBottom: 10 }}>
-      <Text>ID del Proyecto:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200}}
-        value={proyectoId}
-        onChangeText={setProyectoId}
-      />
+    <Text>Proyecto ID:</Text>
+        <Picker
+        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+        selectedValue={proyectosList.map(proyecto => proyecto._id)}
+        onValueChange={(itemValue, itemIndex) => {
+          if (itemValue) {
+            console.log("Proyecto seleccionado:", itemValue);
+            setProyectoId(itemValue);
+          } else {
+            console.log("Proyecto seleccionado es null o undefined");
+          }
+          
+        }}
+        mode="multiple"
+      >
+        {proyectosList.map(proyecto => (
+          <Picker.Item
+            key={proyecto._id}
+            label={`${proyecto.nombre} - ${proyecto._id}`}
+            value={proyecto._id}
+          />
+        ))}
+      </Picker>
     </View>
 
     <View style={{ marginBottom: 10 }}>
@@ -186,22 +216,26 @@ const CrearReunion = () => {
       />
     </View>
 
-    <View style={{ marginBottom: 10 }}>
+    <View style={{ marginBottom: 20 }}>
       <Text>Fecha:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        value={fecha}
-        onChangeText={setFecha}
-      />
+      <SafeAreaView>
+        <Button title="Show date picker!" onPress={() => showMode("date")} />
+        <Button title="Show time picker!" onPress={() => showMode("time")} />
+        {show && (
+          <DateTimePicker
+            value={fecha}
+            mode= {mode}// Aquí corregimos el valor de la prop mode
+            is24Hour={false}
+            onChange={mode === 'date' ? onChangeDate : onChangeTime}
+          />
+        )}
+        <Text>Fecha seleccionada: {fechaMostrada.toLocaleString()}</Text>
+      </SafeAreaView>
     </View>
 
     <View style={{ marginBottom: 10 }}>
-      <Text>Hora:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200}}
-        value={hora}
-        onChangeText={setHora}
-      />
+    <Text>Hora:</Text>
+      
     </View>
 
     <View style={{ marginBottom: 10 }}>
@@ -215,38 +249,62 @@ const CrearReunion = () => {
 
     <View style={{ marginBottom: 10 }}>
       <Text>Colaboradores:</Text>
-      <Picker
-        style={{ width: '100%', borderColor: 'white',  borderRadius: 5, padding: 5, width: 200 }}
-        selectedValue={colaboradores.map(colaborador => colaborador._id)}
-        onValueChange={(itemValue) => setColaboradores(itemValue)}
-        mode="multiple"
-      >
-        {colaboradoresDisponibles.map(colaborador => (
-          <Picker.Item
-            key={colaborador._id}
-            label={`${colaborador.nombre} - ${colaborador._id}`}
-            value={colaborador._id}
-          />
-        ))}
-      </Picker>
+      <DropDownPicker
+          items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
+          open = {isOpen} 
+          setOpen ={() => setIsOpen(!isOpen)}
+          value = {colaboradores}
+          setValue = {(val) => setColaboradores(val)}
+          
+          containerStyle={{ height: 40, width: 200 }}
+          maxHeight={200}
+          autoScroll
+          
+          placeholder='Seleccionar Colabs'
+          searchable={true}
+          searchablePlaceholder="Buscar colaboradores"
+          showTickIcon = {true}
+          showArrowIcon = {true}
+          
+          multiple = {true}
+          onChangeItem={item => setColaboradores(item.value)}
+          min ={1}
+          mode = "BADGE"
+          badgeColors={['black']}
+          badegeDotColor = {['white']}
+          badgeTextStyle ={{color: 'white'}}
+          
+        />
     </View>
 
     <View style={{ marginBottom: 10 }}>
       <Text>Administradores:</Text>
-      <Picker
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200}}
-        selectedValue={administradores.map(administrador => administrador._id)}
-        onValueChange={(itemValue) => setAdministradores(itemValue)}
-        mode="multiple"
-      >
-        {administradoresDisponibles.map(administrador => (
-          <Picker.Item
-            key={administrador._id}
-            label={`${administrador.nombre} - ${administrador._id}`}
-            value={administrador._id}
-          />
-        ))}
-      </Picker>
+      <DropDownPicker
+          items={administradoresDisponibles.map(administrador => ({ label: administrador.nombre, value: administrador._id }))}
+          open = {isOpenAdmin} 
+          setOpen ={() => setIsOpenAdmin(!isOpenAdmin)}
+          value = {administradores}
+          setValue = {(val) => setAdministradores(val)}
+          
+          containerStyle={{ height: 40, width: 200 }}
+          maxHeight={200}
+          autoScroll
+          
+          placeholder='Seleccionar Admins'
+          searchable={true}
+          searchablePlaceholder="Buscar administradores"
+          showTickIcon = {true}
+          showArrowIcon = {true}
+          
+          multiple = {true}
+          onChangeItem={item => setAdministradores(item.value)}
+          min ={1}
+          mode = "BADGE"
+          badgeColors={['black']}
+          badegeDotColor = {['white']}
+          badgeTextStyle ={{color: 'white'}}
+          
+        />
     </View>
 
     <Button
@@ -254,14 +312,7 @@ const CrearReunion = () => {
       onPress={handleCrearReunion}
     />
 
-    <View>
-      <Text style={{ fontSize: 16, marginTop: 10 }}>Proyectos disponibles:</Text>
-      <ScrollView style={{ maxHeight: 200 }}>
-        {proyectosList.map((proyecto) => (
-          <Text key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
-        ))}
-      </ScrollView>
-    </View>
+    
 
     {datosGuardados && (
       <View>
