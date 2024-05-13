@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView,  Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
 const ConsultarProyecto = ({ navigation }) => {
@@ -22,6 +23,7 @@ const ConsultarProAd = () => {
   const [proyecto, setProyecto] = useState(null);
   const [proyectosList, setProyectosList] = useState([]);
   const [colaboradoresList, setColaboradoresList] = useState([]);
+  
   const [editingTask, setEditingTask] = useState(null);
   const [editedTaskName, setEditedTaskName] = useState('');
   const [editedTaskState, setEditedTaskState] = useState('');
@@ -30,6 +32,8 @@ const ConsultarProAd = () => {
 
   const [selectedField, setSelectedField] = useState('');
   const [newData, setNewData] = useState('');
+
+
 
 
 
@@ -125,6 +129,8 @@ const ConsultarProAd = () => {
       }
   };
 
+
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
       <View style={{ alignItems: 'center' }}>
@@ -170,42 +176,36 @@ const ConsultarProAd = () => {
               <Text style={{ color: 'black' }}>Descripción: {proyecto.descripcion}</Text>
               <Text style={{ color: 'black' }}>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
               <Text style={{ color: 'black' }}>Responsable: {proyecto.responsable}</Text>
-              <Button color="#FA1946" title="Delete" onPress={handleDelete} />
+              <Button color="#57AEBD" title="Eliminar" onPress={handleDelete} />
             
           
             <View>
-                <Picker
-                  selectedValue={selectedField}
-                  onValueChange={(itemValue) => setSelectedField(itemValue)}
-                  style={{ backgroundColor: 'lightgray', marginBottom: 10, color: 'black' }}
-                >
-                  <Picker.Item label="Nombre" value="nombre" />
-                  <Picker.Item label="Recursos" value="recursos" />
-                  <Picker.Item label="Presupuesto" value="presupuesto" />
-                  <Picker.Item label="Estado" value="estado" />
-                  <Picker.Item label="Descripcion" value="descripcion" />
-                  <Picker.Item label="Fecha de Inicio" value="fecha_inicio" />
-                  <Picker.Item label="Estado" value="estado" />
-                </Picker>
-                <TextInput
-                  style={{
-                    backgroundColor: 'lightgray',
-                    padding: 10,
-                    marginBottom: 10,
-                    color: 'black',
-                    borderWidth: 1, // Añade un borde para resaltar el TextInput
-                    borderColor: '#6886E0', // Color del borde
-                    borderRadius: 5, // Bordes redondeados
-                    shadowColor: 'black', // Color de la sombra
-                    shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-                    shadowOpacity: 0.2, // Opacidad de la sombra
-                    shadowRadius: 2, // Radio de la sombra
-                    elevation: 3, // Elevación de la sombra en dispositivos Android
-                  }}
-                  value={newData}
-                  onChangeText={(text) => setNewData(text)}
-                />
-                <Button color="#32C28B" title="Update" onPress={handleUpdate} />
+            <Picker
+              style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 20 }]}
+              selectedValue={selectedField}
+              onValueChange={(itemValue) => {
+                setSelectedField(itemValue);
+                if (itemValue === 'fecha') {
+                  setMostrarBoton(true); // Mostrar el botón solo cuando se selecciona "Fecha"
+                } else {
+                  setMostrarBoton(false); // Ocultar el botón para otros valores seleccionados
+                }
+              }}
+            >
+              <Picker.Item label="Nombre" value="nombre" />
+              <Picker.Item label="Recursos" value="recursos" />
+              <Picker.Item label="Presupuesto" value="presupuesto" />
+              <Picker.Item label="Estado" value="estado" />
+              <Picker.Item label="Descripcion" value="descripcion" />
+              <Picker.Item label="Estado" value="estado" />
+            </Picker>
+            <TextInput
+                style={inputStyle}
+                value={newData}
+                onChangeText={(text) => setNewData(text)}
+              />
+            
+              <Button color="#4EBC7B" title="Actualizar" onPress={handleUpdate} />
             </View>
             
             {/* Lista de Tareas */}
@@ -220,20 +220,7 @@ const ConsultarProAd = () => {
                             onChangeText={(text) => setEditedTaskName(text)}
                           />
                           <TextInput
-                            style={{
-                              backgroundColor: 'lightgray',
-                              padding: 10,
-                              marginBottom: 10,
-                              color: 'black',
-                              borderWidth: 1, // Añade un borde para resaltar el TextInput
-                              borderColor: '#6886E0', // Color del borde
-                              borderRadius: 5, // Bordes redondeados
-                              shadowColor: 'black', // Color de la sombra
-                              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-                              shadowOpacity: 0.2, // Opacidad de la sombra
-                              shadowRadius: 2, // Radio de la sombra
-                              elevation: 3, // Elevación de la sombra en dispositivos Android
-                            }}
+                            style={inputStyle}
                             value={editedTaskDescription}
                             onChangeText={(text) => setEditedTaskDescription(text)}
                           />
@@ -277,16 +264,7 @@ const ConsultarProAd = () => {
       )}
 
       
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
-        <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Proyectos disponibles</Text>
-       
-          {proyectosList.map((proyecto) => (
-            <Text style={{ color: 'black' }} key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
-          ))}
-        
-      </View>
-      </View>
+      
       </View>
     </ScrollView>
   );

@@ -80,21 +80,35 @@ const ConsultaReuPro = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
       <View style={{ alignItems: 'center' }}>
         <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Consulta y modificación de reuniones</Text>
-        <TextInput
-          style={{ backgroundColor: 'lightgray', width: '100%', padding: 10, marginBottom: 10, color: 'black' }}
-          placeholder="Buscar por ID"
-          value={searchId}
-          onChangeText={setSearchId}
-        />
-        <Button
-          title="Buscar"
-          onPress={handleSearch}
-          color="#1D4EE0"
-          style={{ marginBottom: 20 }}
-        />
+        <View style={{ height: 130, width: 345 ,backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <Text style={{ color: 'black' }}>Reunión ID:</Text>
+            <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={reunionesList.map(reu => reu._id)}
+            onValueChange={(itemValue, itemIndex) => {
+              if (itemValue) {
+                console.log("Reunion seleccionado:", itemValue);
+                setSearchId(itemValue);
+              } else {
+                console.log("Reunion seleccionado es null o undefined");
+              }
+              
+            }}
+            mode="multiple"
+          >
+            {reunionesList.map(reu => (
+              <Picker.Item
+                key={reu._id}
+                label={`${reu.tema} - ${reu._id}`}
+                value={reu._id}
+              />
+            ))}
+          </Picker>
+          </View>
+          <Button color= "#57AEBD" title="Buscar" onPress={handleSearch} />
   
         {reunion && (
-          <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+          <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginTop:20, marginBottom: 20 }}>
             <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Información de la Reunión:</Text>
             <Text style={{ color: 'black' }}>ID: {reunion._id}</Text>
             <Text style={{ color: 'black' }}>Proyecto: {reunion.proyecto}</Text>
@@ -104,17 +118,12 @@ const ConsultaReuPro = () => {
             <Text style={{ color: 'black' }}>Fecha: {reunion.fecha}</Text>
             <Text style={{ color: 'black' }}>Duración en Horas: {reunion.duracionHoras}</Text>
             <Text style={{ color: 'black' }}>Colaboradores: {reunion.colaboradores.join(', ')}</Text>
-            <Button
-              title="Eliminar"
-              onPress={handleDelete}
-              color="#FA1946"
-              style={{ marginTop: 10 }}
-            />
+            <Button color="#57AEBD" title="Eliminar" onPress={handleDelete} />
             <View style={{ marginTop: 20 }}>
               <Picker
                 selectedValue={selectedField}
                 onValueChange={value => setSelectedField(value)}
-                style={{ backgroundColor: 'lightgray', marginBottom: 10, color: 'black' }}
+                style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 20 }]}
               >
                 <Picker.Item label="Proyecto" value="proyecto" />
                 <Picker.Item label="Tema" value="tema" />
@@ -124,46 +133,34 @@ const ConsultaReuPro = () => {
                 <Picker.Item label="Duración en Horas" value="duracionHoras" />
                 <Picker.Item label="Colaboradores" value="colaboradores" />
               </Picker>
-              <TextInput
-  style={{
-    backgroundColor: 'lightgray',
-    padding: 10,
-    marginBottom: 10,
-    color: 'black',
-    borderWidth: 1, // Añade un borde para resaltar el TextInput
-    borderColor: '#6886E0', // Color del borde
-    borderRadius: 5, // Bordes redondeados
-    shadowColor: 'black', // Color de la sombra
-    shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-    shadowOpacity: 0.2, // Opacidad de la sombra
-    shadowRadius: 2, // Radio de la sombra
-    elevation: 3, // Elevación de la sombra en dispositivos Android
-  }}
-  value={newData}
-  onChangeText={setNewData}
-/>
-              <Button
-                title="Actualizar"
-                onPress={handleUpdate}
-                color="#1D8CE0"
-              />
+            <TextInput
+              style={inputStyle}
+              value={newData}
+              onChangeText={setNewData}
+            />
+              <Button color="#4EBC7B" title="Actualizar" onPress={handleUpdate} />
             </View>
           </View>
         )}
   
-        <View>
-          <Text style={{ fontWeight: 'bold', marginBottom: 10, color: 'darkgray' }}>Reuniones disponibles:</Text>
-          {reunionesList.map(reunion => (
-            <Text key={reunion._id} style={{ marginBottom: 5, color: 'darkgray' }}>{reunion._id} - {reunion.tema}</Text>
-          ))}
-        </View>
       </View>
     </ScrollView>
   );
-  
-  
-  
-  
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default ConsultaReuPro;

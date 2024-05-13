@@ -81,29 +81,35 @@ const TareasProAd = () => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
         <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Tareas asignadas</Text>
-        <TextInput
-        style={{
-          backgroundColor: 'lightgray',
-          padding: 10,
-          marginBottom: 10,
-          color: 'black',
-          borderWidth: 1, // Añade un borde para resaltar el TextInput
-          borderColor: '#6886E0', // Color del borde
-          borderRadius: 5, // Bordes redondeados
-          shadowColor: 'black', // Color de la sombra
-          shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-          shadowOpacity: 0.2, // Opacidad de la sombra
-          shadowRadius: 2, // Radio de la sombra
-          elevation: 3, // Elevación de la sombra en dispositivos Android
-        }}
-          placeholder="Search by ID"
-          value={searchId}
-          onChangeText={(text) => setSearchId(text)}
-        />
-        <Button title="Search" onPress={handleSearch} />
+        <View style={{ height: 130, width: 345 ,backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <Text style={{ color: 'black' }}>Proyecto ID:</Text>
+            <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={proyectosList.map(proyecto => proyecto._id)}
+            onValueChange={(itemValue, itemIndex) => {
+              if (itemValue) {
+                console.log("Proyecto seleccionado:", itemValue);
+                setSearchId(itemValue);
+              } else {
+                console.log("Proyecto seleccionado es null o undefined");
+              }
+              
+            }}
+            mode="multiple"
+          >
+            {proyectosList.map(proyecto => (
+              <Picker.Item
+                key={proyecto._id}
+                label={`${proyecto.nombre} - ${proyecto._id}`}
+                value={proyecto._id}
+              />
+            ))}
+          </Picker>
+        </View>
+        <Button color= "#57AEBD" title="Buscar" onPress={handleSearch} />
   
         {proyecto && (
-        <View style={{ backgroundColor: 'lightgray',  padding: 20, borderRadius: 10, marginBottom: 20}}>
+        <View style={{ backgroundColor: 'lightgray',  padding: 20, borderRadius: 10, marginBottom: 20, marginTop: 20}}>
           <Text style={{ fontSize: 15, marginTop: 10 , color: 'black', fontWeight: 'bold', marginBottom: 20}}>Información del Proyecto:</Text>
           <Text style={{ color: 'black' }}>ID: {proyecto._id}</Text>
           <Text style={{ color: 'black' }}>Nombre: {proyecto.nombre}</Text>
@@ -130,72 +136,52 @@ const TareasProAd = () => {
           <View style={{ marginTop: 10 }}>
           <Text  style={{ fontSize: 15, marginTop: 20 , color: 'black', fontWeight: 'bold', marginBottom: 10}}>Agregar tarea:</Text>
           <TextInput
-            style={{
-              backgroundColor: 'lightgray',
-              padding: 10,
-              marginBottom: 10,
-              color: 'black',
-              borderWidth: 1, // Añade un borde para resaltar el TextInput
-              borderColor: '#6886E0', // Color del borde
-              borderRadius: 5, // Bordes redondeados
-              shadowColor: 'black', // Color de la sombra
-              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-              shadowOpacity: 0.2, // Opacidad de la sombra
-              shadowRadius: 2, // Radio de la sombra
-              elevation: 3, // Elevación de la sombra en dispositivos Android
-            }}
+              style={inputStyle}
               placeholder="Nombre"
+              placeholderTextColor={'black'}
               value={newTaskName}
               onChangeText={(text) => setNewTaskName(text)}
             />
             <TextInput
-            style={{
-              backgroundColor: 'lightgray',
-              padding: 10,
-              marginBottom: 10,
-              color: 'black',
-              borderWidth: 1, // Añade un borde para resaltar el TextInput
-              borderColor: '#6886E0', // Color del borde
-              borderRadius: 5, // Bordes redondeados
-              shadowColor: 'black', // Color de la sombra
-              shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-              shadowOpacity: 0.2, // Opacidad de la sombra
-              shadowRadius: 2, // Radio de la sombra
-              elevation: 3, // Elevación de la sombra en dispositivos Android
-            }}
+              style={inputStyle}
               placeholder="Descripción"
+              placeholderTextColor={'black'}
               value={newTaskDescription}
               onChangeText={(text) => setNewTaskDescription(text)}
             />
             <Picker
               selectedValue={selectedTaskAssignee}
               onValueChange={(itemValue) => setSelectedTaskAssignee(itemValue)}
-              style={{ marginBottom: 5 }}
+              style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 5, marginBottom: 25 }]}
             >
               <Picker.Item color = 'black' label="Seleccionar encargado" value="" />
               {colaboradoresList.map((colaborador) => (
                 <Picker.Item key={colaborador._id} label={colaborador.nombre} value={colaborador._id} />
               ))}
             </Picker>
-            <Button title="Agregar Tarea" onPress={handleAddTask} />
+            <Button color="#4EBC7B" title="Agregar Tarea" onPress={handleAddTask} />
           </View>
         </View>
-      )}
-  
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Proyectos disponibles</Text>
-          
-              {proyectosList.map((proyecto) => (
-                <Text style={{ color: 'black' }} key={proyecto._id}>{proyecto._id} - {proyecto.nombre}</Text>
-              ))}
-            
-          </View>
-      </View>
-      
+      )}      
     </ScrollView>
     
   );
 };
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
+};
+
 
 export default TareasProAd;
