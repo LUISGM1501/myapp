@@ -159,172 +159,186 @@ const CrearReunion = () => {
   fechaMostrada.setHours(fechaMostrada.getHours() + 6);
 
   return (
-    <View style={{ flex: 1 }}>
-  <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' , backgroundColor: 'black'}}>
-    <Text style={{ fontSize: 20, borderColor: 'white', marginBottom: 10 }}>Crear Reunión de Proyectos</Text>
 
-    <View style={{ marginBottom: 10 }}>
-    <Text>Proyecto ID:</Text>
-        <Picker
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        selectedValue={proyectosList.map(proyecto => proyecto._id)}
-        onValueChange={(itemValue, itemIndex) => {
-          if (itemValue) {
-            console.log("Proyecto seleccionado:", itemValue);
-            setProyectoId(itemValue);
-          } else {
-            console.log("Proyecto seleccionado es null o undefined");
-          }
-          
-        }}
-        mode="multiple"
-      >
-        {proyectosList.map(proyecto => (
-          <Picker.Item
-            key={proyecto._id}
-            label={`${proyecto.nombre} - ${proyecto._id}`}
-            value={proyecto._id}
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Ingreso de información:</Text>
+        <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Proyecto ID:</Text>
+            <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={proyectosList.map(proyecto => proyecto._id)}
+            onValueChange={(itemValue, itemIndex) => {
+              if (itemValue) {
+                console.log("Proyecto seleccionado:", itemValue);
+                setProyectoId(itemValue);
+              } else {
+                console.log("Proyecto seleccionado es null o undefined");
+              }
+              
+            }}
+            mode="multiple"
+          >
+            {proyectosList.map(proyecto => (
+              <Picker.Item
+                key={proyecto._id}
+                label={`${proyecto.nombre} - ${proyecto._id}`}
+                value={proyecto._id}
+              />
+            ))}
+          </Picker>
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Tema:</Text>
+          <TextInput
+            style={inputStyle}
+            value={tema}
+            onChangeText={setTema}
           />
-        ))}
-      </Picker>
-    </View>
+        </View>
 
-    <View style={{ marginBottom: 10 }}>
-      <Text>Tema:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        value={tema}
-        onChangeText={setTema}
-      />
-    </View>
-
-    <View style={{ marginBottom: 10 }}>
-      <Text>Medio:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        value={medio}
-        onChangeText={setMedio}
-      />
-    </View>
-
-    <View style={{ marginBottom: 10 }}>
-      <Text>Enlace:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        value={link}
-        onChangeText={setLink}
-      />
-    </View>
-
-    <View style={{ marginBottom: 20 }}>
-      <Text>Fecha:</Text>
-      <SafeAreaView>
-        <Button title="Show date picker!" onPress={() => showMode("date")} />
-        <Button title="Show time picker!" onPress={() => showMode("time")} />
-        {show && (
-          <DateTimePicker
-            value={fecha}
-            mode= {mode}// Aquí corregimos el valor de la prop mode
-            is24Hour={false}
-            onChange={mode === 'date' ? onChangeDate : onChangeTime}
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Medio:</Text>
+          <TextInput
+            style={inputStyle}
+            value={medio}
+            onChangeText={setMedio}
           />
-        )}
-        <Text>Fecha seleccionada: {fechaMostrada.toLocaleString()}</Text>
-      </SafeAreaView>
-    </View>
+        </View>
 
-    <View style={{ marginBottom: 10 }}>
-    <Text>Hora:</Text>
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Enlace:</Text>
+          <TextInput
+            style={inputStyle}
+            value={link}
+            onChangeText={setLink}
+          />
+        </View>
+
+        <View style={{ marginBottom: 20 }}>
+        <Text style={{ color: 'black' }}>Fecha:</Text>
+          <SafeAreaView>
+          <Button color="#8CBBE0" title="Seleccionar Fecha" onPress={() => showMode("date")} />
+          <View style={{ marginTop: 5 }}><Button color="#8CBBE0" marginTop = '5' title="Seleccionar Hora" onPress={() => showMode("time")} /></View>
+            {show && (
+              <DateTimePicker
+                value={fecha}
+                mode= {mode}// Aquí corregimos el valor de la prop mode
+                is24Hour={false}
+                onChange={mode === 'date' ? onChangeDate : onChangeTime}
+              />
+            )}
+            <Text style={{ color: 'gray' }}>Fecha seleccionada: {fechaMostrada.toLocaleString()}</Text>
+          </SafeAreaView>
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Duración en Horas:</Text>
+          <TextInput
+            style={inputStyle}
+            value={duracionHoras}
+            onChangeText={setDuracionHoras}
+          />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Colaboradores:</Text>
+          <DropDownPicker
+              items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
+              open = {isOpen} 
+              setOpen ={() => setIsOpen(!isOpen)}
+              value = {colaboradores}
+              setValue = {(val) => setColaboradores(val)}
+              
+              containerStyle={{ height: 40, width: 300 }}
+              maxHeight={200}
+              autoScroll
+              
+              placeholder='Seleccionar Colabs'
+              searchable={true}
+              searchablePlaceholder="Buscar colaboradores"
+              showTickIcon = {true}
+              showArrowIcon = {true}
+              
+              multiple = {true}
+              onChangeItem={item => setColaboradores(item.value)}
+              min ={1}
+              mode = "BADGE"
+              badgeColors={['black']}
+              badegeDotColor = {['white']}
+              badgeTextStyle ={{color: 'white'}}
+              style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            />
+        </View>
+
+        <View style={{ marginBottom: 10 }}>
+        <Text style={{ color: 'black' }}>Administradores:</Text>
+          <DropDownPicker
+              items={administradoresDisponibles.map(administrador => ({ label: administrador.nombre, value: administrador._id }))}
+              open = {isOpenAdmin} 
+              setOpen ={() => setIsOpenAdmin(!isOpenAdmin)}
+              value = {administradores}
+              setValue = {(val) => setAdministradores(val)}
+              
+              containerStyle={{ height: 40, width: 300 }}
+              maxHeight={200}
+              autoScroll
+              
+              placeholder='Seleccionar Admins'
+              searchable={true}
+              searchablePlaceholder="Buscar administradores"
+              showTickIcon = {true}
+              showArrowIcon = {true}
+              
+              multiple = {true}
+              onChangeItem={item => setAdministradores(item.value)}
+              min ={1}
+              mode = "BADGE"
+              badgeColors={['black']}
+              badegeDotColor = {['white']}
+              badgeTextStyle ={{color: 'white'}}
+              style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            />
+        </View>
+        
+        </View>
+        <Button
+          color = '#4EBC7B'
+          title="Crear Reunión"
+          onPress={handleCrearReunion}
+        />
+
+        
       
-    </View>
-
-    <View style={{ marginBottom: 10 }}>
-      <Text>Duración en Horas:</Text>
-      <TextInput
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
-        value={duracionHoras}
-        onChangeText={setDuracionHoras}
-      />
-    </View>
-
-    <View style={{ marginBottom: 10 }}>
-      <Text>Colaboradores:</Text>
-      <DropDownPicker
-          items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
-          open = {isOpen} 
-          setOpen ={() => setIsOpen(!isOpen)}
-          value = {colaboradores}
-          setValue = {(val) => setColaboradores(val)}
-          
-          containerStyle={{ height: 40, width: 200 }}
-          maxHeight={200}
-          autoScroll
-          
-          placeholder='Seleccionar Colabs'
-          searchable={true}
-          searchablePlaceholder="Buscar colaboradores"
-          showTickIcon = {true}
-          showArrowIcon = {true}
-          
-          multiple = {true}
-          onChangeItem={item => setColaboradores(item.value)}
-          min ={1}
-          mode = "BADGE"
-          badgeColors={['black']}
-          badegeDotColor = {['white']}
-          badgeTextStyle ={{color: 'white'}}
-          
-        />
-    </View>
-
-    <View style={{ marginBottom: 10 }}>
-      <Text>Administradores:</Text>
-      <DropDownPicker
-          items={administradoresDisponibles.map(administrador => ({ label: administrador.nombre, value: administrador._id }))}
-          open = {isOpenAdmin} 
-          setOpen ={() => setIsOpenAdmin(!isOpenAdmin)}
-          value = {administradores}
-          setValue = {(val) => setAdministradores(val)}
-          
-          containerStyle={{ height: 40, width: 200 }}
-          maxHeight={200}
-          autoScroll
-          
-          placeholder='Seleccionar Admins'
-          searchable={true}
-          searchablePlaceholder="Buscar administradores"
-          showTickIcon = {true}
-          showArrowIcon = {true}
-          
-          multiple = {true}
-          onChangeItem={item => setAdministradores(item.value)}
-          min ={1}
-          mode = "BADGE"
-          badgeColors={['black']}
-          badegeDotColor = {['white']}
-          badgeTextStyle ={{color: 'white'}}
-          
-        />
-    </View>
-
-    <Button
-      title="Crear Reunión"
-      onPress={handleCrearReunion}
-    />
-
-    
-
-    {datosGuardados && (
-      <View>
-        <Text style={{ fontSize: 16, marginTop: 10 }}>Datos guardados:</Text>
-        <Text>{JSON.stringify(datosGuardados, null, 2)}</Text>
+        {datosGuardados && (
+          <View style={{ backgroundColor: '#8CBBE0', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+            <Text style={{ fontSize: 16, marginTop: 10, color: black}}>Datos guardados:</Text>
+            <Text style={{ color: 'black' }}>{JSON.stringify(datosGuardados, null, 2)}</Text>
+          </View>
+        )}
       </View>
-    )}
-  </ScrollView>
-</View>
+    </ScrollView>
+
 
 
   );
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default CrearReunion;

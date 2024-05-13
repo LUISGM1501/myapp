@@ -91,34 +91,36 @@ const CrearProyecto = () => {
   ;
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center'  , backgroundColor: 'black'}}>
-      <Text>Pantalla de Crear Proyectos de Administradores</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
+      <View style={{ alignItems: 'center' }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Ingreso de información:</Text>
+      <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
       <View style={{ marginBottom: 20 }}>
-        <Text>Nombre:</Text>
+      <Text style={{ color: 'black' }}>Nombre:</Text>
         <TextInput
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+          style={inputStyle}
           value={nombre}
           onChangeText={setNombre}
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-        <Text>Recursos:</Text>
+      <Text style={{ color: 'black' }}>Recursos:</Text>
         <TextInput
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+          style={inputStyle}
           value={recursos}
           onChangeText={setRecursos}
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-        <Text>Presupuesto:</Text>
+      <Text style={{ color: 'black' }}>Presupuesto:</Text>
         <TextInput
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+          style={inputStyle}
           value={presupuesto}
           onChangeText={setPresupuesto}
         />
       </View>
       <View style={{ marginBottom: 10 }}>
-      <Text>Colaboradores:</Text>
+      <Text style={{ color: 'black' }}>Colaboradores:</Text>
       <DropDownPicker
           items={colaboradoresDisponibles.map(colaborador => ({ label: colaborador.nombre, value: colaborador._id }))}
           open = {isOpen} 
@@ -126,7 +128,7 @@ const CrearProyecto = () => {
           value = {colaboradores}
           setValue = {(val) => setColaboradores(val)}
           
-          containerStyle={{ height: 40, width: 200 }}
+          containerStyle={{ height: 40, width: 300 }}
           maxHeight={200}
           autoScroll
           
@@ -143,30 +145,30 @@ const CrearProyecto = () => {
           badgeColors={['black']}
           badegeDotColor = {['white']}
           badgeTextStyle ={{color: 'white'}}
-          
+          style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
         />
     </View>
       <View style={{ marginBottom: 20 }}>
-        <Text>Estado:</Text>
+      <Text style={{ color: 'black' }}>Estado:</Text>
         <TextInput
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+          style={inputStyle}
           value={estado}
           onChangeText={setEstado}
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-        <Text>Descripción:</Text>
+      <Text style={{ color: 'black' }}>Descripción:</Text>
         <TextInput
           multiline
-          style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5, padding: 5, width: 200, height: 100 }}
+          style={inputStyle}
           value={descripcion}
           onChangeText={setDescripcion}
         />
       </View>
       <View style={{ marginBottom: 20 }}>
-      <Text>Fecha de Inicio:</Text>
+      <Text style={{ color: 'black' }}>Fecha de Inicio:</Text>
       <SafeAreaView>
-        <Button title="Show date picker!" onPress={() => showMode("date")} />
+        <Button color="#8CBBE0" title="Seleccionar Fecha" onPress={() => showMode("date")} />
         {show && (
           <DateTimePicker
             value={fecha_inicio}
@@ -175,17 +177,17 @@ const CrearProyecto = () => {
             onChange={onChange}
           />
         )}
-        <Text>Fecha seleccionada: {fecha_inicio.toLocaleString()}</Text>
+        <Text style={{ color: 'gray' }}>Fecha seleccionada: {fecha_inicio.toLocaleString()}</Text>
       </SafeAreaView>
     </View>
     <View style={{ marginBottom: 20 }}>
-        <Text>Responsable:</Text>
+    <Text style={{ color: 'black' }}>Responsable:</Text>
         <Picker
-        style={{ width: '100%', borderColor: 'white', borderRadius: 5, padding: 5, width: 200 }}
+        style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
         selectedValue={responsablesDisponibles.map(responsable => responsable._id)}
         onValueChange={(itemValue, itemIndex) => {
           if (itemValue) {
-            console.log("esponsable seleccionado:", itemValue);
+            console.log("Responsable seleccionado:", itemValue);
           } else {
             console.log("responsable seleccionado es null o undefined");
           }
@@ -202,15 +204,32 @@ const CrearProyecto = () => {
         ))}
       </Picker>
       </View>
-      <Button title="Guardar" onPress={handleGuardar} />
+      </View>
+      <Button color = '#4EBC7B' title="Guardar" onPress={handleGuardar} />
       {datosGuardados && (
         <View>
           <Text>Datos guardados:</Text>
           <Text>{JSON.stringify(datosGuardados, null, 2)}</Text>
         </View>
       )}
+      </View>
     </ScrollView>
   );
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default CrearProyecto;

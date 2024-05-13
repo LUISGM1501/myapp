@@ -32,6 +32,7 @@ const ConsultarProAd = () => {
   const [newData, setNewData] = useState('');
 
 
+
   const handleDelete = async () => {
       try {
           await axios.delete(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyecto._id}`);
@@ -128,30 +129,36 @@ const ConsultarProAd = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
       <View style={{ alignItems: 'center' }}>
         <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Consulta y modificación de proyectos</Text>
-      <TextInput
-        style={{
-          backgroundColor: 'lightgray',
-          padding: 10,
-          marginBottom: 10,
-          color: 'black',
-          borderWidth: 1, // Añade un borde para resaltar el TextInput
-          borderColor: '#6886E0', // Color del borde
-          borderRadius: 5, // Bordes redondeados
-          shadowColor: 'black', // Color de la sombra
-          shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-          shadowOpacity: 0.2, // Opacidad de la sombra
-          shadowRadius: 2, // Radio de la sombra
-          elevation: 3, // Elevación de la sombra en dispositivos Android
-        }}
-        placeholder="Search by ID"
-        value={searchId}
-        onChangeText={(text) => setSearchId(text)}
-      />
-      <Button title="Search" onPress={handleSearch} />
+        <View style={{ height: 130, width: 345 ,backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <Text style={{ color: 'black' }}>Proyecto ID:</Text>
+            <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={proyectosList.map(proyecto => proyecto._id)}
+            onValueChange={(itemValue, itemIndex) => {
+              if (itemValue) {
+                console.log("Proyecto seleccionado:", itemValue);
+                setSearchId(itemValue);
+              } else {
+                console.log("Proyecto seleccionado es null o undefined");
+              }
+              
+            }}
+            mode="multiple"
+          >
+            {proyectosList.map(proyecto => (
+              <Picker.Item
+                key={proyecto._id}
+                label={`${proyecto.nombre} - ${proyecto._id}`}
+                value={proyecto._id}
+              />
+            ))}
+          </Picker>
+          </View>
+      <Button color= "#57AEBD" title="Buscar" onPress={handleSearch} />
       {/* Información del Proyecto */}
       {proyecto && (
         
-        <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginTop:20, marginBottom: 20 }}>
                          
               <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Información del Proyecto:</Text>
               <Text style={{ color: 'black' }}>ID: {proyecto._id}</Text>
@@ -283,6 +290,21 @@ const ConsultarProAd = () => {
       </View>
     </ScrollView>
   );
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default ConsultarProAd;
