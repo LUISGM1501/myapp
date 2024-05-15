@@ -13,6 +13,10 @@ const TareasProAd = () => {
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [selectedTaskAssignee, setSelectedTaskAssignee] = useState('');
+  const [estado, setEstado] = useState('Pendiente');
+  const [recursosEconomicos, setRecursosEconomicos] = useState('');
+  const [tiempoEstimado, setTiempoEstimado] = useState('');
+  const [storyPoints, setStoryPoints] = useState('');
   const [colaboradoresList, setColaboradoresList] = useState([]);
 
   const handleSearch = async () => {
@@ -38,23 +42,33 @@ const TareasProAd = () => {
   };
 
   const handleAddTask = async () => {
-      try {
-          const response = await axios.put(`http://192.168.0.13:4000/api/proyecto/${proyecto._id}/add-task`, {
-              nombre: newTaskName,
-              descripcion: newTaskDescription,
-              responsable: selectedTaskAssignee
-          });
-          setNewTaskName('');
-          setNewTaskDescription('');
-          setSelectedTaskAssignee('');
-          setProyecto(response.data.proyecto);
-          loadProyectosList();
-          handleSearch();
-      } catch (error) {
-          console.error('Error adding task:', error);
-      }
+    try {
+      const response = await axios.put(`http://192.168.0.13:4000/api/proyecto/${proyecto._id}/add-task`, {
+        nombre: newTaskName,
+        descripcion: newTaskDescription,
+        responsable: selectedTaskAssignee,
+        estado: estado,
+        recursosEconomicos: parseInt(recursosEconomicos),
+        tiempoEstimado: parseInt(tiempoEstimado),
+        storyPoints: parseInt(storyPoints),
+      });
+  
+      // Resto del código para limpiar los campos y actualizar las listas
+      setNewTaskName('');
+      setNewTaskDescription('');
+      setSelectedTaskAssignee('');
+      setEstado('Pendiente');
+      setRecursosEconomicos('');
+      setTiempoEstimado('');
+      setStoryPoints('');
+      setProyecto(response.data.proyecto);
+      loadProyectosList();
+      handleSearch();
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
   };
-
+  
   const loadProyectosList = async () => {
       try {
           const response = await axios.get('http://192.168.0.13:4000/api/proyecto');
@@ -148,6 +162,27 @@ const TareasProAd = () => {
               placeholderTextColor={'black'}
               value={newTaskDescription}
               onChangeText={(text) => setNewTaskDescription(text)}
+            />
+            <TextInput
+              style={inputStyle}
+              placeholder="Recursos Económicos"
+              placeholderTextColor={'black'}
+              value={recursosEconomicos}
+              onChangeText={(text) => setRecursosEconomicos(text)}
+            />
+            <TextInput
+              style={inputStyle}
+              placeholder="Tiempo Estimado"
+              placeholderTextColor={'black'}
+              value={tiempoEstimado}
+              onChangeText={(text) => setTiempoEstimado(text)}
+            />
+            <TextInput
+              style={inputStyle}
+              placeholder="Story Points"
+              placeholderTextColor={'black'}
+              value={storyPoints}
+              onChangeText={(text) => setStoryPoints(text)}
             />
             <Picker
               selectedValue={selectedTaskAssignee}
