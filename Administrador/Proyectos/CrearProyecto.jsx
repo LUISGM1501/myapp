@@ -30,7 +30,7 @@ const CrearProyecto = () => {
 
   useEffect(() => {
     // Obtener la lista de colaboradores disponibles
-    axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/colaborador')
+    axios.get('http://192.168.0.13:4000/api/colaborador')
       .then(response => {
         setColaboradoresDisponibles(response.data);
       })
@@ -39,7 +39,7 @@ const CrearProyecto = () => {
       });
 
     // Obtener la lista de responsables disponibles
-    axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/Admin')
+    axios.get('http://192.168.0.13:4000/api/Admin')
       .then(response => {
         setResponsablesDisponibles(response.data);
       })
@@ -79,7 +79,7 @@ const CrearProyecto = () => {
     console.log('Fecha:', fecha_inicio.toLocaleDateString());
     console.log('Responsable:', responsable);
     // Enviar los datos al servidor para crear el proyecto
-    axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/', datos)
+    axios.post('http://192.168.0.13:4000/api/proyecto/', datos)
       .then(response => {
         console.log('Proyecto creado exitosamente:', response.data);
       })

@@ -10,7 +10,7 @@ const Inicio = ({ onSelectUserType }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/login', {
+      const response = await axios.post('http://192.168.0.13:4000/api/login', {
         nombre: username,
         password: password,
       });
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 40,
+    color: 'black', 
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,

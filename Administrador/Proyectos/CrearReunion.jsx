@@ -40,7 +40,7 @@ const CrearReunion = () => {
 
   const loadProyectosList = async () => {
     try {
-      const response = await axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto');
+      const response = await axios.get('http://192.168.0.13:4000/api/proyecto');
       setProyectosList(response.data);
     } catch (error) {
       console.error('Error loading projects list:', error);
@@ -49,7 +49,7 @@ const CrearReunion = () => {
 
   const loadColaboradoresDisponibles = async () => {
     try {
-      const response = await axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/colaborador');
+      const response = await axios.get('http://192.168.0.13:4000/api/colaborador');
       setColaboradoresDisponibles(response.data);
     } catch (error) {
       console.error('Error loading available collaborators:', error);
@@ -58,7 +58,7 @@ const CrearReunion = () => {
 
   const loadAdministradoresDisponibles = async () => {
     try {
-      const response = await axios.get('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/Admin');
+      const response = await axios.get('http://192.168.0.13:4000/api/Admin');
       setAdministradoresDisponibles(response.data);
     } catch (error) {
       console.error('Error loading available administrators:', error);
@@ -112,7 +112,7 @@ const CrearReunion = () => {
     };
 
     try {
-      const response = await axios.get(`https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/proyecto/${proyectoId}`);
+      const response = await axios.get(`http://192.168.0.13:4000/api/proyecto/${proyectoId}`);
       
       if (!response.data) {
         alert('No se encontró ningún proyecto con el ID proporcionado!');
@@ -123,7 +123,7 @@ const CrearReunion = () => {
 
       // Crear la reunión en el backend
       console.log('datos: ', datos);
-      const posting = await axios.post('https://ancient-savannah-86041-b59d8e70e572.herokuapp.com/api/reunion', datos);
+      const posting = await axios.post('http://192.168.0.13:4000/api/reunion', datos);
       if (!posting.data) {
         console.log('datos: ', datos);
         return; // Salir de la función temprano si no se encontró el proyecto
