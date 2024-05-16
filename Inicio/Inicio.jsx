@@ -37,7 +37,7 @@ const Inicio = ({ onSelectUserType }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+      <Text style={styles.title}>The DriverP</Text>
       <TextInput
         style={styles.input}
         placeholderTextColor= 'gray'
