@@ -1,11 +1,11 @@
-// BurnDownChart.jsx
+// SeguimienotoProyecto.jsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-const BurnDownChart = ({ navigation }) => {
+const SeguimienotoProyecto = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>BurnDownChart</Text>
+      <Text>SeguimienotoProyecto</Text>
       <Button
         title="Abrir Menú"
         onPress={() => navigation.openDrawer()}
@@ -14,4 +14,4 @@ const BurnDownChart = ({ navigation }) => {
   );
 };
 
-export default BurnDownChart;
+export default SeguimienotoProyecto;

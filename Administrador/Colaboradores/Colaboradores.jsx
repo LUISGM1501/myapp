@@ -12,7 +12,7 @@ const Colaboradores = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Mi Proyecto</Text>
+      <Text  style={{color: 'gray'}}>Mi Proyecto</Text>
       <View style={{ marginVertical: 10 }}>
         <Button
           title="Consultar"

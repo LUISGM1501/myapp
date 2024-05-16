@@ -27,6 +27,9 @@ const ConsultarProAd = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [editedTaskName, setEditedTaskName] = useState('');
   const [editedTaskState, setEditedTaskState] = useState('');
+  const [recursosEconomicos, setRecursosEconomicos] = useState('');
+  const [tiempoEstimado, setTiempoEstimado] = useState('');
+  const [storyPoints, setStoryPoints] = useState('');
   const [editedTaskDescription, setEditedTaskDescription] = useState('');
   const [editedTaskAssignee, setEditedTaskAssignee] = useState('');
 
@@ -97,10 +100,16 @@ const ConsultarProAd = () => {
               descripcion: editedTaskDescription,
               responsable: editedTaskAssignee,
               estado: editedTaskState,
+              recursosEconomicos: parseInt(recursosEconomicos),
+              tiempoEstimado: parseInt(tiempoEstimado),
+              storyPoints: parseInt(storyPoints),
           });
           setEditingTask(null);
           setEditedTaskName('');
           setEditedTaskState('');
+          setRecursosEconomicos('');
+          setTiempoEstimado('');
+          setStoryPoints('');
           setEditedTaskDescription('');
           setEditedTaskAssignee('');
           handleSearch();
@@ -200,6 +209,8 @@ const ConsultarProAd = () => {
               <Picker.Item label="Estado" value="estado" />
             </Picker>
             <TextInput
+                placeholder='Nuevo valor'
+                placeholderTextColor={'gray'}
                 style={inputStyle}
                 value={newData}
                 onChangeText={(text) => setNewData(text)}
@@ -216,13 +227,39 @@ const ConsultarProAd = () => {
                       {editingTask === tarea._id ? (
                         <View>
                           <TextInput
+                            placeholder='Nombre de la tarea'
+                            placeholderTextColor={'gray'}
+                            style={inputStyle}
                             value={editedTaskName}
                             onChangeText={(text) => setEditedTaskName(text)}
                           />
                           <TextInput
+                            placeholder='Descripcion'
+                            placeholderTextColor={'gray'}
                             style={inputStyle}
                             value={editedTaskDescription}
                             onChangeText={(text) => setEditedTaskDescription(text)}
+                          />
+                          <TextInput
+                            style={inputStyle}
+                            placeholder="Recursos Económicos"
+                            placeholderTextColor={'gray'}
+                            value={recursosEconomicos}
+                            onChangeText={(text) => setRecursosEconomicos(text)}
+                          />
+                          <TextInput
+                            style={inputStyle}
+                            placeholder="Tiempo Estimado"
+                            placeholderTextColor={'gray'}
+                            value={tiempoEstimado}
+                            onChangeText={(text) => setTiempoEstimado(text)}
+                          />
+                          <TextInput
+                            style={inputStyle}
+                            placeholder="Story Points"
+                            placeholderTextColor={'gray'}
+                            value={storyPoints}
+                            onChangeText={(text) => setStoryPoints(text)}
                           />
                           <Picker
                             selectedValue={editedTaskAssignee}

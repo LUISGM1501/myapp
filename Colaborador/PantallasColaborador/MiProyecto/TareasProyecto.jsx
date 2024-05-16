@@ -61,9 +61,9 @@ const TareasProyecto = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tareas de Proyecto</Text>
+      <Text style={styles.title}>Tareas de un Proyecto</Text>
       <View style={styles.selectContainer}>
-        <Text>Selecciona un proyecto:</Text>
+        <Text >Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
           style={{ height: 50, width: 200 }}
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:  'black', 
   },
   selectContainer: {
     marginBottom: 20,

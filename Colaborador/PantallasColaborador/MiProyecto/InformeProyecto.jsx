@@ -61,15 +61,15 @@ const InformeProyecto = () => {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Informe de tareas de proyectos</Text>
-      <Text style={{ fontSize: 16 }}>1: Pendiente, 2: En Progeso, 3: Terminada</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, color:'gray' }}>Informe de tareas de proyectos</Text>
+      <Text style={{ fontSize: 16, color:'gray' }}>1: Pendiente, 2: En Progeso, 3: Terminada</Text>
       <View style={{ marginBottom: 20 }}>
-        <Text>Selecciona un proyecto:</Text>
+        <Text style={{ color: 'gray' }}>Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
           onValueChange={(itemValue) => setSelectedProjectId(itemValue)}
         >
-          <Picker.Item label="Selecciona un proyecto" value="" />
+          <Picker.Item label="Selecciona un proyecto" value=""  style={{ color:'black' }}/>
           {projectsList.map(project => (
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}

@@ -67,14 +67,14 @@ const InformeProUsu = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mi equipo de trabajo</Text>
+      <Text style={styles.title}>Equipo de trabajo</Text>
       <View style={styles.pickerContainer}>
         <Text>Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
           onValueChange={(itemValue, itemIndex) => setSelectedProjectId(itemValue)}
         >
-          <Picker.Item label="Selecciona un proyecto" value="" />
+          <Picker.Item label="Selecciona un proyecto" value=""  style={styles.subtitle}/>
           {projectsList.map(project => (
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}
@@ -87,9 +87,9 @@ const InformeProUsu = () => {
           {companions.map(companion => (
             <View key={companion._id} style={styles.companionCard}>
               <Text style={styles.companionName}>{companion.nombre}</Text>
-              <Text>Correo: {companion.correo}</Text>
-              <Text>Teléfono: {companion.telefono}</Text>
-              <Text>Proyecto: {companion.projectName}</Text>
+              <Text style={styles.companionInfo} >Correo: {companion.correo}</Text>
+              <Text style={styles.companionInfo}>Teléfono: {companion.telefono}</Text>
+              <Text style={styles.companionInfo}>Proyecto: {companion.projectName}</Text>
             </View>
           ))}
         </ScrollView>
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: 'black', 
   },
   pickerContainer: {
     marginBottom: 20,
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'gray', 
   },
   companionCard: {
     backgroundColor: 'lightblue',
@@ -128,6 +130,10 @@ const styles = StyleSheet.create({
   },
   companionName: {
     fontWeight: 'bold',
+    color: 'black', 
+  },
+  companionInfo: {
+    color: 'black',
   },
 });
 

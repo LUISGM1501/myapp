@@ -138,6 +138,7 @@ const TareasProAd = () => {
                 <Text style={{ color: 'black' }}>Nombre: {item.nombre}</Text>
                 <Text style={{ color: 'black' }}>Descripción: {item.descripcion}</Text>
                 <Text style={{ color: 'black' }}>Responsable: {item.responsable}</Text>
+                <Text style={{ color: 'black' }}>  </Text>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}

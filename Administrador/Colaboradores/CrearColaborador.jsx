@@ -1,6 +1,6 @@
 // CrearColab.jsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button,ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
@@ -37,104 +37,128 @@ const CrearColAd = () => {
   
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Pantalla de Crear Usuarios</Text>
-
-      <View>
-        <Text>Nombre:</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          value={nombre}
-          onChangeText={setNombre}
-        />
-      </View>
-
-      <View>
-        <Text>Cédula:</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          value={cedula}
-          onChangeText={setCedula}
-        />
-      </View>
-
-      <View>
-        <Text>Correo:</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          value={correo}
-          onChangeText={setCorreo}
-        />
-      </View>
-
-      <View>
-        <Text>Password:</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          value={contrasena}
-          onChangeText={setContrasena}
-        />
-      </View>
-
-      <View>
-        <Text>Departamento:</Text>
-        <Picker
-          selectedValue={departamento}
-          onValueChange={(itemValue) => setDepartamento(itemValue)}
-        >
-          <Picker.Item label="---" value="" />
-          <Picker.Item label="Finanzas" value="finanzas" />
-          <Picker.Item label="Limpieza" value="limpieza" />
-          <Picker.Item label="Recursos Humanos" value="recursos humanos" />
-          <Picker.Item label="Marketing" value="marketing" />
-          <Picker.Item label="Gerencia" value="gerencia" />
-        </Picker>
-      </View>
-
-      <View>
-        <Text>Teléfono:</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          value={telefono}
-          onChangeText={setTelefono}
-        />
-      </View>
-
-      <View>
-        <Text>Estado:</Text>
-        <Picker
-          selectedValue={estado}
-          onValueChange={(itemValue) => setEstado(itemValue)}
-        >
-          <Picker.Item label="---" value="" />
-          <Picker.Item label="Disponible" value="disponible" />
-          <Picker.Item label="Ocupado" value="ocupado" />
-        </Picker>
-      </View>
-
-      <View>
-        <Text>Tipo de usuario:</Text>
-        <Picker
-          selectedValue={tipoUsuario}
-          onValueChange={(itemValue) => setTipoUsuario(itemValue)}
-        >
-          <Picker.Item label="---" value="" />
-          <Picker.Item label="Colaborador" value="colaborador" />
-          <Picker.Item label="Administrador" value="administrador" />
-        </Picker>
-      </View>
-
-      <Button title="Guardar" onPress={handleGuardar} />
-
-      {datosGuardados && (
-        <View>
-          <Text>Datos guardados:</Text>
-          <Text>{JSON.stringify(datosGuardados)}</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', paddingHorizontal: 20 }}>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20, color: 'black', textAlign: 'center' }}>Pantalla de Crear Usuarios</Text>
+      <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Nombre:</Text>
+          <TextInput
+            style={inputStyle}
+            value={nombre}
+            onChangeText={setNombre}
+          />
         </View>
-      )}
-    </View>
-  );
+        
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Cédula:</Text>
+          <TextInput
+            style={inputStyle}
+            value={cedula}
+            onChangeText={setCedula}
+          />
+        </View>
 
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Correo:</Text>
+          <TextInput
+            style={inputStyle}
+            value={correo}
+            onChangeText={setCorreo}
+          />
+        </View>
+
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Password:</Text>
+          <TextInput
+            style={inputStyle}
+            value={contrasena}
+            onChangeText={setContrasena}
+          />
+        </View>
+
+        <View style={{ marginBottom: 20 }}> 
+          <Text style={{color:'black'}}>Departamento:</Text>
+          <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={departamento}
+            onValueChange={(itemValue) => setDepartamento(itemValue)}
+          >
+            <Picker.Item label="---" value="" />
+            <Picker.Item label="Finanzas" value="finanzas" />
+            <Picker.Item label="Limpieza" value="limpieza" />
+            <Picker.Item label="Recursos Humanos" value="recursos humanos" />
+            <Picker.Item label="Marketing" value="marketing" />
+            <Picker.Item label="Gerencia" value="gerencia" />
+          </Picker>
+        </View>
+
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Teléfono:</Text>
+          <TextInput
+            style={inputStyle}
+            value={telefono}
+            onChangeText={setTelefono}
+          />
+        </View>
+
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Estado:</Text>
+          <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={estado}
+            onValueChange={(itemValue) => setEstado(itemValue)}
+          >
+            <Picker.Item label="---" value="" />
+            <Picker.Item label="Disponible" value="disponible" />
+            <Picker.Item label="Ocupado" value="ocupado" />
+          </Picker>
+        </View>
+
+        <View style={{ marginBottom: 20 }}>
+          <Text style={{color:'black'}}>Tipo de usuario:</Text>
+          <Picker
+            style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
+            selectedValue={tipoUsuario}
+            onValueChange={(itemValue) => setTipoUsuario(itemValue)}
+          >
+            <Picker.Item label="---" value="" />
+            <Picker.Item label="Colaborador" value="colaborador" />
+            <Picker.Item label="Administrador" value="administrador" />
+          </Picker>
+        </View>
+
+
+        {datosGuardados && (
+          <View>
+            <Text style={{color:'black'}}>Datos guardados:</Text>
+            <Text>{JSON.stringify(datosGuardados)}</Text>
+          </View>
+        )}
+        </View>
+        <View style={{ marginBottom: 30 }}>
+        <Button color = '#4EBC7B' title="Guardar" onPress={handleGuardar} />
+        </View>
+        
+      </View>
+    </ScrollView>
+  );
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default CrearColAd;

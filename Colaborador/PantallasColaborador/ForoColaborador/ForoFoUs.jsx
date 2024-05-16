@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'gray', 
   },
   messagesContainer: {
     flex: 1,
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   },
   message: {
     backgroundColor: 'lightblue',
+    color: 'gray', 
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
@@ -128,6 +130,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     marginRight: 10,
+    color: 'black', 
   },
 });
 

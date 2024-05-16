@@ -1,160 +1,213 @@
-// ConsultarColab.jsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
+import { View, Text, Button, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
 const ConsultarColab = () => {
-    const [searchId, setSearchId] = useState('');
-    const [colaborador, setColaborador] = useState(null);
-    const [colaboradoresList, setColaboradoresList] = useState([]);
-    const [admin, setAdmin] = useState(null);
-    const [adminsList, setAdminsList] = useState([]);
-    const [selectedField, setSelectedField] = useState('');
-    const [newData, setNewData] = useState('');
+  const [colaborador, setColaborador] = useState(null);
+  const [colaboradoresList, setColaboradoresList] = useState([]);
+  const [admin, setAdmin] = useState(null);
+  const [adminsList, setAdminsList] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserType, setSelectedUserType] = useState('');
+  const [selectedField, setSelectedField] = useState('');
+  const [newData, setNewData] = useState('');
 
-    const handleSearch = async () => {
-        if (!searchId) {
-            alert('Por favor, introduce un ID antes de realizar la búsqueda.');
-            return;
-        }
-        try {
-            const response = await axios.get(`http://192.168.0.13:4000/api/colaborador/${searchId}`);
-            setColaborador(response.data);
-        } catch (error) {
-            alert('Error: ese ID de Colaborador no existe');
-            console.error('Error searching for collaborator:', error);
-        }
-    };
+  const handleSearch = async () => {
+    if (!selectedUser || !selectedUserType) {
+      alert('Por favor, selecciona un usuario y su tipo antes de realizar la búsqueda.');
+      return;
+    }
+    try {
+      const response = await axios.get(`http://192.168.0.13:4000/api/${selectedUserType}/${selectedUser}`);
+      if (selectedUserType === 'colaborador') {
+        setColaborador(response.data);
+      } else {
+        setAdmin(response.data);
+      }
+    } catch (error) {
+      alert(`Error: ese ID de ${selectedUserType} no existe`);
+      console.error(`Error searching for ${selectedUserType}:`, error);
+    }
+  };
 
-    const handleAdminSearch = async () => {
-        if (!searchId) {
-            alert('Por favor, introduce un ID antes de realizar la búsqueda.');
-            return;
-        }
-        try {
-            const response = await axios.get(`http://192.168.0.13:4000/api/Admin/${searchId}`);
-            setAdmin(response.data);
-        } catch (error) {
-            alert('Error: ese ID de Administrador no existe');
-            console.error('Error searching for admin:', error);
-        }
-    };
-
-    const handleDelete = async () => {
-        try {
-            await axios.delete(`http://192.168.0.13:4000/api/colaborador/${colaborador._id}`);
-            setColaborador(null);
-            loadColaboradoresList();
-        } catch (error) {
-            console.error('Error deleting collaborator:', error);
-        }
-    };
-
-    const handleAdminDelete = async () => {
-        try {
-            await axios.delete(`http://192.168.0.13:4000/api/Admin/${admin._id}`);
-            setAdmin(null);
-            loadAdminsList();
-        } catch (error) {
-            console.error('Error deleting admin:', error);
-        }
-    };
-
-    const handleUpdate = async () => {
-        try {
-            await axios.put(`http://192.168.0.13:4000/api/colaborador/${colaborador._id}`, { [selectedField]: newData });
-            setColaborador(null);
-            loadColaboradoresList();
-        } catch (error) {
-            console.error('Error updating collaborator:', error);
-        }
-    };
-
-    const handleAdminUpdate = async () => {
-        try {
-            await axios.put(`http://192.168.0.13:4000/api/Admin/${admin._id}`, { [selectedField]: newData });
-            setAdmin(null);
-            loadAdminsList();
-        } catch (error) {
-            console.error('Error updating admin:', error);
-        }
-    };
-
-    const loadColaboradoresList = async () => {
-        try {
-            const response = await axios.get('http://192.168.0.13:4000/api/colaborador');
-            setColaboradoresList(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error loading collaborators list:', error);
-        }
-    };
-
-    const loadAdminsList = async () => {
-        try {
-            const response = await axios.get('http://192.168.0.13:4000/api/Admin');
-            setAdminsList(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error loading admins list:', error);
-        }
-    };
-
-    useEffect(() => {
-        if (searchId === '') {
-            setColaborador(null);
-            setAdmin(null);
-        }
+  const handleDeleteUser = async () => {
+    try {
+      await axios.delete(`http://192.168.0.13:4000/api/${selectedUserType}/${selectedUser}`);
+      alert(`Usuario ${selectedUser} eliminado exitosamente.`);
+      if (selectedUserType === 'colaborador') {
+        setColaborador(null);
         loadColaboradoresList();
+      } else {
+        setAdmin(null);
         loadAdminsList();
-    }, [searchId]);
+      }
+    } catch (error) {
+      alert(`Error al eliminar el usuario ${selectedUser}`);
+      console.error('Error deleting user:', error);
+    }
+  };
 
-    return (
-      <ScrollView>
-          <View style={{ padding: 20 }}>
-              <TextInput
-                  style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-                  placeholder="Search by ID"
-                  value={searchId}
-                  onChangeText={(text) => setSearchId(text)}
-              />
+  const handleUpdateUser = async () => {
+    try {
+      const endpoint = selectedUserType === 'colaborador' ? 'colaborador' : 'Admin';
+      await axios.put(`http://192.168.0.13:4000/api/${endpoint}/${selectedUser}`, { [selectedField]: newData });
+      alert(`Usuario ${selectedUser} actualizado exitosamente.`);
+      if (selectedUserType === 'colaborador') {
+        setColaborador(null);
+        loadColaboradoresList();
+      } else {
+        setAdmin(null);
+        loadAdminsList();
+      }
+    } catch (error) {
+      alert(`Error al actualizar el usuario ${selectedUser}`);
+      console.error('Error updating user:', error);
+    }
+  };
+
+  const loadColaboradoresList = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.13:4000/api/colaborador');
+      setColaboradoresList(response.data);
+    } catch (error) {
+      console.error('Error loading collaborators list:', error);
+    }
+  };
+
+  const loadAdminsList = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.13:4000/api/Admin');
+      setAdminsList(response.data);
+    } catch (error) {
+      console.error('Error loading admins list:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadColaboradoresList();
+    loadAdminsList();
+  }, []);
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={{color:'gray'}}>Selecciona el tipo de usuario:</Text>
+        <Picker
+          selectedValue={selectedUserType}
+          onValueChange={(itemValue) => setSelectedUserType(itemValue)}
+        >
+          <Picker.Item label="Selecciona el tipo de usuario" value="" />
+          <Picker.Item label="Colaborador" value="colaborador" />
+          <Picker.Item label="Admin" value="Admin" />
+        </Picker>
+
+        {selectedUserType && (
+          <View>
+            <Text style={{color: 'gray'}}>Selecciona el usuario:</Text>
+            <Picker
+              selectedValue={selectedUser}
+              onValueChange={(itemValue) => setSelectedUser(itemValue)}
+            >
+              <Picker.Item label="Selecciona un usuario" value="" />
+              {selectedUserType === 'colaborador' &&
+                colaboradoresList.map((colaborador) => (
+                  <Picker.Item key={colaborador._id} label={colaborador.nombre} value={colaborador._id} />
+                ))}
+              {selectedUserType === 'Admin' &&
+                adminsList.map((admin) => (
+                    <Picker.Item key={admin._id} label={admin.nombre} value={admin._id} />
+                  ))}
+              </Picker>
+            <View style={{ marginBottom:10}}>
               <Button title="Search" onPress={handleSearch} />
-              <Button title="Search Admin" onPress={handleAdminSearch} />
-
-              {colaborador && (
-                  <View>
-                      <Text>ID: {colaborador._id}</Text>
-                      <Text>Nombre: {colaborador.nombre}</Text>
-                      <Button title="Update" onPress={handleUpdate} />
-                      <Button title="Delete" onPress={handleDelete} />
-                  </View>
+            </View>
+            <View style={{ marginBottom:10}}>
+              <Button title="Actualizar Usuario" onPress={handleUpdateUser} />
+            </View>
+            <View style={{ marginBottom:10}}>
+              <Button title="Eliminar Usuario" onPress={handleDeleteUser} color={'red'} />
+            </View>
+  
+              {selectedUserType === 'colaborador' && colaborador && (
+                <View style={styles.userInfo}>
+                  <Text style={{color:'black', fontWeight: 'bold', fontSize: 18}}>Información del colaborador:</Text>
+                  <Text style={styles.info}>ID: {colaborador._id}</Text>
+                  <Text style={styles.info}>Nombre: {colaborador.nombre}</Text>
+                  <Text style={styles.info}>Cédula: {colaborador.cedula}</Text>
+                  <Text style={styles.info}>Departamento: {colaborador.departamento}</Text>
+                  <Text style={styles.info}>Correo: {colaborador.correo}</Text>
+                  <Text style={styles.info}>Teléfono: {colaborador.telefono}</Text>
+                </View>
               )}
-
-              {admin && (
-                  <View>
-                      <Text>ID: {admin._id}</Text>
-                      <Text>Nombre: {admin.nombre}</Text>
-                      <Button title="Update Admin" onPress={handleAdminUpdate} />
-                      <Button title="Delete Admin" onPress={handleAdminDelete} />
-                  </View>
+  
+              {selectedUserType === 'Admin' && admin && (
+                <View style={styles.userInfo}>
+                  <Text style={{color:'black', fontWeight: 'bold', fontSize: 18}}>Información del administrador:</Text>                
+                  <Text style={styles.info}>ID: {admin._id}</Text>
+                  <Text style={styles.info}>Nombre: {admin.nombre}</Text>
+                  <Text style={styles.info}>Cédula: {admin.cedula}</Text>
+                  <Text style={styles.info}>Departamento: {admin.departamento}</Text>
+                  <Text style={styles.info}>Correo: {admin.correo}</Text>
+                  <Text style={styles.info}>Teléfono: {admin.telefono}</Text>
+                </View>
               )}
-
-              <View>
-                  <Text>Colaboradores:</Text>
-                  {colaboradoresList.map((colaborador) => (
-                      <Text key={colaborador._id}>{colaborador._id} - {colaborador.nombre}</Text>
-                  ))}
-              </View>
-
-              <View>
-                  <Text>Admins:</Text>
-                  {adminsList.map((admin) => (
-                      <Text key={admin._id}>{admin._id} - {admin.nombre}</Text>
-                  ))}
-              </View>
-          </View>
+  
+              {selectedUserType && (
+                <View>
+                  <Text style={{ color: 'gray'}}>Selecciona el campo a modificar:</Text>
+                  <Picker
+                    selectedValue={selectedField}
+                    onValueChange={(itemValue) => setSelectedField(itemValue)}
+                  >
+                    <Picker.Item label="Selecciona el campo a modificar" value="" />
+                    <Picker.Item label="Nombre" value="nombre" />
+                    <Picker.Item label="Cédula" value="cedula" />
+                    <Picker.Item label="Departamento" value="departamento" />
+                    <Picker.Item label="Correo" value="correo" />
+                    <Picker.Item label="Teléfono" value="telefono" />
+                    <Picker.Item label="Estado" value="estado" />
+                  </Picker>
+  
+                  <Text style={{ color: 'gray' }}>Nuevo valor:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={newData}
+                    onChangeText={setNewData}
+                  />
+                </View>
+              )}
+            </View>
+          )}
+        </View>
       </ScrollView>
-  );
-};
-
-export default ConsultarColab;
+    );
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      padding: 20,
+    },
+    userInfo: {
+      backgroundColor: 'lightblue',
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 10,
+      marginTop: 10,
+    },
+    info: {
+      color: 'black',
+      fontSize: 15,
+    },
+    input: {
+      borderWidth: 1,
+      color:'black', 
+      borderColor: 'black',
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 10,
+    },
+  });
+  
+  export default ConsultarColab;
+  
