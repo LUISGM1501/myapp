@@ -12,6 +12,7 @@ import InformeProyecto from './Colaborador/PantallasColaborador/MiProyecto/Infor
 import TareasProyecto from './Colaborador/PantallasColaborador/MiProyecto/TareasProyecto';
 import ProyectosAdmin from  "./Administrador/Proyectos/ProyectosAdmin";
 import ConsultarProyecto from './Administrador/Proyectos/ConsultarProyecto';
+import SeguimientoProyecto from './Administrador/Proyectos/SeguimientoProyecto';
 import ConsultarReunion from './Administrador/Proyectos/ConsultarReunion';
 import CrearProyecto from './Administrador/Proyectos/CrearProyecto';
 import CrearReunion from './Administrador/Proyectos/CrearReunion';
@@ -46,6 +47,7 @@ const ProyectosAdminStack = () => {
       <Stack.Screen name='CrearProyecto' component={CrearProyecto} />
       <Stack.Screen name='CrearReunion' component={CrearReunion} />
       <Stack.Screen name='TareasProyectos' component={TareasProyectos} />
+      <Stack.Screen name='SeguimientoProyecto' component={SeguimientoProyecto} />
     </Stack.Navigator>
   );
 }

@@ -14,7 +14,7 @@ function ForoColab() {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get('http://192.168.0.13:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
+      const response = await axios.get('http://192.168.0.17:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
       const mensajes = response.data;
       
       // Obtener el nombre y el departamento del autor de cada mensaje
@@ -37,7 +37,7 @@ function ForoColab() {
 
   const obtenerAutor = async (idAutor) => {
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/colaborador/${idAutor}`);
+      const response = await axios.get(`http://192.168.0.17:4000/api/colaborador/${idAutor}`);
       
       if (!response || !response.data) {
         console.error('Error: Datos del autor no encontrados');
@@ -61,7 +61,7 @@ function ForoColab() {
       const nombreAutor = await AsyncStorage.getItem('username');
 
       await axios.post(
-        'http://192.168.0.13:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
+        'http://192.168.0.17:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
         { nombreAutor, idAutor, contenido: mensaje }
       );
 

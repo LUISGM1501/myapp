@@ -15,7 +15,7 @@ const TareasProyecto = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('http://192.168.0.13:4000/api/proyecto');
+      const response = await axios.get('http://192.168.0.17:4000/api/proyecto');
       console.log('Proyectos obtenidos:', response.data);
       setProjectsList(response.data);
     } catch (error) {
@@ -25,7 +25,7 @@ const TareasProyecto = () => {
 
   const fetchResponsableName = async (responsableId) => {
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/colaborador/${responsableId}`);
+      const response = await axios.get(`http://192.168.0.17:4000/api/colaborador/${responsableId}`);
       const responsable = response.data;
       return responsable.nombre;
     } catch (error) {
@@ -42,7 +42,7 @@ const TareasProyecto = () => {
     }
     try {
       console.log('Proyecto seleccionado:', selectedProjectId);
-      const response = await axios.get(`http://192.168.0.13:4000/api/proyecto/${selectedProjectId}`);
+      const response = await axios.get(`http://192.168.0.17:4000/api/proyecto/${selectedProjectId}`);
       console.log('Respuesta del servidor:', response.data);
       const project = response.data;
       setTareas(project.tareas);

@@ -10,7 +10,7 @@ const Inicio = ({ onSelectUserType }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://192.168.0.13:4000/api/login', {
+      const response = await axios.post('http://192.168.0.17:4000/api/login', {
         nombre: username,
         password: password,
       });

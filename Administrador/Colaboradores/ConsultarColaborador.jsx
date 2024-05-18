@@ -19,7 +19,7 @@ const ConsultarColab = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/${selectedUserType}/${selectedUser}`);
+      const response = await axios.get(`http://192.168.0.17:4000/api/${selectedUserType}/${selectedUser}`);
       if (selectedUserType === 'colaborador') {
         setColaborador(response.data);
       } else {
@@ -33,7 +33,7 @@ const ConsultarColab = () => {
 
   const handleDeleteUser = async () => {
     try {
-      await axios.delete(`http://192.168.0.13:4000/api/${selectedUserType}/${selectedUser}`);
+      await axios.delete(`http://192.168.0.17:4000/api/${selectedUserType}/${selectedUser}`);
       alert(`Usuario ${selectedUser} eliminado exitosamente.`);
       if (selectedUserType === 'colaborador') {
         setColaborador(null);
@@ -51,7 +51,7 @@ const ConsultarColab = () => {
   const handleUpdateUser = async () => {
     try {
       const endpoint = selectedUserType === 'colaborador' ? 'colaborador' : 'Admin';
-      await axios.put(`http://192.168.0.13:4000/api/${endpoint}/${selectedUser}`, { [selectedField]: newData });
+      await axios.put(`http://192.168.0.17:4000/api/${endpoint}/${selectedUser}`, { [selectedField]: newData });
       alert(`Usuario ${selectedUser} actualizado exitosamente.`);
       if (selectedUserType === 'colaborador') {
         setColaborador(null);
@@ -68,7 +68,7 @@ const ConsultarColab = () => {
 
   const loadColaboradoresList = async () => {
     try {
-      const response = await axios.get('http://192.168.0.13:4000/api/colaborador');
+      const response = await axios.get('http://192.168.0.17:4000/api/colaborador');
       setColaboradoresList(response.data);
     } catch (error) {
       console.error('Error loading collaborators list:', error);
@@ -77,7 +77,7 @@ const ConsultarColab = () => {
 
   const loadAdminsList = async () => {
     try {
-      const response = await axios.get('http://192.168.0.13:4000/api/Admin');
+      const response = await axios.get('http://192.168.0.17:4000/api/Admin');
       setAdminsList(response.data);
     } catch (error) {
       console.error('Error loading admins list:', error);

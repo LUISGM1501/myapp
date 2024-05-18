@@ -43,6 +43,12 @@ const ProyectosAdmin = () => {
           onPress={() => navigateToScreen('TareasProyectos')}
         />
       </View>
+      <View style={{ marginVertical: 10 }}>
+        <Button
+          title="Seguimiento Proyecto"
+          onPress={() => navigateToScreen('SeguimientoProyecto')}
+        />
+      </View>
     </View>
   );
 };
