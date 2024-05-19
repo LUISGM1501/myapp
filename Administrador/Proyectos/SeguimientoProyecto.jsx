@@ -3,7 +3,6 @@ import { View, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-// Componente principal
 const SeguimientoProyecto = ({ navigation }) => {
   const [proyectos, setProyectos] = useState([]);
   const [selectedProyecto, setSelectedProyecto] = useState(null);
@@ -35,11 +34,9 @@ const SeguimientoProyecto = ({ navigation }) => {
 
   const handleProyectoChange = (proyectoId) => {
     if (proyectoId === 'todos') {
-      // Si se selecciona 'todos los proyectos', calculamos los informes para todos los proyectos
-      setSelectedProyecto(null); // Restablecer el estado de selectedProyecto a null
+      setSelectedProyecto('todos');
       calcularInformesParaTodos();
     } else {
-      // Si se selecciona un proyecto específico, calculamos los informes solo para ese proyecto
       const proyecto = proyectos.find(p => p._id === proyectoId);
       setSelectedProyecto(proyecto);
       calcularInformes(proyecto);
@@ -61,128 +58,6 @@ const SeguimientoProyecto = ({ navigation }) => {
     calcularPorcentajeTareas(proyecto);
   };
 
-  const calcularHorasPromedioPorTarea = (proyecto) => {
-    let totalHoras = 0;
-    let totalTareas = 0;
-    proyecto.tareas.forEach((tarea) => {
-      totalHoras += tarea.tiempoEstimado;
-      totalTareas++;
-    });
-    const promedio = totalTareas > 0 ? totalHoras / totalTareas : 0;
-    setHorasPromedioPorTarea(promedio);
-  };
-
-  const calcularTareaMayorHoras = (proyecto) => {
-    let mayorHoras = 0;
-    let tareaMayor = null;
-    proyecto.tareas.forEach((tarea) => {
-      if (tarea.tiempoEstimado > mayorHoras) {
-        mayorHoras = tarea.tiempoEstimado;
-        tareaMayor = tarea;
-      }
-    });
-    setTareaMayorHoras(tareaMayor);
-  };
-
-  const calcularRecursosPromedioPorTarea = (proyecto) => {
-    let totalRecursos = 0;
-    let totalTareas = 0;
-    proyecto.tareas.forEach((tarea) => {
-      totalRecursos += tarea.recursosEconomicos;
-      totalTareas++;
-    });
-    const promedio = totalTareas > 0 ? totalRecursos / totalTareas : 0;
-    setRecursosPromedioPorTarea(promedio);
-  };
-
-  const calcularTareaMayorRecursos = (proyecto) => {
-    let maxRecursos = 0;
-    let tareaMayor = null;
-    proyecto.tareas.forEach((tarea) => {
-      if (tarea.recursosEconomicos > maxRecursos) {
-        maxRecursos = tarea.recursosEconomicos;
-        tareaMayor = tarea;
-      }
-    });
-    setTareaMayorRecursos(tareaMayor);
-  };
-
-  const calcularRecursosAsignadosProyecto = (proyecto) => {
-    let totalRecursos = 0;
-    proyecto.tareas.forEach((tarea) => {
-      totalRecursos += tarea.recursosEconomicos;
-    });
-    setRecursosAsignadosProyecto(totalRecursos);
-  };
-
-  const calcularStoryPointsPromedio = (proyecto) => {
-    let totalStoryPoints = 0;
-    let totalTareas = 0;
-    proyecto.tareas.forEach((tarea) => {
-      totalStoryPoints += tarea.storyPoints;
-      totalTareas++;
-    });
-    const promedio = totalTareas > 0 ? totalStoryPoints / totalTareas : 0;
-    setStoryPointsPromedio(promedio);
-  };
-
-  const calcularTareaMayorStoryPoints = (proyecto) => {
-    let mayorStoryPoints = 0;
-    let tareaMayor = null;
-    proyecto.tareas.forEach((tarea) => {
-      if (tarea.storyPoints > mayorStoryPoints) {
-        mayorStoryPoints = tarea.storyPoints;
-        tareaMayor = tarea;
-      }
-    });
-    setTareaMayorStoryPoints(tareaMayor);
-  };
-
-  const calcularTiempoPromedioTareas = (proyecto) => {
-    let totalTiempo = 0;
-    let totalTareas = 0;
-    proyecto.tareas.forEach((tarea) => {
-      totalTiempo += tarea.tiempoEstimado;
-      totalTareas++;
-    });
-    const promedio = totalTareas > 0 ? totalTiempo / totalTareas : 0;
-    setTiempoPromedioTareas(promedio);
-  };
-
-  const calcularTareaMayorTiempo = (proyecto) => {
-    let mayorTiempo = 0;
-    let tareaMayor = null;
-    proyecto.tareas.forEach((tarea) => {
-      if (tarea.tiempoEstimado > mayorTiempo) {
-        mayorTiempo = tarea.tiempoEstimado;
-        tareaMayor = tarea;
-      }
-    });
-    setTareaMayorTiempo(tareaMayor);
-  };
-
-  const calcularPorcentajeTareas = (proyecto) => {
-    let terminadas = 0;
-    let pendientes = 0;
-    let enProgreso = 0;
-    proyecto.tareas.forEach((tarea) => {
-      if (tarea.estado === 'Terminada') {
-        terminadas++;
-      } else if (tarea.estado === 'Pendiente') {
-        pendientes++;
-      } else if (tarea.estado === 'En Proceso') {
-        enProgreso++;
-      }
-    });
-    const totalTareas = proyecto.tareas.length;
-    const porcentajeTerminadas = (terminadas / totalTareas) * 100;
-    const porcentajePendientes = (pendientes / totalTareas) * 100;
-    const porcentajeEnProgreso = (enProgreso / totalTareas) * 100;
-    setPorcentajeTerminadas(porcentajeTerminadas);
-    setPorcentajePendientes(porcentajePendientes);
-    setPorcentajeEnProgreso(porcentajeEnProgreso);
-  };
-
   const calcularInformesParaTodos = () => {
     let totalHoras = 0;
     let totalRecursos = 0;
@@ -192,6 +67,11 @@ const SeguimientoProyecto = ({ navigation }) => {
     let terminadas = 0;
     let pendientes = 0;
     let enProgreso = 0;
+
+    let tareaMayorHorasGlobal = null;
+    let tareaMayorRecursosGlobal = null;
+    let tareaMayorStoryPointsGlobal = null;
+    let tareaMayorTiempoGlobal = null;
 
     proyectos.forEach((proyecto) => {
       proyecto.tareas.forEach((tarea) => {
@@ -208,160 +88,165 @@ const SeguimientoProyecto = ({ navigation }) => {
         } else if (tarea.estado === 'En Proceso') {
           enProgreso++;
         }
+
+        if (!tareaMayorHorasGlobal || tarea.tiempoEstimado > tareaMayorHorasGlobal.tiempoEstimado) {
+          tareaMayorHorasGlobal = tarea;
+        }
+
+        if (!tareaMayorRecursosGlobal || tarea.recursosEconomicos > tareaMayorRecursosGlobal.recursosEconomicos) {
+          tareaMayorRecursosGlobal = tarea;
+        }
+
+        if (!tareaMayorStoryPointsGlobal || tarea.storyPoints > tareaMayorStoryPointsGlobal.storyPoints) {
+          tareaMayorStoryPointsGlobal = tarea;
+        }
+
+        if (!tareaMayorTiempoGlobal || tarea.tiempoEstimado > tareaMayorTiempoGlobal.tiempoEstimado) {
+          tareaMayorTiempoGlobal = tarea;
+        }
       });
     });
 
     const promedioHoras = totalTareas > 0 ? totalHoras / totalTareas : 0;
     const promedioStoryPoints = totalTareas > 0 ? totalStoryPoints / totalTareas : 0;
     const promedioTiempo = totalTareas > 0 ? totalTiempo / totalTareas : 0;
+    const promedioRecursos = totalTareas > 0 ? totalRecursos / totalTareas : 0;
 
-    const porcentajeTerminadas = (terminadas / totalTareas) * 100;
-    const porcentajePendientes = (pendientes / totalTareas) * 100;
-    const porcentajeEnProgreso = (enProgreso / totalTareas) * 100;
+    const porcentajeTerminadas = totalTareas > 0 ? (terminadas / totalTareas) * 100 : 0;
+    const porcentajePendientes = totalTareas > 0 ? (pendientes / totalTareas) * 100 : 0;
+    const porcentajeEnProgreso = totalTareas > 0 ? (enProgreso / totalTareas) * 100 : 0;
 
     setHorasPromedioPorTarea(promedioHoras);
     setStoryPointsPromedio(promedioStoryPoints);
     setTiempoPromedioTareas(promedioTiempo);
+    setRecursosPromedioPorTarea(promedioRecursos);
     setPorcentajeTerminadas(porcentajeTerminadas);
     setPorcentajePendientes(porcentajePendientes);
     setPorcentajeEnProgreso(porcentajeEnProgreso);
-    setRecursosAsignadosProyecto(totalRecursos); // Actualizar los recursos asignados en todos los proyectos
+    setRecursosAsignadosProyecto(totalRecursos);
+    setTareaMayorHoras(tareaMayorHorasGlobal);
+    setTareaMayorRecursos(tareaMayorRecursosGlobal);
+    setTareaMayorStoryPoints(tareaMayorStoryPointsGlobal);
+    setTareaMayorTiempo(tareaMayorTiempoGlobal);
   };
 
+  const calcularHorasPromedioPorTarea = (proyecto) => {
+    const totalHoras = proyecto.tareas.reduce((total, tarea) => total + tarea.tiempoEstimado, 0);
+    const promedioHoras = proyecto.tareas.length > 0 ? totalHoras / proyecto.tareas.length : 0;
+    setHorasPromedioPorTarea(promedioHoras);
+  };
 
-  // En el componente SeguimientoProyecto
-  return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
-      <View style={{ alignItems: 'center' }}>
-        <Text style={{ color: 'black' }}>Informes de Seguimiento de Proyectos</Text>
-        <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+  const calcularTareaMayorHoras = (proyecto) => {
+    const tarea = proyecto.tareas.reduce((mayor, tarea) => (mayor === null || tarea.tiempoEstimado > mayor.tiempoEstimado ? tarea : mayor), null);
+    setTareaMayorHoras(tarea);
+  };
+
+  const calcularRecursosPromedioPorTarea = (proyecto) => {
+    const totalRecursos = proyecto.tareas.reduce((total, tarea) => total + tarea.recursosEconomicos, 0);
+    const promedioRecursos = proyecto.tareas.length > 0 ? totalRecursos / proyecto.tareas.length : 0;
+    setRecursosPromedioPorTarea(promedioRecursos);
+  };
+
+  const calcularTareaMayorRecursos = (proyecto) => {
+    const tarea = proyecto.tareas.reduce((mayor, tarea) => (mayor === null || tarea.recursosEconomicos > mayor.recursosEconomicos ? tarea : mayor), null);
+    setTareaMayorRecursos(tarea);
+  };
+
+  const calcularRecursosAsignadosProyecto = (proyecto) => {
+    const totalRecursos = proyecto.tareas.reduce((total, tarea) => total + tarea.recursosEconomicos, 0);
+    setRecursosAsignadosProyecto(totalRecursos);
+  };
+
+  const calcularStoryPointsPromedio = (proyecto) => {
+    const totalStoryPoints = proyecto.tareas.reduce((total, tarea) => total + tarea.storyPoints, 0);
+    const promedioStoryPoints = proyecto.tareas.length > 0 ? totalStoryPoints / proyecto.tareas.length : 0;
+    setStoryPointsPromedio(promedioStoryPoints);
+  };
+
+  const calcularTareaMayorStoryPoints = (proyecto) => {
+    const tarea = proyecto.tareas.reduce((mayor, tarea) => (mayor === null || tarea.storyPoints > mayor.storyPoints ? tarea : mayor), null);
+    setTareaMayorStoryPoints(tarea);
+  };
+
+  const calcularTiempoPromedioTareas = (proyecto) => {
+    const totalTiempo = proyecto.tareas.reduce((total, tarea) => total + tarea.tiempoEstimado, 0);
+    const promedioTiempo = proyecto.tareas.length > 0 ? totalTiempo / proyecto.tareas.length : 0;
+    setTiempoPromedioTareas(promedioTiempo);
+  };
+
+  const calcularTareaMayorTiempo = (proyecto) => {
+    const tarea = proyecto.tareas.reduce((mayor, tarea) => (mayor === null || tarea.tiempoEstimado > mayor.tiempoEstimado ? tarea : mayor), null);
+    setTareaMayorTiempo(tarea);
+  };
+
+  const calcularPorcentajeTareas = (proyecto) => {
+    const totalTareas = proyecto.tareas.length;
+    const calcularPorcentajeTareas = (proyecto) => {
+      const totalTareas = proyecto.tareas.length;
+      const terminadas = proyecto.tareas.filter(tarea => tarea.estado === 'Terminada').length;
+      const pendientes = proyecto.tareas.filter(tarea => tarea.estado === 'Pendiente').length;
+      const enProgreso = proyecto.tareas.filter(tarea => tarea.estado === 'En Proceso').length;
+  
+      const porcentajeTerminadas = totalTareas > 0 ? (terminadas / totalTareas) * 100 : 0;
+      const porcentajePendientes = totalTareas > 0 ? (pendientes / totalTareas) * 100 : 0;
+      const porcentajeEnProgreso = totalTareas > 0 ? (enProgreso / totalTareas) * 100 : 0;
+  
+      setPorcentajeTerminadas(porcentajeTerminadas);
+      setPorcentajePendientes(porcentajePendientes);
+      setPorcentajeEnProgreso(porcentajeEnProgreso);
+    }
+  };
+  
+    return (
+      <ScrollView>
+        <View>
           <Picker
-            selectedValue={selectedProyecto ? selectedProyecto._id : null}
-            style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 5, marginBottom: 25 }]}
+            selectedValue={selectedProyecto ? selectedProyecto._id : 'todos'}
             onValueChange={(itemValue) => handleProyectoChange(itemValue)}
           >
-            <Picker.Item label="Seleccione un proyecto..." value={null} />
-            <Picker.Item label="Todos los proyectos" value="todos" />
+            <Picker.Item label="Todos los Proyectos" value="todos" />
             {proyectos.map((proyecto) => (
               <Picker.Item key={proyecto._id} label={proyecto.nombre} value={proyecto._id} />
             ))}
-          </Picker >
-          {selectedProyecto ? (
-  <InformacionProyecto
-    horasPromedioPorTarea={horasPromedioPorTarea}
-    tareaMayorHoras={tareaMayorHoras}
-    recursosPromedioPorTarea={recursosPromedioPorTarea}
-    tareaMayorRecursos={tareaMayorRecursos}
-    recursosAsignadosProyecto={recursosAsignadosProyecto}
-    storyPointsPromedio={storyPointsPromedio}
-    tareaMayorStoryPoints={tareaMayorStoryPoints}
-    tiempoPromedioTareas={tiempoPromedioTareas}
-    tareaMayorTiempo={tareaMayorTiempo}
-    porcentajeTerminadas={porcentajeTerminadas}
-    porcentajePendientes={porcentajePendientes}
-    porcentajeEnProgreso={porcentajeEnProgreso}
-  />
-) : (
-  <InformacionTodosProyectos
-    horasPromedioPorTarea={horasPromedioPorTarea}
-    recursosPromedioPorTarea={recursosPromedioPorTarea}
-    recursosAsignadosProyecto={recursosAsignadosProyecto}
-    storyPointsPromedio={storyPointsPromedio}
-    tiempoPromedioTareas={tiempoPromedioTareas}
-    porcentajeTerminadas={porcentajeTerminadas}
-    porcentajePendientes={porcentajePendientes}
-    porcentajeEnProgreso={porcentajeEnProgreso}
-  />
-)}
-          </View>
+          </Picker>
         </View>
+  
+        {selectedProyecto !== 'todos' && (
+          <View>
+            <Text>Horas promedio por tarea: {horasPromedioPorTarea.toFixed(2)}</Text>
+            <Text>Tarea con más horas estimadas: {tareaMayorHoras ? tareaMayorHoras.nombre : 'N/A'}</Text>
+            <Text>Recursos promedio por tarea: {recursosPromedioPorTarea.toFixed(2)}</Text>
+            <Text>Tarea con más recursos asignados: {tareaMayorRecursos ? tareaMayorRecursos.nombre : 'N/A'}</Text>
+            <Text>Recursos asignados al proyecto: {recursosAsignadosProyecto}</Text>
+            <Text>Story points promedio por tarea: {storyPointsPromedio.toFixed(2)}</Text>
+            <Text>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
+            <Text>Tiempo promedio por tarea: {tiempoPromedioTareas.toFixed(2)}</Text>
+            <Text>Tarea con más tiempo estimado: {tareaMayorTiempo ? tareaMayorTiempo.nombre : 'N/A'}</Text>
+            <Text>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
+            <Text>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
+            <Text>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
+          </View>
+        )}
+  
+        {selectedProyecto === 'todos' && (
+          <View>
+            <Text>Horas promedio por tarea: {horasPromedioPorTarea.toFixed(2)}</Text>
+            <Text>Tarea con más horas estimadas: {tareaMayorHoras ? tareaMayorHoras.nombre : 'N/A'}</Text>
+            <Text>Recursos promedio por tarea: {recursosPromedioPorTarea.toFixed(2)}</Text>
+            <Text>Tarea con más recursos asignados: {tareaMayorRecursos ? tareaMayorRecursos.nombre : 'N/A'}</Text>
+            <Text>Recursos asignados a todos los proyectos: {recursosAsignadosProyecto}</Text>
+            <Text>Story points promedio por tarea: {storyPointsPromedio.toFixed(2)}</Text>
+            <Text>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
+            <Text>Tiempo promedio por tarea: {tiempoPromedioTareas.toFixed(2)}</Text>
+            <Text>Tarea con más tiempo estimado: {tareaMayorTiempo ? tareaMayorTiempo.nombre : 'N/A'}</Text>
+            <Text>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
+            <Text>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
+            <Text>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
+          </View>
+        )}
       </ScrollView>
     );
-  };
-  
-  // Cuando se selecciona un proyecto específico
-  const InformacionProyecto = ({
-    horasPromedioPorTarea,
-    tareaMayorHoras,
-    recursosPromedioPorTarea,
-    tareaMayorRecursos,
-    recursosAsignadosProyecto,
-    storyPointsPromedio,
-    tareaMayorStoryPoints,
-    tiempoPromedioTareas,
-    tareaMayorTiempo,
-    porcentajeTerminadas,
-    porcentajePendientes,
-    porcentajeEnProgreso,
-  }) => (
-    <>
-      <Text>Horas promedio por tarea: {horasPromedioPorTarea}</Text>
-      {tareaMayorHoras && (
-        <Text>Tarea con mayor cantidad de horas: {tareaMayorHoras.nombre} ({tareaMayorHoras.tiempoEstimado} horas)</Text>
-      )}
-      <Text>Recursos asignados por tarea promedio: {recursosPromedioPorTarea}</Text>
-      {tareaMayorRecursos && (
-        <Text>Tarea con mayor cantidad de recursos: {tareaMayorRecursos.nombre} ({tareaMayorRecursos.recursosEconomicos} unidades)</Text>
-      )}
-      <Text>Recursos asignados al proyecto: {recursosAsignadosProyecto}</Text>
-      <Text>Promedio de Story Points por tarea: {storyPointsPromedio}</Text>
-      {tareaMayorStoryPoints && (
-        <Text>Tarea con mayor cantidad de Story Points: {tareaMayorStoryPoints.nombre} ({tareaMayorStoryPoints.storyPoints} puntos)</Text>
-      )}
-      <Text>Promedio de tiempo de las tareas: {tiempoPromedioTareas}</Text>
-      {tareaMayorTiempo && (
-        <Text>Tarea con mayor tiempo estimado: {tareaMayorTiempo.nombre} ({tareaMayorTiempo.tiempoEstimado} horas)</Text>
-      )}
-      <Text>Porcentaje de tareas terminadas: {porcentajeTerminadas}%</Text>
-      <Text>Porcentaje de tareas pendientes: {porcentajePendientes}%</Text>
-      <Text>Porcentaje de tareas en progreso: {porcentajeEnProgreso}%</Text>
-    </>
-  );
-  
-  const InformacionTodosProyectos = ({
-    horasPromedioPorTarea,
-    recursosPromedioPorTarea,
-    recursosAsignadosProyecto,
-    storyPointsPromedio,
-    tiempoPromedioTareas,
-    porcentajeTerminadas,
-    porcentajePendientes,
-    porcentajeEnProgreso,
-  }) => (
-    <>
-      <Text>Horas promedio por tarea en todos los proyectos: {horasPromedioPorTarea}</Text>
-      <Text>
-        Recursos asignados por tarea promedio en todos los proyectos: {recursosPromedioPorTarea}
-      </Text>
-      <Text>Recursos asignados en todos los proyectos: {recursosAsignadosProyecto}</Text>
-      <Text>
-        Promedio de Story Points por tarea en todos los proyectos: {storyPointsPromedio}
-      </Text>
-      <Text>Promedio de tiempo de las tareas en todos los proyectos: {tiempoPromedioTareas}</Text>
-      <Text>Porcentaje de tareas terminadas en todos los proyectos: {porcentajeTerminadas}%</Text>
-      <Text>Porcentaje de tareas pendientes en todos los proyectos: {porcentajePendientes}%</Text>
-      <Text>Porcentaje de tareas en progreso en todos los proyectos: {porcentajeEnProgreso}%</Text>
-    </>
-  );
-
-  
-  const inputStyle = {
-    padding: 10,
-    marginBottom: 10,
-    color: 'black',
-    borderWidth: 1,
-    backgroundColor: '#f0f0f0', // Gris super claro
-    borderColor: 'lightgray',
-    borderRadius: 5,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
-  };
+};
   
 export default SeguimientoProyecto;
-
-
-
- 
+  
