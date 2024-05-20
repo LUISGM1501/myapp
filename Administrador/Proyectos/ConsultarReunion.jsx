@@ -30,7 +30,7 @@ const ConsultaReuPro = () => {
 
   const loadReunionesList = async () => {
       try {
-          const response = await axios.get('http://192.168.0.13:4000/api/reunion');
+          const response = await axios.get('http://192.168.18.104:4000/api/reunion');
           setReunionesList(response.data);
       } catch (error) {
           console.error('Error loading reuniones list:', error);
@@ -39,7 +39,7 @@ const ConsultaReuPro = () => {
 
   const handleSearch = async () => {
       try {
-          const response = await axios.get(`http://192.168.0.13:4000/api/reunion/${searchId}`);
+          const response = await axios.get(`http://192.168.18.104:4000/api/reunion/${searchId}`);
           setReunion(response.data);
       } catch (error) {
           console.error('Error searching for meeting:', error);
@@ -48,7 +48,7 @@ const ConsultaReuPro = () => {
 
   const handleDelete = async () => {
       try {
-          await axios.delete(`http://192.168.0.13:4000/api/reunion/${reunion._id}`);
+          await axios.delete(`http://192.168.18.104:4000/api/reunion/${reunion._id}`);
           setSearchId('');
           setReunion(null);
           loadReunionesList();
@@ -67,7 +67,7 @@ const ConsultaReuPro = () => {
               console.error('No new data provided');
               return;
           }
-          await axios.put(`http://192.168.0.13:4000/api/reunion/${reunion._id}`, { [selectedField]: newData });
+          await axios.put(`http://192.168.18.104:4000/api/reunion/${reunion._id}`, { [selectedField]: newData });
           setSearchId('');
           setReunion(null);
           loadReunionesList();

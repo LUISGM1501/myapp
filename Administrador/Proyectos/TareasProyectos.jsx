@@ -21,13 +21,13 @@ const TareasProAd = () => {
 
   const handleSearch = async () => {
       try {
-          const response = await axios.get(`http://192.168.0.13:4000/api/proyecto/${searchId}`);
+          const response = await axios.get(`http://192.168.18.104:4000/api/proyecto/${searchId}`);
           setProyecto(response.data);
 
           // Cargar tareas del proyecto con detalles de los responsables
           const tareas = await Promise.all(
               response.data.tareas.map(async (tarea) => {
-                  const responsableResponse = await axios.get(`http://192.168.0.13:4000/api/colaborador/${tarea.responsable}`);
+                  const responsableResponse = await axios.get(`http://192.168.18.104:4000/api/colaborador/${tarea.responsable}`);
                   return {
                       nombre: tarea.nombre,
                       descripcion: tarea.descripcion,
@@ -43,7 +43,7 @@ const TareasProAd = () => {
 
   const handleAddTask = async () => {
     try {
-      const response = await axios.put(`http://192.168.0.13:4000/api/proyecto/${proyecto._id}/add-task`, {
+      const response = await axios.put(`http://192.168.18.104:4000/api/proyecto/${proyecto._id}/add-task`, {
         nombre: newTaskName,
         descripcion: newTaskDescription,
         responsable: selectedTaskAssignee,
@@ -71,7 +71,7 @@ const TareasProAd = () => {
   
   const loadProyectosList = async () => {
       try {
-          const response = await axios.get('http://192.168.0.13:4000/api/proyecto');
+          const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
           setProyectosList(response.data);
       } catch (error) {
           console.error('Error loading projects list:', error);
@@ -80,7 +80,7 @@ const TareasProAd = () => {
 
   const loadColaboradoresList = async () => {
       try {
-          const response = await axios.get('http://192.168.0.13:4000/api/colaborador');
+          const response = await axios.get('http://192.168.18.104:4000/api/colaborador');
           setColaboradoresList(response.data);
       } catch (error) {
           console.error('Error loading collaborators list:', error);

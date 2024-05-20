@@ -15,7 +15,7 @@ const InformeProUsu = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://192.168.0.13:4000/api/proyecto');
+        const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
         console.log('Proyectos obtenidos:', response.data);
         setProjectsList(response.data);
       } catch (error) {
@@ -37,7 +37,7 @@ const InformeProUsu = () => {
 
   const fetchCompanionsInfo = async (companionId) => {
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/colaborador/${companionId}`);
+      const response = await axios.get(`http://192.168.18.104:4000/api/colaborador/${companionId}`);
       console.log('Respuesta del compañero:', response.data);
       return response.data;
     } catch (error) {
@@ -48,7 +48,7 @@ const InformeProUsu = () => {
 
   const handleProjectSelect = async () => {
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/proyecto/${selectedProjectId}`);
+      const response = await axios.get(`http://192.168.18.104:4000/api/proyecto/${selectedProjectId}`);
       console.log('Proyecto seleccionado:', response.data);
       const project = response.data;
 

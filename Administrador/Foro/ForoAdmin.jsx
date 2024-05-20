@@ -9,7 +9,7 @@ function ForoFoAd() {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get('http://192.168.0.13:4000/api/foro/660d97e2783f0dbbe89eba18/mensaje');
+      const response = await axios.get('http://192.168.18.104:4000/api/foro/660d97e2783f0dbbe89eba18/mensaje');
       const mensajes = response.data;
 
       // Obtener el nombre y el departamento del autor de cada mensaje
@@ -29,7 +29,7 @@ function ForoFoAd() {
 
   const dataAdmin = async (idAutor) => {
     try {
-      const response = await axios.get(`http://192.168.0.13:4000/api/Admin/${idAutor}`);
+      const response = await axios.get(`http://192.168.18.104:4000/api/Admin/${idAutor}`);
 
       if (!response || !response.data) {
         console.error('Error: Datos del administrador no encontrados');
@@ -63,7 +63,7 @@ function ForoFoAd() {
       }
 
       await axios.post(
-        'http://192.168.0.13:4000/api/foro/660d97e2783f0dbbe89eba18/mensaje',
+        'http://192.168.18.104:4000/api/foro/660d97e2783f0dbbe89eba18/mensaje',
         { nombreAutor, idAutor, contenido: mensaje }
       );
 

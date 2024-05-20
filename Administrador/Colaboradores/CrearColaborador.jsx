@@ -26,7 +26,7 @@ const CrearColAd = () => {
   }
   
     try {
-      const url = tipoUsuario === 'colaborador' ? 'http://192.168.0.13:4000/api/colaborador/' : 'http://192.168.0.13:4000/api/admin/';
+      const url = tipoUsuario === 'colaborador' ? 'http://192.168.18.104:4000/api/colaborador/' : 'http://192.168.18.104:4000/api/admin/';
       await axios.post(url, usuario);
       setDatosGuardados(usuario);
     } catch (error) {

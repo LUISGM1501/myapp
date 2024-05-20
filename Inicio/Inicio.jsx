@@ -14,7 +14,7 @@ const Inicio = ({ onSelectUserType }) => {
         nombre: username,
         password: password,
       });
-
+      console.log(resp)
       if (response && response.data) {
         const { role, id } = response.data;
         onSelectUserType(role);
