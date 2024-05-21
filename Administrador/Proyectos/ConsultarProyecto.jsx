@@ -178,7 +178,7 @@ const ConsultarProAd = () => {
               <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20, color: 'black' }}>Información del Proyecto:</Text>
               <Text style={{ color: 'black' }}>ID: {proyecto._id}</Text>
               <Text style={{ color: 'black' }}>Nombre: {proyecto.nombre}</Text>
-              <Text style={{ color: 'black' }}> Recursos: {proyecto.recursos}</Text>
+              <Text style={{ color: 'black' }}>Recursos: {proyecto.recursos}</Text>
               <Text style={{ color: 'black' }}>Presupuesto: {proyecto.presupuesto}</Text>
               <Text style={{ color: 'black' }}>Colaboradores: {proyecto.colaboradores.join(', ')}</Text>
               <Text style={{ color: 'black' }}>Estado: {proyecto.estado}</Text>
@@ -186,8 +186,7 @@ const ConsultarProAd = () => {
               <Text style={{ color: 'black' }}>Fecha de Inicio: {proyecto.fecha_inicio}</Text>
               <Text style={{ color: 'black' }}>Responsable: {proyecto.responsable}</Text>
               <Button color="#57AEBD" title="Eliminar" onPress={handleDelete} />
-            
-          
+      
             <View>
             <Picker
               style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 20 }]}
@@ -214,6 +213,7 @@ const ConsultarProAd = () => {
                 style={inputStyle}
                 value={newData}
                 onChangeText={(text) => setNewData(text)}
+                keyboardType={(selectedField === 'presupuesto') ? 'numeric' : 'default'}
               />
             
               <Button color="#4EBC7B" title="Actualizar" onPress={handleUpdate} />
@@ -246,6 +246,7 @@ const ConsultarProAd = () => {
                             placeholderTextColor={'gray'}
                             value={recursosEconomicos}
                             onChangeText={(text) => setRecursosEconomicos(text)}
+                            keyboardType="numeric"
                           />
                           <TextInput
                             style={inputStyle}
@@ -253,6 +254,7 @@ const ConsultarProAd = () => {
                             placeholderTextColor={'gray'}
                             value={tiempoEstimado}
                             onChangeText={(text) => setTiempoEstimado(text)}
+                            keyboardType="numeric"
                           />
                           <TextInput
                             style={inputStyle}
@@ -260,6 +262,7 @@ const ConsultarProAd = () => {
                             placeholderTextColor={'gray'}
                             value={storyPoints}
                             onChangeText={(text) => setStoryPoints(text)}
+                            keyboardType="numeric"
                           />
                           <Picker
                             selectedValue={editedTaskAssignee}

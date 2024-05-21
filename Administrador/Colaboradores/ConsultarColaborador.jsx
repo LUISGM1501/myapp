@@ -1,3 +1,4 @@
+// ConsultarColab.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -166,7 +167,6 @@ const ConsultarColab = () => {
                     <Picker.Item label="Departamento" value="departamento" />
                     <Picker.Item label="Correo" value="correo" />
                     <Picker.Item label="Teléfono" value="telefono" />
-                    <Picker.Item label="Estado" value="estado" />
                   </Picker>
   
                   <Text style={{ color: 'gray' }}>Nuevo valor:</Text>
@@ -174,6 +174,7 @@ const ConsultarColab = () => {
                     style={styles.input}
                     value={newData}
                     onChangeText={setNewData}
+                    keyboardType={(selectedField === 'telefono' || selectedField === 'cedula') ? 'numeric' : 'default'} // Configuración de keyboardType para aceptar solo números cuando se seleccionan los campos 'telefono' o 'cedula'
                   />
                 </View>
               )}
@@ -210,4 +211,3 @@ const ConsultarColab = () => {
   });
   
   export default ConsultarColab;
-  

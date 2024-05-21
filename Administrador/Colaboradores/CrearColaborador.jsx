@@ -57,6 +57,7 @@ const CrearColAd = () => {
             style={inputStyle}
             value={cedula}
             onChangeText={setCedula}
+            keyboardType="numeric"
           />
         </View>
 
@@ -100,6 +101,7 @@ const CrearColAd = () => {
             style={inputStyle}
             value={telefono}
             onChangeText={setTelefono}
+            keyboardType="numeric"
           />
         </View>
 

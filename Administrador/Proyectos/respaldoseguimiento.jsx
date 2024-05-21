@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import { BarChart, PieChart } from 'react-native-chart-kit';
 
 const SeguimientoProyecto = ({ navigation }) => {
   const [proyectos, setProyectos] = useState([]);
@@ -160,128 +159,24 @@ const SeguimientoProyecto = ({ navigation }) => {
           ))}
         </Picker>
       </View>
-  
-      {(selectedProyecto || selectedProyecto === 'todos') && (
+
+      {selectedProyecto && (
         <View style={{ alignItems: 'center' }}>
           <Text>Horas promedio por tarea: {horasPromedioPorTarea.toFixed(2)}</Text>
           <Text>Tarea con más horas estimadas: {tareaMayorHoras ? tareaMayorHoras.nombre : 'N/A'}</Text>
-          {/* Gráfico de barras para el tiempo de las tareas */}
-          <View style={{ marginTop: 20 }}>
-            {selectedProyecto && selectedProyecto.tareas && (
-              <BarChart
-                data={{
-                  labels: selectedProyecto.tareas.map(tarea => tarea.nombre),
-                  datasets: [
-                    {
-                      data: selectedProyecto.tareas.map(tarea => tarea.tiempoEstimado.toFixed(2)),
-                    },
-                  ],
-                }}
-                width={300}
-                height={200}
-                yAxisSuffix="h"
-                chartConfig={{
-                  backgroundGradientFrom: '#1E2923',
-                  backgroundGradientTo: '#08130D',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-                  style: {
-                    borderRadius: 16,
-                  },
-                  yAxisMinValue: 0, // Establecer el valor mínimo del eje Y en 0
-                }}
-              />
-            )}
-          </View>
-  
           <Text>Recursos promedio por tarea: {recursosPromedioPorTarea.toFixed(2)}</Text>
           <Text>Tarea con más recursos asignados: {tareaMayorRecursos ? tareaMayorRecursos.nombre : 'N/A'}</Text>
-          {/* Gráfico de barras para el presupuesto de las tareas */}
-          <View style={{ marginTop: 20 }}>
-            {selectedProyecto && selectedProyecto.tareas && (
-              <BarChart
-                data={{
-                  labels: selectedProyecto.tareas.map(tarea => tarea.nombre),
-                  datasets: [
-                    {
-                      data: selectedProyecto.tareas.map(tarea => tarea.recursosEconomicos.toFixed(2)),
-                    },
-                  ],
-                }}
-                width={300}
-                height={200}
-                yAxisSuffix="$"
-                chartConfig={{
-                  backgroundGradientFrom: '#1E2923',
-                  backgroundGradientTo: '#08130D',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(255, 99, 71, ${opacity})`,
-                  style: {
-                    borderRadius: 16,
-                  },
-                  yAxisMinValue: 0, // Establecer el valor mínimo del eje Y en 0
-                }}
-              />
-            )}
-          </View>
-  
           <Text>Recursos asignados {selectedProyecto === 'todos' ? 'a todos los proyectos' : 'al proyecto'}: {recursosAsignadosProyecto}</Text>
           <Text>Story points promedio por tarea: {storyPointsPromedio.toFixed(2)}</Text>
           <Text>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
           <Text>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
           <Text>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
           <Text>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
-          {/* Gráfico de pie para los estados de las tareas */}
-          <View style={{ marginTop: 20 }}>
-            <PieChart
-              data={[
-                {
-                  name: 'Terminadas',
-                  population: porcentajeTerminadas,
-                  color: '#FF6347',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-                {
-                  name: 'Pendientes',
-                  population: porcentajePendientes,
-                  color: '#36A2EB',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-                {
-                  name: 'En Progreso',
-                  population: porcentajeEnProgreso,
-                  color: '#FFD700',
-                  legendFontColor: '#7F7F7F',
-                  legendFontSize: 15,
-                },
-              ]}
-              width={300}
-              height={200}
-              chartConfig={{
-                backgroundGradientFrom: '#1E2923',
-                backgroundGradientTo: '#08130D',
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              }}
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute
-            />
-          </View>
-  
-          {/* Renderizar gráficos cuando se selecciona "Todos los Proyectos" */}
-          {selectedProyecto === 'todos' && (
-            <View>
-              {/* Renderizar los gráficos aquí para "Todos los Proyectos" */}
-            </View>
-          )}
         </View>
       )}
     </ScrollView>
   );
-  
 };
 
 export default SeguimientoProyecto;
+

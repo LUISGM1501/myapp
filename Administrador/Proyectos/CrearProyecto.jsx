@@ -117,6 +117,7 @@ const CrearProyecto = () => {
           style={inputStyle}
           value={presupuesto}
           onChangeText={setPresupuesto}
+          keyboardType="numeric"
         />
       </View>
       <View style={{ marginBottom: 10 }}>
@@ -213,6 +214,14 @@ const CrearProyecto = () => {
         </View>
       )}
       </View>
+
+      <View>
+        <Text style={{ color: 'black' }}>Colaboradores:</Text>
+        {colaboradoresDisponibles.map(colaborador => (
+          <Text key={colaborador._id}>{colaborador.nombre}</Text>
+        ))}
+      </View>
+      
     </ScrollView>
   );
 };
