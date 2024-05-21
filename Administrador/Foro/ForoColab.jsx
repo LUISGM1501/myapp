@@ -14,7 +14,7 @@ function ForoColab() {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get('http://192.168.0.17:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
+      const response = await axios.get('https://requebackend-da0aea993398.herokuapp.com/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
       const mensajes = response.data;
       
       // Obtener el nombre y el departamento del autor de cada mensaje
@@ -37,7 +37,7 @@ function ForoColab() {
 
   const obtenerAutor = async (idAutor) => {
     try {
-      const response = await axios.get(`http://192.168.0.17:4000/api/colaborador/${idAutor}`);
+      const response = await axios.get(`https://requebackend-da0aea993398.herokuapp.com/api/colaborador/${idAutor}`);
       
       if (!response || !response.data) {
         console.error('Error: Datos del autor no encontrados');
@@ -46,8 +46,19 @@ function ForoColab() {
 
       return response.data;
     } catch (error) {
-      console.error('Error al obtener datos del autor:', error);
-      return null;
+      try {
+        const response = await axios.get(`https://requebackend-da0aea993398.herokuapp.com/api/Admin/${idAutor}`);
+  
+        if (!response || !response.data) {
+          console.error('Error: Datos del administrador no encontrados');
+          return null;
+        }
+  
+        return response.data;
+      } catch (error) {
+        console.error('Error al obtener datos del administrador:', error);
+        return null;
+      }
     }
   };
 
@@ -61,7 +72,7 @@ function ForoColab() {
       const nombreAutor = await AsyncStorage.getItem('username');
 
       await axios.post(
-        'http://192.168.0.17:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
+        'https://requebackend-da0aea993398.herokuapp.com/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
         { nombreAutor, idAutor, contenido: mensaje }
       );
 

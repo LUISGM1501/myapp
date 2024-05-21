@@ -42,7 +42,7 @@ const ConsultarProAd = () => {
 
   const handleDelete = async () => {
       try {
-          await axios.delete(`http://192.168.0.17:4000/api/proyecto/${proyecto._id}`);
+          await axios.delete(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${proyecto._id}`);
           handleSearch();
       } catch (error) {
           console.error('Error deleting collaborator:', error);
@@ -58,7 +58,7 @@ const ConsultarProAd = () => {
               console.error('No new data provided');
               return;
           }
-          await axios.put(`http://192.168.0.17:4000/api/proyecto/${proyecto._id}`, { [selectedField]: newData });
+          await axios.put(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${proyecto._id}`, { [selectedField]: newData });
           handleSearch();
       } catch (error) {
           console.error('Error updating project:', error);
@@ -70,7 +70,7 @@ const ConsultarProAd = () => {
           return; // Exit the function early
       }
       try {
-          const response = await axios.get(`http://192.168.0.17:4000/api/proyecto/${searchId}`);
+          const response = await axios.get(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${searchId}`);
           // Check if response data is empty
           if (response && !response.data) {
               alert('No se encontró ningún proyecto con el ID proporcionado.');
@@ -85,7 +85,7 @@ const ConsultarProAd = () => {
   };
   const handleDeleteTask = async (taskId) => {
     try {
-        await axios.delete(`http://192.168.0.17:4000/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
+        await axios.delete(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
         handleSearch();
     } catch (error) {
         console.error('Error deleting task:', error);
@@ -95,7 +95,7 @@ const ConsultarProAd = () => {
 
   const handleEditTask = async (taskId) => {
       try {
-          await axios.put(`http://192.168.0.17:4000/api/proyecto/${proyecto._id}/edit-task/${taskId}`, {
+          await axios.put(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${proyecto._id}/edit-task/${taskId}`, {
               nombre: editedTaskName,
               descripcion: editedTaskDescription,
               responsable: editedTaskAssignee,
@@ -123,7 +123,7 @@ const ConsultarProAd = () => {
   }, []);
   const loadProyectosList = async () => {
       try {
-          const response = await axios.get('http://192.168.0.17:4000/api/proyecto');
+          const response = await axios.get('https://requebackend-da0aea993398.herokuapp.com/api/proyecto');
           setProyectosList(response.data);
       } catch (error) {
           console.error('Error loading projects list:', error);
@@ -131,7 +131,7 @@ const ConsultarProAd = () => {
   };
   const loadColaboradoresList = async () => {
       try {
-          const response = await axios.get('http://192.168.0.17:4000/api/colaborador');
+          const response = await axios.get('https://requebackend-da0aea993398.herokuapp.com/api/colaborador');
           setColaboradoresList(response.data);
       } catch (error) {
           console.error('Error loading collaborators list:', error);
