@@ -163,17 +163,43 @@ const SeguimientoProyecto = ({ navigation }) => {
   
       {(selectedProyecto || selectedProyecto === 'todos') && (
         <View style={{ alignItems: 'center' }}>
-          <Text>Horas promedio por tarea: {horasPromedioPorTarea.toFixed(2)}</Text>
-          <Text>Tarea con más horas estimadas: {tareaMayorHoras ? tareaMayorHoras.nombre : 'N/A'}</Text>
+          <Text style={{ color: 'gray' }}>Horas promedio por tarea: {horasPromedioPorTarea.toFixed(2)}</Text>
+          <Text style={{ color: 'gray' }}>Tarea con más horas estimadas: {tareaMayorHoras ? tareaMayorHoras.nombre : 'N/A'}</Text>
+  
           {/* Gráfico de barras para el tiempo de las tareas */}
           <View style={{ marginTop: 20 }}>
-            {selectedProyecto && selectedProyecto.tareas && (
+            {selectedProyecto && selectedProyecto !== 'todos' && selectedProyecto.tareas && (
               <BarChart
                 data={{
                   labels: selectedProyecto.tareas.map(tarea => tarea.nombre),
                   datasets: [
                     {
-                      data: selectedProyecto.tareas.map(tarea => tarea.tiempoEstimado.toFixed(2)),
+                      data: selectedProyecto.tareas.map(tarea => parseFloat(tarea.tiempoEstimado.toFixed(2))),
+                    },
+                  ],
+                }}
+                width={300}
+                height={200}
+                yAxisSuffix="h"
+                chartConfig={{
+                  backgroundGradientFrom: '#1E2923',
+                  backgroundGradientTo: '#08130D',
+                  decimalPlaces: 2,
+                  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+                  style: {
+                    borderRadius: 16,
+                  },
+                  yAxisMinValue: 0, // Establecer el valor mínimo del eje Y en 0
+                }}
+              />
+            )}
+            {selectedProyecto === 'todos' && (
+              <BarChart
+                data={{
+                  labels: proyectos.flatMap(proyecto => proyecto.tareas.map(tarea => tarea.nombre)),
+                  datasets: [
+                    {
+                      data: proyectos.flatMap(proyecto => proyecto.tareas.map(tarea => parseFloat(tarea.tiempoEstimado.toFixed(2)))),
                     },
                   ],
                 }}
@@ -194,17 +220,43 @@ const SeguimientoProyecto = ({ navigation }) => {
             )}
           </View>
   
-          <Text>Recursos promedio por tarea: {recursosPromedioPorTarea.toFixed(2)}</Text>
-          <Text>Tarea con más recursos asignados: {tareaMayorRecursos ? tareaMayorRecursos.nombre : 'N/A'}</Text>
+          <Text style={{ color: 'gray' }}>Recursos promedio por tarea: {recursosPromedioPorTarea.toFixed(2)}</Text>
+          <Text style={{ color: 'gray' }}>Tarea con más recursos asignados: {tareaMayorRecursos ? tareaMayorRecursos.nombre : 'N/A'}</Text>
+  
           {/* Gráfico de barras para el presupuesto de las tareas */}
           <View style={{ marginTop: 20 }}>
-            {selectedProyecto && selectedProyecto.tareas && (
+            {selectedProyecto && selectedProyecto !== 'todos' && selectedProyecto.tareas && (
               <BarChart
                 data={{
                   labels: selectedProyecto.tareas.map(tarea => tarea.nombre),
                   datasets: [
                     {
-                      data: selectedProyecto.tareas.map(tarea => tarea.recursosEconomicos.toFixed(2)),
+                      data: selectedProyecto.tareas.map(tarea => parseFloat(tarea.recursosEconomicos.toFixed(2))),
+                    },
+                  ],
+                }}
+                width={300}
+                height={200}
+                yAxisSuffix="$"
+                chartConfig={{
+                  backgroundGradientFrom: '#1E2923',
+                  backgroundGradientTo: '#08130D',
+                  decimalPlaces: 2,
+                  color: (opacity = 1) => `rgba(255, 99, 71, ${opacity})`,
+                  style: {
+                    borderRadius: 16,
+                  },
+                  yAxisMinValue: 0, // Establecer el valor mínimo del eje Y en 0
+                }}
+              />
+            )}
+            {selectedProyecto === 'todos' && (
+              <BarChart
+                data={{
+                  labels: proyectos.flatMap(proyecto => proyecto.tareas.map(tarea => tarea.nombre)),
+                  datasets: [
+                    {
+                      data: proyectos.flatMap(proyecto => proyecto.tareas.map(tarea => parseFloat(tarea.recursosEconomicos.toFixed(2)))),
                     },
                   ],
                 }}
@@ -225,12 +277,13 @@ const SeguimientoProyecto = ({ navigation }) => {
             )}
           </View>
   
-          <Text>Recursos asignados {selectedProyecto === 'todos' ? 'a todos los proyectos' : 'al proyecto'}: {recursosAsignadosProyecto}</Text>
-          <Text>Story points promedio por tarea: {storyPointsPromedio.toFixed(2)}</Text>
-          <Text>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
-          <Text>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
-          <Text>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
-          <Text>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
+          <Text style={{ color: 'gray' }}>Recursos asignados {selectedProyecto === 'todos' ? 'a todos los proyectos' : 'al proyecto'}: {recursosAsignadosProyecto}</Text>
+          <Text style={{ color: 'gray' }}>Story points promedio por tarea: {storyPointsPromedio.toFixed(2)}</Text>
+          <Text style={{ color: 'gray' }}>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
+          <Text style={{ color: '#FF6347' }}>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
+          <Text style={{ color: '#36A2EB' }}>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
+          <Text style={{ color: '#FFD700' }}>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
+  
           {/* Gráfico de pie para los estados de las tareas */}
           <View style={{ marginTop: 20 }}>
             <PieChart
@@ -270,17 +323,11 @@ const SeguimientoProyecto = ({ navigation }) => {
               absolute
             />
           </View>
-  
-          {/* Renderizar gráficos cuando se selecciona "Todos los Proyectos" */}
-          {selectedProyecto === 'todos' && (
-            <View>
-              {/* Renderizar los gráficos aquí para "Todos los Proyectos" */}
-            </View>
-          )}
         </View>
       )}
     </ScrollView>
   );
+  
   
 };
 
