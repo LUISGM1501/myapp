@@ -35,9 +35,22 @@ const ConsultarProAd = () => {
 
   const [selectedField, setSelectedField] = useState('');
   const [newData, setNewData] = useState('');
+  
+  const [showDatePicker, setShowDatePicker] = useState(false); // Estado para controlar la visibilidad del DateTimePicker
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Estado para la fecha seleccionada
 
   const [mostrarBoton, setMostrarBoton] = useState(false); // Añadido para corregir el error
 
+
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    const modifiedDate = new Date(currentDate); // Crear una nueva instancia de Date
+    modifiedDate.setDate(modifiedDate.getDate()-1); // Restar un día
+  
+    setNewData(modifiedDate);
+    setSelectedDate(currentDate);
+    setShowDatePicker(false);
+  };
 
   const handleDelete = async () => {
       try {
@@ -48,15 +61,20 @@ const ConsultarProAd = () => {
       }
   };
   const handleUpdate = async () => {
+    
       try {
           if (!selectedField) {
               console.error('No field selected for update');
               return;
           }
           if (!newData) {
+            console.log("entramos", selectedField);
+            console.log("entramos", newData);
               console.error('No new data provided');
               return;
           }
+          console.log("entramos", selectedField);
+          console.log("entramos", newData);
           await axios.put(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${proyecto._id}`, { [selectedField]: newData });
           handleSearch();
       } catch (error) {
@@ -69,12 +87,15 @@ const ConsultarProAd = () => {
           return; // Exit the function early
       }
       try {
+        
           const response = await axios.get(`https://requebackend-da0aea993398.herokuapp.com/api/proyecto/${searchId}`);
           // Check if response data is empty
           if (response && !response.data) {
               alert('No se encontró ningún proyecto con el ID proporcionado.');
               return; // Exit the function early
           }
+          console.log("entramos", selectedField);
+          console.log("entramos", newData);
           setProyecto(response.data);
           loadColaboradoresList();
       } catch (error) {
@@ -137,7 +158,11 @@ const ConsultarProAd = () => {
       }
   };
 
-
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white', padding: 20 }}>
@@ -191,7 +216,7 @@ const ConsultarProAd = () => {
               selectedValue={selectedField}
               onValueChange={(itemValue) => {
                 setSelectedField(itemValue);
-                if (itemValue === 'fecha') {
+                if (itemValue === 'fecha_inicio') {
                   setMostrarBoton(true); // Mostrar el botón solo cuando se selecciona "Fecha"
                 } else {
                   setMostrarBoton(false); // Ocultar el botón para otros valores seleccionados
@@ -203,16 +228,35 @@ const ConsultarProAd = () => {
               <Picker.Item label="Presupuesto" value="presupuesto" />
               <Picker.Item label="Estado" value="estado" />
               <Picker.Item label="Descripcion" value="descripcion" />
+              <Picker.Item label="Fecha" value="fecha_inicio" />
 
             </Picker>
-            <TextInput
-                placeholder='Nuevo valor'
-                placeholderTextColor={'gray'}
+
+            
+            {selectedField === 'fecha_inicio' ? (
+              <View>
+                <Button onPress={() => setShowDatePicker(true)} title="Seleccionar Fecha" />
+                {showDatePicker && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={selectedDate}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChangeDate}
+                  />
+                )}
+                <Text style={{ color: 'gray' }}>Fecha seleccionada: {newData && addDays(newData, 1).toLocaleString()}</Text>
+
+              </View>
+            ) : (
+              <TextInput
                 style={inputStyle}
+                onChangeText={setNewData}
                 value={newData}
-                onChangeText={(text) => setNewData(text)}
-                keyboardType={(selectedField === 'presupuesto') ? 'numeric' : 'default'}
+                placeholder={`Nuevo ${selectedField}`}
               />
+            )}
             
               <Button color="#4EBC7B" title="Actualizar" onPress={handleUpdate} />
             </View>
