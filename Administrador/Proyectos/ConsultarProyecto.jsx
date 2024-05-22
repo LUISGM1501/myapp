@@ -5,19 +5,6 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
-const ConsultarProyecto = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>ConsultarProyecto</Text>
-      <Button
-        title="Abrir Menú"
-        onPress={() => navigation.openDrawer()}
-      />
-    </View>
-  );
-};
-
-
 const ConsultarProAd = () => {
   const [searchId, setSearchId] = useState('');
   const [proyecto, setProyecto] = useState(null);

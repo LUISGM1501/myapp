@@ -151,6 +151,7 @@ const SeguimientoProyecto = ({ navigation }) => {
     <ScrollView>
       <View>
         <Picker
+          style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
           selectedValue={selectedProyecto ? selectedProyecto._id : 'todos'}
           onValueChange={(itemValue) => handleProyectoChange(itemValue)}
         >
@@ -328,6 +329,21 @@ const SeguimientoProyecto = ({ navigation }) => {
     </ScrollView>
   );
   
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default SeguimientoProyecto;

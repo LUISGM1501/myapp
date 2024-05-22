@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
 const ConsultaReuPro = () => {
@@ -11,9 +12,30 @@ const ConsultaReuPro = () => {
   const [selectedField, setSelectedField] = useState('');
   const [newData, setNewData] = useState('');
 
+  const [showDatePicker, setShowDatePicker] = useState(false); // Estado para controlar la visibilidad del DateTimePicker
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Estado para la fecha seleccionada
+  const [mostrarBoton, setMostrarBoton] = useState(false);
+
   useEffect(() => {
     loadReunionesList();
   }, []);
+
+
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    const modifiedDate = new Date(currentDate); // Crear una nueva instancia de Date
+    modifiedDate.setDate(modifiedDate.getDate()); // Restar un día
+  
+    setNewData(modifiedDate);
+    setSelectedDate(currentDate);
+    setShowDatePicker(false);
+  };
+
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate());
+    return result;
+  };
 
   const loadReunionesList = async () => {
     try {
@@ -107,16 +129,41 @@ const ConsultaReuPro = () => {
             <Text style={{ color: 'black' }}>Colaboradores: {reunion.colaboradores.join(', ')}</Text>
             <Button color="#57AEBD" title="Eliminar" onPress={handleDelete} />
             <View style={{ marginTop: 20 }}>
-              <Picker
-                selectedValue={selectedField}
-                onValueChange={value => setSelectedField(value)}
-                style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 20 }]}
-              >
+            <Picker
+              style={[inputStyle, { backgroundColor: '#BCCDE0', marginTop: 20 }]}
+              selectedValue={selectedField}
+              onValueChange={(itemValue) => {
+                setSelectedField(itemValue);
+                if (itemValue === 'fecha_inicio') {
+                  setMostrarBoton(true); // Mostrar el botón solo cuando se selecciona "Fecha"
+                } else {
+                  setMostrarBoton(false); // Ocultar el botón para otros valores seleccionados
+                }
+              }}
+            >
                 <Picker.Item label="Tema" value="tema" />
                 <Picker.Item label="Medio" value="medio" />
                 <Picker.Item label="Link" value="link" />
                 <Picker.Item label="Duración en Horas" value="duracionHoras" />
+                <Picker.Item label="Fecha" value="fecha" />
               </Picker>
+              {selectedField === 'fecha' ? (
+              <View>
+                <Button onPress={() => setShowDatePicker(true)} title="Seleccionar Fecha" />
+                {showDatePicker && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={selectedDate}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChangeDate}
+                  />
+                )}
+                <Text style={{ color: 'gray' }}>Fecha seleccionada: {newData && addDays(newData, 1).toLocaleString()}</Text>
+
+              </View>
+            ) : (
               <TextInput
                 placeholder='Nuevo Valor'
                 placeholderTextColor='gray'
@@ -125,6 +172,7 @@ const ConsultaReuPro = () => {
                 onChangeText={setNewData}
                 keyboardType={selectedField === 'duracionHoras' ? 'numeric' : 'default'} 
               />
+            )}
               <Button color="#4EBC7B" title="Actualizar" onPress={handleUpdate} />
             </View>
           </View>
