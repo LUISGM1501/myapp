@@ -45,7 +45,7 @@ const ConsultarProAd = () => {
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     const modifiedDate = new Date(currentDate); // Crear una nueva instancia de Date
-    modifiedDate.setDate(modifiedDate.getDate()-1); // Restar un día
+    modifiedDate.setDate(modifiedDate.getDate()); // Restar un día
   
     setNewData(modifiedDate);
     setSelectedDate(currentDate);
@@ -160,7 +160,7 @@ const ConsultarProAd = () => {
 
   const addDays = (date, days) => {
     const result = new Date(date);
-    result.setDate(result.getDate() + days);
+    result.setDate(result.getDate());
     return result;
   };
 
