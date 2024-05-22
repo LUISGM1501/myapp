@@ -80,7 +80,7 @@ function ForoFoAd() {
       <ScrollView style={styles.messagesContainer}>
         {mensajesForo.map((mensaje, index) => (
           <View key={index} style={styles.message}>
-            <Text>{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
+            <Text style={{color:'black'}}>{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
           </View>
         ))}
       </ScrollView>
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'black', 
   },
   messagesContainer: {
     flex: 1,

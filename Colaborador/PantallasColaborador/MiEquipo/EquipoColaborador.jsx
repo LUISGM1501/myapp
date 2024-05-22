@@ -69,7 +69,7 @@ const InformeProUsu = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Equipo de trabajo</Text>
       <View style={styles.pickerContainer}>
-        <Text>Selecciona un proyecto:</Text>
+        <Text style={{color:'black'}}>Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
           onValueChange={(itemValue, itemIndex) => setSelectedProjectId(itemValue)}
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'gray', 
+    color: 'black', 
   },
   companionCard: {
     backgroundColor: 'lightblue',

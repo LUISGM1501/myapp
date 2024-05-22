@@ -12,7 +12,7 @@ const Foros = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Mi Proyecto</Text>
+      <Text style={{color:'black'}} > Foros Colaborativos</Text>
       <View style={{ marginVertical: 10 }}>
         <Button
           title="Foro de Colaboradores"

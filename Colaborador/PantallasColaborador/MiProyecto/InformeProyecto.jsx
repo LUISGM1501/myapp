@@ -61,7 +61,7 @@ const InformeProyecto = () => {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, color:'gray' }}>Informe de tareas de proyectos</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, color:'black' }}>Informe de tareas de proyectos</Text>
       <Text style={{ fontSize: 16, color:'gray' }}>1: Pendiente, 2: En Progeso, 3: Terminada</Text>
       <View style={{ marginBottom: 20 }}>
         <Text style={{ color: 'gray' }}>Selecciona un proyecto:</Text>

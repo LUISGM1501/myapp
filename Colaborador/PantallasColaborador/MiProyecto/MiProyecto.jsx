@@ -12,7 +12,7 @@ const MiProyecto = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Mi Proyecto</Text>
+      <Text style={{color:'black'}} >Reportes</Text>
       <View style={{ marginVertical: 10 }}>
         <Button
           title="Ver Informe"

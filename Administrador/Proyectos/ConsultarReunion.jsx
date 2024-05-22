@@ -118,6 +118,8 @@ const ConsultaReuPro = () => {
                 <Picker.Item label="Duración en Horas" value="duracionHoras" />
               </Picker>
               <TextInput
+                placeholder='Nuevo Valor'
+                placeholderTextColor='gray'
                 style={inputStyle}
                 value={newData}
                 onChangeText={setNewData}

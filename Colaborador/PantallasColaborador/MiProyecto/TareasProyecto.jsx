@@ -63,13 +63,13 @@ const TareasProyecto = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Tareas de un Proyecto</Text>
       <View style={styles.selectContainer}>
-        <Text >Selecciona un proyecto:</Text>
+        <Text style={{color:'black'}}>Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
           style={{ height: 50, width: 200 }}
           onValueChange={(itemValue, itemIndex) => setSelectedProjectId(itemValue)}
         >
-          <Picker.Item label="Selecciona un proyecto" value="" />
+          <Picker.Item label="Selecciona un proyecto" value="" style={{color:'black'}}/>
           {projectsList.map(project => (
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}
@@ -82,8 +82,8 @@ const TareasProyecto = () => {
           {tareas.filter(tarea => tarea.estado === 'Pendiente').map((tarea, index) => (
             <View key={index} style={styles.taskItem}>
               <Text style={styles.taskTitle}>{tarea.nombre}</Text>
-              <Text><Text style={styles.boldText}>Descripción:</Text> {tarea.descripcion}</Text>
-              <Text><Text style={styles.boldText}>Responsable:</Text> {responsablesMap[tarea.responsable]}</Text>
+              <Text style={{color:'black'}}><Text style={styles.boldText}>Descripción:</Text > {tarea.descripcion}</Text>
+              <Text style={{color:'black'}}><Text style={styles.boldText}>Responsable:</Text> {responsablesMap[tarea.responsable]}</Text>
             </View>
           ))}
         </View>
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'black',
   },
   taskItem: {
     padding: 10,
@@ -144,9 +145,11 @@ const styles = StyleSheet.create({
   taskTitle: {
     fontWeight: 'bold',
     marginBottom: 5,
+    color:'black'
   },
   boldText: {
     fontWeight: 'bold',
+    color:'black'
   },
 });
 

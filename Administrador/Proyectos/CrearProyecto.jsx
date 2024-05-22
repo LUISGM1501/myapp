@@ -218,7 +218,7 @@ const CrearProyecto = () => {
       <View>
         <Text style={{ color: 'black' }}>Colaboradores:</Text>
         {colaboradoresDisponibles.map(colaborador => (
-          <Text key={colaborador._id}>{colaborador.nombre}</Text>
+          <Text key={colaborador._id} style={{color:'black'}}>{colaborador.nombre}</Text>
         ))}
       </View>
       

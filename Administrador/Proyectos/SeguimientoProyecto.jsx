@@ -62,7 +62,7 @@ const SeguimientoProyecto = ({ navigation }) => {
 
     const terminadas = proyecto.tareas.filter(tarea => tarea.estado === 'Terminada').length;
     const pendientes = proyecto.tareas.filter(tarea => tarea.estado === 'Pendiente').length;
-    const enProgreso = proyecto.tareas.filter(tarea => tarea.estado === 'En Proceso').length;
+    const EnProgreso = proyecto.tareas.filter(tarea => tarea.estado === 'En Progreso').length;
     const totalTareas = proyecto.tareas.length;
 
     const tareaMayorHoras = proyecto.tareas.reduce((mayor, tarea) => (mayor === null || tarea.tiempoEstimado > mayor.tiempoEstimado ? tarea : mayor), null);
@@ -76,7 +76,7 @@ const SeguimientoProyecto = ({ navigation }) => {
     setTiempoPromedioTareas(totalTareas > 0 ? totalTiempo / totalTareas : 0);
     setPorcentajeTerminadas(totalTareas > 0 ? (terminadas / totalTareas) * 100 : 0);
     setPorcentajePendientes(totalTareas > 0 ? (pendientes / totalTareas) * 100 : 0);
-    setPorcentajeEnProgreso(totalTareas > 0 ? (enProgreso / totalTareas) * 100 : 0);
+    setPorcentajeEnProgreso(totalTareas > 0 ? (EnProgreso / totalTareas) * 100 : 0);
     setRecursosAsignadosProyecto(totalRecursos);
     setTareaMayorHoras(tareaMayorHoras);
     setTareaMayorRecursos(tareaMayorRecursos);
@@ -92,7 +92,7 @@ const SeguimientoProyecto = ({ navigation }) => {
     let totalTareas = 0;
     let terminadas = 0;
     let pendientes = 0;
-    let enProgreso = 0;
+    let EnProgreso = 0;
 
     let tareaMayorHorasGlobal = null;
     let tareaMayorRecursosGlobal = null;
@@ -111,8 +111,8 @@ const SeguimientoProyecto = ({ navigation }) => {
           terminadas++;
         } else if (tarea.estado === 'Pendiente') {
           pendientes++;
-        } else if (tarea.estado === 'En Proceso') {
-          enProgreso++;
+        } else if (tarea.estado === 'En Progreso') {
+          EnProgreso++;
         }
 
         if (!tareaMayorHorasGlobal || tarea.tiempoEstimado > tareaMayorHorasGlobal.tiempoEstimado) {
@@ -139,7 +139,7 @@ const SeguimientoProyecto = ({ navigation }) => {
     setTiempoPromedioTareas(totalTareas > 0 ? totalTiempo / totalTareas : 0);
     setPorcentajeTerminadas(totalTareas > 0 ? (terminadas / totalTareas) * 100 : 0);
     setPorcentajePendientes(totalTareas > 0 ? (pendientes / totalTareas) * 100 : 0);
-    setPorcentajeEnProgreso(totalTareas > 0 ? (enProgreso / totalTareas) * 100 : 0);
+    setPorcentajeEnProgreso(totalTareas > 0 ? (EnProgreso / totalTareas) * 100 : 0);
     setRecursosAsignadosProyecto(totalRecursos);
     setTareaMayorHoras(tareaMayorHorasGlobal);
     setTareaMayorRecursos(tareaMayorRecursosGlobal);
@@ -154,7 +154,7 @@ const SeguimientoProyecto = ({ navigation }) => {
           selectedValue={selectedProyecto ? selectedProyecto._id : 'todos'}
           onValueChange={(itemValue) => handleProyectoChange(itemValue)}
         >
-          <Picker.Item label="Todos los Proyectos" value="todos" />
+          <Picker.Item label="Todos los Proyectos" value="todos" style={{color:'black'}} />
           {proyectos.map((proyecto) => (
             <Picker.Item key={proyecto._id} label={proyecto.nombre} value={proyecto._id} />
           ))}
@@ -282,7 +282,7 @@ const SeguimientoProyecto = ({ navigation }) => {
           <Text style={{ color: 'gray' }}>Tarea con más story points: {tareaMayorStoryPoints ? tareaMayorStoryPoints.nombre : 'N/A'}</Text>
           <Text style={{ color: '#FF6347' }}>Porcentaje de tareas terminadas: {porcentajeTerminadas.toFixed(2)}%</Text>
           <Text style={{ color: '#36A2EB' }}>Porcentaje de tareas pendientes: {porcentajePendientes.toFixed(2)}%</Text>
-          <Text style={{ color: '#FFD700' }}>Porcentaje de tareas en progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
+          <Text style={{ color: '#FFD700' }}>Porcentaje de tareas En Progreso: {porcentajeEnProgreso.toFixed(2)}%</Text>
   
           {/* Gráfico de pie para los estados de las tareas */}
           <View style={{ marginTop: 20 }}>
@@ -327,7 +327,6 @@ const SeguimientoProyecto = ({ navigation }) => {
       )}
     </ScrollView>
   );
-  
   
 };
 

@@ -317,14 +317,14 @@ const CrearReunion = () => {
       <View>
         <Text style={{ color: 'black' }}>Colaboradores:</Text>
         {colaboradoresDisponibles.map(colaborador => (
-          <Text key={colaborador._id}>{colaborador.nombre}</Text>
+          <Text key={colaborador._id} style={{color:'black'}}>{colaborador.nombre}</Text>
         ))}
       </View>
 
       <View>
         <Text style={{ color: 'black' }}>Administradores:</Text>
         {administradoresDisponibles.map(administrador => (
-          <Text key={administrador._id}>{administrador.nombre}</Text>
+          <Text key={administrador._id} style={{color:'black'}}>{administrador.nombre}</Text>
         ))}
       </View>
 

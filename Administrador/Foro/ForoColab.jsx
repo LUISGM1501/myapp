@@ -89,8 +89,8 @@ function ForoColab() {
       <ScrollView style={styles.messagesContainer}>
         {mensajesForo.map((mensaje, index) => (
           <View key={index} style={styles.message}>
-            <Text>{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
-            <Text>Creado en: {new Date(mensaje.createdAt).toLocaleString()}</Text>
+            <Text style={{color:'black'}} >{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
+            <Text style={{color:'black'}} >Creado en: {new Date(mensaje.createdAt).toLocaleString()}</Text>
           </View>
         ))}
       </ScrollView>
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    color:'black',
     fontWeight: 'bold',
     marginBottom: 10,
   },

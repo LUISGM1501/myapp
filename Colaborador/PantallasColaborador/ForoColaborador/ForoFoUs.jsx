@@ -88,8 +88,8 @@ function ForoFoUs() {
       <ScrollView style={styles.messagesContainer}>
         {mensajesForo.map((mensaje, index) => (
           <View key={index} style={styles.message}>
-            <Text>{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
-            <Text>Creado en: {new Date(mensaje.createdAt).toLocaleString()}</Text>
+            <Text style={{color:'black'}}>{mensaje.nombreAutor} - {mensaje.departamentoAutor}: {mensaje.contenido}</Text>
+            <Text style={{color:'black'}}>Creado en: {new Date(mensaje.createdAt).toLocaleString()}</Text>
           </View>
         ))}
       </ScrollView>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'gray', 
+    color: 'black', 
   },
   messagesContainer: {
     flex: 1,

@@ -98,7 +98,7 @@ const ConsultarColab = () => {
           selectedValue={selectedUserType}
           onValueChange={(itemValue) => setSelectedUserType(itemValue)}
         >
-          <Picker.Item label="Selecciona el tipo de usuario" value="" />
+          <Picker.Item label="Selecciona el tipo de usuario" value="" style={{color:'black'}} />
           <Picker.Item label="Colaborador" value="colaborador" />
           <Picker.Item label="Admin" value="Admin" />
         </Picker>
@@ -110,7 +110,7 @@ const ConsultarColab = () => {
               selectedValue={selectedUser}
               onValueChange={(itemValue) => setSelectedUser(itemValue)}
             >
-              <Picker.Item label="Selecciona un usuario" value="" />
+              <Picker.Item label="Selecciona un usuario" value="" style={{color:'black'}}/>
               {selectedUserType === 'colaborador' &&
                 colaboradoresList.map((colaborador) => (
                   <Picker.Item key={colaborador._id} label={colaborador.nombre} value={colaborador._id} />
@@ -161,7 +161,7 @@ const ConsultarColab = () => {
                     selectedValue={selectedField}
                     onValueChange={(itemValue) => setSelectedField(itemValue)}
                   >
-                    <Picker.Item label="Selecciona el campo a modificar" value="" />
+                    <Picker.Item label="Selecciona el campo a modificar" value="" style={{color:'black'}} />
                     <Picker.Item label="Nombre" value="nombre" />
                     <Picker.Item label="Cédula" value="cedula" />
                     <Picker.Item label="Departamento" value="departamento" />

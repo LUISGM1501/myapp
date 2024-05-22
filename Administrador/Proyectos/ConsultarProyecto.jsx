@@ -36,8 +36,7 @@ const ConsultarProAd = () => {
   const [selectedField, setSelectedField] = useState('');
   const [newData, setNewData] = useState('');
 
-
-
+  const [mostrarBoton, setMostrarBoton] = useState(false); // Añadido para corregir el error
 
 
   const handleDelete = async () => {
@@ -158,7 +157,6 @@ const ConsultarProAd = () => {
               }
               
             }}
-            mode="multiple"
           >
             {proyectosList.map(proyecto => (
               <Picker.Item
