@@ -10,7 +10,11 @@ const InformesProyectos = () => {
   useEffect(() => {
     const fetchProyectosData = async () => {
       try {
+<<<<<<< Updated upstream
         const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
+=======
+        const response = await axios.get('http://localhost:4000/api/proyecto');
+>>>>>>> Stashed changes
         const proyectos = response.data;
 
         const data = {

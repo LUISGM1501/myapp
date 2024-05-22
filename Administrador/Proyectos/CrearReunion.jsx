@@ -40,7 +40,11 @@ const CrearReunion = () => {
 
   const loadProyectosList = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
+=======
+      const response = await axios.get('http://localhost:4000/api/proyecto');
+>>>>>>> Stashed changes
       setProyectosList(response.data);
     } catch (error) {
       console.error('Error loading projects list:', error);
@@ -49,7 +53,11 @@ const CrearReunion = () => {
 
   const loadColaboradoresDisponibles = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get('http://192.168.18.104:4000/api/colaborador');
+=======
+      const response = await axios.get('http://localhost:4000/api/colaborador');
+>>>>>>> Stashed changes
       setColaboradoresDisponibles(response.data);
     } catch (error) {
       console.error('Error loading available collaborators:', error);
@@ -58,7 +66,11 @@ const CrearReunion = () => {
 
   const loadAdministradoresDisponibles = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get('http://192.168.18.104:4000/api/Admin');
+=======
+      const response = await axios.get('http://localhost:4000/api/Admin');
+>>>>>>> Stashed changes
       setAdministradoresDisponibles(response.data);
     } catch (error) {
       console.error('Error loading available administrators:', error);
@@ -112,7 +124,11 @@ const CrearReunion = () => {
     };
 
     try {
+<<<<<<< Updated upstream
       const response = await axios.get(`http://192.168.18.104:4000/api/proyecto/${proyectoId}`);
+=======
+      const response = await axios.get(`http://localhost:4000/api/proyecto/${proyectoId}`);
+>>>>>>> Stashed changes
       
       if (!response.data) {
         alert('No se encontró ningún proyecto con el ID proporcionado!');
@@ -123,7 +139,11 @@ const CrearReunion = () => {
 
       // Crear la reunión en el backend
       console.log('datos: ', datos);
+<<<<<<< Updated upstream
       const posting = await axios.post('http://192.168.18.104:4000/api/reunion', datos);
+=======
+      const posting = await axios.post('http://localhost:4000/api/reunion', datos);
+>>>>>>> Stashed changes
       if (!posting.data) {
         console.log('datos: ', datos);
         return; // Salir de la función temprano si no se encontró el proyecto

@@ -11,7 +11,11 @@ const InformeProyecto = () => {
 
   const fetchProjects = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
+=======
+      const response = await axios.get('http://localhost:4000/api/proyecto');
+>>>>>>> Stashed changes
       setProjectsList(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -24,7 +28,11 @@ const InformeProyecto = () => {
 
   const handleProjectSelect = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get(`http://192.168.18.104:4000/api/proyecto/${selectedProjectId}`);
+=======
+      const response = await axios.get(`http://localhost:4000/api/proyecto/${selectedProjectId}`);
+>>>>>>> Stashed changes
       const project = response.data;
 
       // Definir colores personalizados para cada estado de tarea

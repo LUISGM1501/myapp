@@ -39,7 +39,11 @@ const ConsultarProAd = () => {
 
   const handleDelete = async () => {
       try {
+<<<<<<< Updated upstream
           await axios.delete(`http://192.168.18.104:4000/api/proyecto/${proyecto._id}`);
+=======
+          await axios.delete(`http://localhost:4000/api/proyecto/${proyecto._id}`);
+>>>>>>> Stashed changes
           handleSearch();
       } catch (error) {
           console.error('Error deleting collaborator:', error);
@@ -55,7 +59,11 @@ const ConsultarProAd = () => {
               console.error('No new data provided');
               return;
           }
+<<<<<<< Updated upstream
           await axios.put(`http://192.168.18.104:4000/api/proyecto/${proyecto._id}`, { [selectedField]: newData });
+=======
+          await axios.put(`http://localhost:4000/api/proyecto/${proyecto._id}`, { [selectedField]: newData });
+>>>>>>> Stashed changes
           handleSearch();
       } catch (error) {
           console.error('Error updating project:', error);
@@ -67,7 +75,11 @@ const ConsultarProAd = () => {
           return; // Exit the function early
       }
       try {
+<<<<<<< Updated upstream
           const response = await axios.get(`http://192.168.18.104:4000/api/proyecto/${searchId}`);
+=======
+          const response = await axios.get(`http://localhost:4000/api/proyecto/${searchId}`);
+>>>>>>> Stashed changes
           // Check if response data is empty
           if (response && !response.data) {
               alert('No se encontró ningún proyecto con el ID proporcionado.');
@@ -82,7 +94,11 @@ const ConsultarProAd = () => {
   };
   const handleDeleteTask = async (taskId) => {
     try {
+<<<<<<< Updated upstream
         await axios.delete(`http://192.168.18.104:4000/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
+=======
+        await axios.delete(`http://localhost:4000/api/proyecto/${proyecto._id}/delete-task/${taskId}`);
+>>>>>>> Stashed changes
         handleSearch();
     } catch (error) {
         console.error('Error deleting task:', error);
@@ -92,7 +108,11 @@ const ConsultarProAd = () => {
 
   const handleEditTask = async (taskId) => {
       try {
+<<<<<<< Updated upstream
           await axios.put(`http://192.168.18.104:4000/api/proyecto/${proyecto._id}/edit-task/${taskId}`, {
+=======
+          await axios.put(`http://localhost:4000/api/proyecto/${proyecto._id}/edit-task/${taskId}`, {
+>>>>>>> Stashed changes
               nombre: editedTaskName,
               descripcion: editedTaskDescription,
               responsable: editedTaskAssignee,
@@ -114,7 +134,11 @@ const ConsultarProAd = () => {
   }, []);
   const loadProyectosList = async () => {
       try {
+<<<<<<< Updated upstream
           const response = await axios.get('http://192.168.18.104:4000/api/proyecto');
+=======
+          const response = await axios.get('http://localhost:4000/api/proyecto');
+>>>>>>> Stashed changes
           setProyectosList(response.data);
       } catch (error) {
           console.error('Error loading projects list:', error);
@@ -122,7 +146,11 @@ const ConsultarProAd = () => {
   };
   const loadColaboradoresList = async () => {
       try {
+<<<<<<< Updated upstream
           const response = await axios.get('http://192.168.18.104:4000/api/colaborador');
+=======
+          const response = await axios.get('http://localhost:4000/api/colaborador');
+>>>>>>> Stashed changes
           setColaboradoresList(response.data);
       } catch (error) {
           console.error('Error loading collaborators list:', error);

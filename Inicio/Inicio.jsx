@@ -10,7 +10,11 @@ const Inicio = ({ onSelectUserType }) => {
 
   const handleLogin = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.post('http://192.168.0.13:4000/api/login', {
+=======
+      const response = await axios.post('http://localhost:4000/api/login', {
+>>>>>>> Stashed changes
         nombre: username,
         password: password,
       });

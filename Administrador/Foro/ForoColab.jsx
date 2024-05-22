@@ -14,7 +14,11 @@ function ForoColab() {
 
   const fetchMessages = async () => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get('http://192.168.18.104:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
+=======
+      const response = await axios.get('http://localhost:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje');
+>>>>>>> Stashed changes
       const mensajes = response.data;
       
       // Obtener el nombre y el departamento del autor de cada mensaje
@@ -37,7 +41,11 @@ function ForoColab() {
 
   const obtenerAutor = async (idAutor) => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get(`http://192.168.18.104:4000/api/colaborador/${idAutor}`);
+=======
+      const response = await axios.get(`http://localhost:4000/api/colaborador/${idAutor}`);
+>>>>>>> Stashed changes
       
       if (!response || !response.data) {
         console.error('Error: Datos del autor no encontrados');
@@ -61,7 +69,11 @@ function ForoColab() {
       const nombreAutor = await AsyncStorage.getItem('username');
 
       await axios.post(
+<<<<<<< Updated upstream
         'http://192.168.18.104:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
+=======
+        'http://localhost:4000/api/foro/660d97e3783f0dbbe89eba1a/mensaje',
+>>>>>>> Stashed changes
         { nombreAutor, idAutor, contenido: mensaje }
       );
 

@@ -30,7 +30,11 @@ const ConsultaReuPro = () => {
 
   const loadReunionesList = async () => {
       try {
+<<<<<<< Updated upstream
           const response = await axios.get('http://192.168.18.104:4000/api/reunion');
+=======
+          const response = await axios.get('http://localhost:4000/api/reunion');
+>>>>>>> Stashed changes
           setReunionesList(response.data);
       } catch (error) {
           console.error('Error loading reuniones list:', error);
@@ -39,7 +43,11 @@ const ConsultaReuPro = () => {
 
   const handleSearch = async () => {
       try {
+<<<<<<< Updated upstream
           const response = await axios.get(`http://192.168.18.104:4000/api/reunion/${searchId}`);
+=======
+          const response = await axios.get(`http://localhost:4000/api/reunion/${searchId}`);
+>>>>>>> Stashed changes
           setReunion(response.data);
       } catch (error) {
           console.error('Error searching for meeting:', error);
@@ -48,7 +56,11 @@ const ConsultaReuPro = () => {
 
   const handleDelete = async () => {
       try {
+<<<<<<< Updated upstream
           await axios.delete(`http://192.168.18.104:4000/api/reunion/${reunion._id}`);
+=======
+          await axios.delete(`http://localhost:4000/api/reunion/${reunion._id}`);
+>>>>>>> Stashed changes
           setSearchId('');
           setReunion(null);
           loadReunionesList();
@@ -67,7 +79,11 @@ const ConsultaReuPro = () => {
               console.error('No new data provided');
               return;
           }
+<<<<<<< Updated upstream
           await axios.put(`http://192.168.18.104:4000/api/reunion/${reunion._id}`, { [selectedField]: newData });
+=======
+          await axios.put(`http://localhost:4000/api/reunion/${reunion._id}`, { [selectedField]: newData });
+>>>>>>> Stashed changes
           setSearchId('');
           setReunion(null);
           loadReunionesList();

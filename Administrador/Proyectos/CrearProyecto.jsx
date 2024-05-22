@@ -30,7 +30,11 @@ const CrearProyecto = () => {
 
   useEffect(() => {
     // Obtener la lista de colaboradores disponibles
+<<<<<<< Updated upstream
     axios.get('http://192.168.18.104:4000/api/colaborador')
+=======
+    axios.get('http://localhost:4000/api/colaborador')
+>>>>>>> Stashed changes
       .then(response => {
         setColaboradoresDisponibles(response.data);
       })
@@ -39,7 +43,11 @@ const CrearProyecto = () => {
       });
 
     // Obtener la lista de responsables disponibles
+<<<<<<< Updated upstream
     axios.get('http://192.168.18.104:4000/api/Admin')
+=======
+    axios.get('http://localhost:4000/api/Admin')
+>>>>>>> Stashed changes
       .then(response => {
         setResponsablesDisponibles(response.data);
       })
@@ -79,7 +87,11 @@ const CrearProyecto = () => {
     console.log('Fecha:', fecha_inicio.toLocaleDateString());
     console.log('Responsable:', responsable);
     // Enviar los datos al servidor para crear el proyecto
+<<<<<<< Updated upstream
     axios.post('http://192.168.18.104:4000/api/proyecto/', datos)
+=======
+    axios.post('http://localhost:4000/api/proyecto/', datos)
+>>>>>>> Stashed changes
       .then(response => {
         console.log('Proyecto creado exitosamente:', response.data);
       })
