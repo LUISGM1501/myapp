@@ -93,8 +93,9 @@ const ConsultarColab = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={{color:'gray'}}>Selecciona el tipo de usuario:</Text>
+        <Text style={{color:'gray', marginBottom: 10}}>Selecciona el tipo de usuario:</Text>
         <Picker
+          style={[inputStyle, { backgroundColor: '#57AEBD' }]}
           selectedValue={selectedUserType}
           onValueChange={(itemValue) => setSelectedUserType(itemValue)}
         >
@@ -105,8 +106,12 @@ const ConsultarColab = () => {
 
         {selectedUserType && (
           <View>
-            <Text style={{color: 'gray'}}>Selecciona el usuario:</Text>
+            <View style={{  width: 345 ,backgroundColor: 'lightgray', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+            
+            
+            <Text style={{color: 'gray', marginBottom: 10}}>Selecciona el usuario:</Text>
             <Picker
+              style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
               selectedValue={selectedUser}
               onValueChange={(itemValue) => setSelectedUser(itemValue)}
             >
@@ -120,14 +125,12 @@ const ConsultarColab = () => {
                     <Picker.Item key={admin._id} label={admin.nombre} value={admin._id} />
                   ))}
               </Picker>
-            <View style={{ marginBottom:10}}>
-              <Button title="Search" onPress={handleSearch} />
+            <View style={{ marginBottom:20}}>
+              <Button color='#4EBC7B' title="Buscar" onPress={handleSearch} />
             </View>
+            
             <View style={{ marginBottom:10}}>
-              <Button title="Actualizar Usuario" onPress={handleUpdateUser} />
-            </View>
-            <View style={{ marginBottom:10}}>
-              <Button title="Eliminar Usuario" onPress={handleDeleteUser} color={'red'} />
+              <Button title="Eliminar Usuario" onPress={handleDeleteUser} color={'#57AEBD'} />
             </View>
   
               {selectedUserType === 'colaborador' && colaborador && (
@@ -156,8 +159,9 @@ const ConsultarColab = () => {
   
               {selectedUserType && (
                 <View>
-                  <Text style={{ color: 'gray'}}>Selecciona el campo a modificar:</Text>
+                  <Text style={{ color: 'gray', marginBottom: 10}}>Selecciona el campo a modificar:</Text>
                   <Picker
+                    style={[inputStyle, { backgroundColor: '#9ACFE0' }]}
                     selectedValue={selectedField}
                     onValueChange={(itemValue) => setSelectedField(itemValue)}
                   >
@@ -169,16 +173,22 @@ const ConsultarColab = () => {
                     <Picker.Item label="Teléfono" value="telefono" />
                   </Picker>
   
-                  <Text style={{ color: 'gray' }}>Nuevo valor:</Text>
+                  <Text style={{ color: 'gray', marginBottom: 10 }}>Nuevo valor:</Text>
                   <TextInput
-                    style={styles.input}
+                    style={inputStyle}
                     value={newData}
                     onChangeText={setNewData}
                     keyboardType={(selectedField === 'telefono' || selectedField === 'cedula') ? 'numeric' : 'default'} // Configuración de keyboardType para aceptar solo números cuando se seleccionan los campos 'telefono' o 'cedula'
                   />
                 </View>
+                
               )}
+              <View style={{ marginBottom:10}}>
+              <Button  color="#FAB223" title="Actualizar Usuario" onPress={handleUpdateUser} />
             </View>
+              </View>
+
+            </View> 
           )}
         </View>
       </ScrollView>
@@ -209,5 +219,21 @@ const ConsultarColab = () => {
       marginBottom: 10,
     },
   });
+
+  const inputStyle = {
+    padding: 10,
+    marginBottom: 10,
+    color: 'black',
+    borderWidth: 1,
+    backgroundColor: '#f0f0f0', // Gris super claro
+    borderColor: 'lightgray',
+    borderRadius: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,
+  };
+  
   
   export default ConsultarColab;

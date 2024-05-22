@@ -71,6 +71,7 @@ const InformeProUsu = () => {
       <View style={styles.pickerContainer}>
         <Text style={{color:'black'}}>Selecciona un proyecto:</Text>
         <Picker
+          style={[inputStyle, { backgroundColor: '#9ACFE0', marginTop:10, marginBottom:20 }]}
           selectedValue={selectedProjectId}
           onValueChange={(itemValue, itemIndex) => setSelectedProjectId(itemValue)}
         >
@@ -79,7 +80,7 @@ const InformeProUsu = () => {
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}
         </Picker>
-        <Button title="Seleccionar" onPress={handleProjectSelect} />
+        <Button color='#57AEBD' title="Seleccionar" onPress={handleProjectSelect} />
       </View>
       {companions.length > 0 && (
         <ScrollView style={styles.companionsContainer}>
@@ -137,4 +138,19 @@ const styles = StyleSheet.create({
   },
 });
 
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
+};
 export default InformeProUsu;

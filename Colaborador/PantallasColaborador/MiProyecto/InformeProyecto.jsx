@@ -66,6 +66,7 @@ const InformeProyecto = () => {
       <View style={{ marginBottom: 20 }}>
         <Text style={{ color: 'gray' }}>Selecciona un proyecto:</Text>
         <Picker
+          style={[inputStyle, { backgroundColor: '#9ACFE0', marginTop:20 }]}
           selectedValue={selectedProjectId}
           onValueChange={(itemValue) => setSelectedProjectId(itemValue)}
         >
@@ -74,8 +75,8 @@ const InformeProyecto = () => {
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}
         </Picker>
-        <TouchableOpacity onPress={handleProjectSelect} style={{ marginTop: 10, padding: 10, backgroundColor: 'blue' }}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>Seleccionar</Text>
+        <TouchableOpacity onPress={handleProjectSelect} style={{ marginTop: 10, padding: 10, backgroundColor: '#57AEBD' }}>
+          <Text style={{color: 'white', textAlign: 'center' }}>Seleccionar</Text>
         </TouchableOpacity>
       </View>
       {tareasData && (
@@ -99,6 +100,21 @@ const InformeProyecto = () => {
       )}
     </View>
   );
+};
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
 };
 
 export default InformeProyecto;

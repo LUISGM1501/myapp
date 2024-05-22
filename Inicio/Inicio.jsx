@@ -37,16 +37,17 @@ const Inicio = ({ onSelectUserType }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ backgroundColor: 'lightblue', padding: 20, borderRadius: 10, marginBottom: 20, width:350 }}>
       <Text style={styles.title}>The DriverP</Text>
       <TextInput
-        style={styles.input}
+        style={inputStyle}
         placeholderTextColor= 'gray'
         placeholder="Usuario"
         value={username}
         onChangeText={(text) => setUsername(text)}
       />
       <TextInput
-        style={styles.input}
+        style={inputStyle}
         placeholderTextColor= 'gray'
         placeholder="Contraseña"
         secureTextEntry={true}
@@ -54,7 +55,8 @@ const Inicio = ({ onSelectUserType }) => {
         onChangeText={(text) => setPassword(text)}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Iniciar Sesión" onPress={handleLogin} />
+      <Button color = "#57AEBD" title="Iniciar Sesión" onPress={handleLogin} />
+    </View>
     </View>
   );
 };
@@ -68,6 +70,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    textAlign: 'center',
+    fontWeight: 'bold',
     marginBottom: 20,
     color: 'black',
   },
@@ -85,5 +89,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
+};
 
 export default Inicio;

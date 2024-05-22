@@ -203,7 +203,7 @@ const ConsultarProAd = () => {
               <Picker.Item label="Presupuesto" value="presupuesto" />
               <Picker.Item label="Estado" value="estado" />
               <Picker.Item label="Descripcion" value="descripcion" />
-              <Picker.Item label="Estado" value="estado" />
+
             </Picker>
             <TextInput
                 placeholder='Nuevo valor'
@@ -284,12 +284,12 @@ const ConsultarProAd = () => {
                         </View>
                       ) : (
                         <View>
-                          <Text style={{ color: 'black' }}>Nombre: {tarea.nombre}</Text>
+                          <Text style={{ color: 'black',marginTop: 20 }}>Nombre: {tarea.nombre}</Text>
                           <Text style={{ color: 'black' }}>Descripción: {tarea.descripcion}</Text>
                           <Text style={{ color: 'black' }}>Responsable: {tarea.responsable}</Text>
                           <Text style={{ color: 'black' }}>Recursos Económicos: {tarea.recursosEconomicos}</Text> 
                           <Text style={{ color: 'black' }}>Tiempo Estimado: {tarea.tiempoEstimado}</Text>
-                          <Text style={{ color: 'black' }}>Story Points: {tarea.storyPoints}</Text>
+                          <Text style={{ color: 'black', marginBottom: 10 }}>Story Points: {tarea.storyPoints}</Text>
                           <Button color="#FA2719" title="Borrar tarea" onPress={() => handleDeleteTask(tarea._id)} />
                           <Button color="#FAB223" title="Modificar tarea" onPress={() => setEditingTask(tarea._id)} />
                         </View>

@@ -66,7 +66,8 @@ const TareasProyecto = () => {
         <Text style={{color:'black'}}>Selecciona un proyecto:</Text>
         <Picker
           selectedValue={selectedProjectId}
-          style={{ height: 50, width: 200 }}
+          style={[inputStyle, { backgroundColor: '#9ACFE0', marginBottom:20, marginTop:10}]}
+          
           onValueChange={(itemValue, itemIndex) => setSelectedProjectId(itemValue)}
         >
           <Picker.Item label="Selecciona un proyecto" value="" style={{color:'black'}}/>
@@ -74,7 +75,7 @@ const TareasProyecto = () => {
             <Picker.Item key={project._id} label={project.nombre} value={project._id} />
           ))}
         </Picker>
-        <Button title="Seleccionar" onPress={handleProjectSelect} />
+        <Button color = '#57AEBD' title="Seleccionar" onPress={handleProjectSelect} />
       </View>
       <ScrollView horizontal>
         <View style={styles.taskStateContainer}>
@@ -152,5 +153,20 @@ const styles = StyleSheet.create({
     color:'black'
   },
 });
+
+const inputStyle = {
+  padding: 10,
+  marginBottom: 10,
+  color: 'black',
+  borderWidth: 1,
+  backgroundColor: '#f0f0f0', // Gris super claro
+  borderColor: 'lightgray',
+  borderRadius: 5,
+  shadowColor: 'black',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3,
+};
 
 export default TareasProyecto;
